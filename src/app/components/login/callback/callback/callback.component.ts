@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SpotifyService} from '../../service/spotify.service';
 import {TokenResponse} from '../../models/token-response.interface';
+import {ColorsEnum} from '../../../../enums/colors.enum';
 
 @Component({
   selector: 'app-callback',
@@ -9,6 +10,8 @@ import {TokenResponse} from '../../models/token-response.interface';
   styleUrls: ['./callback.component.scss']
 })
 export class CallbackComponent implements OnInit {
+
+  spinnerColor = ColorsEnum.ORANGE;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -23,8 +26,13 @@ export class CallbackComponent implements OnInit {
     } else {
       this.spotifyService.accessToken = this.route.snapshot.queryParamMap.get('code');
       this.spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
-        this.spotifyService.refreshToken = data.refresh_token;
-        this.spotifyService.accessToken = data.access_token;
+        if (data.refresh_token) {
+          this.spotifyService.refreshToken = data.refresh_token;
+        }
+        if (data.access_token) {
+          this.spotifyService.accessToken = data.access_token;
+        }
+
         this.router.navigate(['./main']);
       });
     }

@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {MainComponent} from './main/main.component';
 import {CallbackComponent} from './login/callback/callback/callback.component';
-import {ErrorPageComponent} from './login/error-page/error-page/error-page.component';
+import {ErrorPageComponent} from './login/error-page/error-page.component';
 
 const routes: Routes = [
   {

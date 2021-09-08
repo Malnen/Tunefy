@@ -1,0 +1,15 @@
+@import "src/colors";
+
+.content {
+  width: 100vw;
+  height: 100vh;
+  background: $background;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #2A79FF!important;
+  }
+
+}
