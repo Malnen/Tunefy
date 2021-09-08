@@ -79,17 +79,15 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
+    const isRefreshTokenPresent = this.refreshToken !== '' && this.refreshToken != null;
     const payload = new HttpParams()
       .append('redirect_uri', this.redirectUri)
       .append('client_id', this.clientId)
-      .append('client_secret', this.clientSecret);
-    if (this.refreshToken !== '') {
-      payload.append('grant_type', 'refresh_token');
-      payload.append('refresh_token', this.refreshToken);
-    } else {
-      payload.append('grant_type', 'authorization_code');
-      payload.append('code', this.accessToken);
-    }
+      .append('client_secret', this.clientSecret)
+      .append('grant_type',
+        isRefreshTokenPresent ? 'refresh_token' : 'authorization_code')
+      .append(isRefreshTokenPresent ? 'refresh_token' : 'code',
+        isRefreshTokenPresent ? this.refreshToken : this.accessToken);
 
     const options = {headers};
     const url = 'https://accounts.spotify.com/api/token';
