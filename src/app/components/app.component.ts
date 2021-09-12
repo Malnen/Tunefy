@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SpotifyService} from './login/service/spotify.service';
+import {SpotifyService} from '../services/spotify/spotify.service';
 import {CookieService} from 'ngx-cookie-service';
 
 @Component({

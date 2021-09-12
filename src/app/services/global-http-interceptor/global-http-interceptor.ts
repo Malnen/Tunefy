@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {SpotifyService} from '../spotify.service';
+import {SpotifyService} from '../spotify/spotify.service';
 import {TokenResponse} from '../../models/token-response.interface';
 
 @Injectable()

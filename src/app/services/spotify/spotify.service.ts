@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {TokenResponse} from '../models/token-response.interface';
+import {TokenResponse} from '../../models/token-response.interface';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {Devices} from '../../models/devices.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -35,6 +36,12 @@ export class SpotifyService {
 
   private _refreshToken: string;
   private _accessToken: string;
+  private _deviceId: string;
+
+  constructor(private http: HttpClient,
+              private router: Router) {
+    this.initializeTokenRefresher();
+  }
 
   get accessToken(): string {
     if (this._accessToken != null) {
@@ -62,9 +69,12 @@ export class SpotifyService {
     }
   }
 
-  constructor(private http: HttpClient,
-              private router: Router) {
-    this.initializeTokenRefresher();
+  get deviceId(): string {
+    return this._deviceId;
+  }
+
+  set deviceId(value: string) {
+    this._deviceId = value;
   }
 
   spotifyAuth(): void {
@@ -73,6 +83,13 @@ export class SpotifyService {
     const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + redirectUri + '&scope=' + scopes;
     window.open(url, '_self');
+  }
+
+  refreshTokens(): void {
+    this.spotifyRefreshToken().subscribe((data: TokenResponse) => {
+      this.refreshToken = data.refresh_token;
+      this.accessToken = data.access_token;
+    });
   }
 
   spotifyRefreshToken(): Observable<TokenResponse> {
@@ -115,12 +132,28 @@ export class SpotifyService {
     this.router.navigate(['./']);
   }
 
+  setAsCurrentDevice(): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player';
+    const options = this.getOptions();
+    const paylaod = {
+      device_ids: [
+        this.deviceId
+      ]
+    };
+
+    return this.http.put(url, paylaod, options);
+  }
+
+  getDevices(): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player/devices';
+    const options = this.getOptions();
+
+    return this.http.get<Devices>(url, options);
+  }
+
   private initializeTokenRefresher(): void {
     setInterval(() => {
-      this.spotifyRefreshToken().subscribe((data: TokenResponse) => {
-        this.refreshToken = data.refresh_token;
-        this.accessToken = data.access_token;
-      });
+      this.refreshTokens();
     }, 1000 * 3000);
   }
 

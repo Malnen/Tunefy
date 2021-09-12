@@ -1,7 +1,29 @@
 @import "src/colors";
 
-.content {
-  width: 100vw;
-  height: 100vh;
-  background: $background;
+.container {
+  text-align: center;
+  display: flex;
+
+  .content {
+    width: 100vw;
+    height: 100vh;
+    background: $background;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 5rem;
+    justify-content: center;
+    align-items: center;
+
+    .message {
+      padding: 5rem;
+      margin: auto;
+    }
+
+    mat-spinner {
+      margin: auto;
+    }
+
+  }
+
 }

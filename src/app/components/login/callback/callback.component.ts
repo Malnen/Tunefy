@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SpotifyService} from '../../service/spotify.service';
-import {TokenResponse} from '../../models/token-response.interface';
-import {ColorsEnum} from '../../../../enums/colors.enum';
+import {SpotifyService} from '../../../services/spotify/spotify.service';
+import {TokenResponse} from '../../../models/token-response.interface';
+import {ColorsEnum} from '../../../enums/colors.enum';
 
 @Component({
   selector: 'app-callback',

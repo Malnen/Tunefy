@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {SpotifyService} from '../login/service/spotify.service';
+import {SpotifyService} from '../../services/spotify/spotify.service';
 import {Router} from '@angular/router';
-import {TokenResponse} from '../login/models/token-response.interface';
+import {TokenResponse} from '../../models/token-response.interface';
+import {ScriptLoaderService} from '../../services/script-loader/script-loader.service';
+import {PlayerInitialized} from '../../models/player-initialized.interface';
 
 @Component({
   selector: 'app-main',
@@ -11,11 +13,15 @@ import {TokenResponse} from '../login/models/token-response.interface';
 export class MainComponent implements OnInit {
 
   constructor(private router: Router,
-              private spotifyService: SpotifyService) {
+              private spotifyService: SpotifyService,
+              private scriptLoader: ScriptLoaderService) {
   }
 
   ngOnInit(): void {
     this.checkRefreshToken();
+    this.scriptLoader.loadSpotifyScript();
+    this.scriptLoader.loadSpotifyPlayerScript();
+    this.addPlayerInitializedEventListener();
   }
 
   onPlay(): void {
@@ -32,11 +38,18 @@ export class MainComponent implements OnInit {
     this.spotifyService.logout();
   }
 
-
   private checkRefreshToken(): void {
     if (this.spotifyService.refreshToken == null) {
       this.router.navigate(['./']);
     }
+  }
+
+  private addPlayerInitializedEventListener(): void {
+    window.addEventListener('playerInitialized', (event: PlayerInitialized) => {
+      this.spotifyService.deviceId = event.id;
+      this.spotifyService.setAsCurrentDevice().subscribe((data: any) => {
+      });
+    });
   }
 
 }
