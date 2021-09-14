@@ -14,6 +14,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatRippleModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {SpinnerDirective} from './app/directives/spinner.directive';
+import { PanelWrapperComponent } from './app/components/panel-wrapper/panel-wrapper.component';
+import { LeftPanelComponent } from './app/components/left-panel/left-panel.component';
+import { RightPanelComponent } from './app/components/right-panel/right-panel.component';
+import { ResizableDirective } from './app/directives/resizable.directive';
+import { BottomPanelComponent } from './app/components/bottom-panel/bottom-panel.component';
+import { ProgressBarComponent } from './app/components/bottom-panel/progress-bar/progress-bar/progress-bar.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -22,15 +29,22 @@ import {SpinnerDirective} from './app/directives/spinner.directive';
     LoginComponent,
     CallbackComponent,
     ErrorPageComponent,
-    SpinnerDirective
+    SpinnerDirective,
+    PanelWrapperComponent,
+    LeftPanelComponent,
+    RightPanelComponent,
+    ResizableDirective,
+    BottomPanelComponent,
+    ProgressBarComponent
   ],
-  imports: [
+  imports : [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatRippleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   providers: [
     {

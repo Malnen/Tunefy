@@ -1,4 +1,4 @@
-import {animation, trigger, animateChild, group, state, transition, animate, style, query} from '@angular/animations';
+import {trigger, state, transition, animate, style, query} from '@angular/animations';
 
 
 export const Animations = {

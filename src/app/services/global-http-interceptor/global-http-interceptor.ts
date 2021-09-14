@@ -6,9 +6,9 @@ import {SpotifyService} from '../spotify/spotify.service';
 import {TokenResponse} from '../../models/token-response.interface';
 
 @Injectable()
-export class GlobalHttpInterceptor   implements HttpInterceptor {
+export class GlobalHttpInterceptor implements HttpInterceptor {
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(private _spotifyService: SpotifyService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -16,7 +16,14 @@ export class GlobalHttpInterceptor   implements HttpInterceptor {
       catchError((error) => {
         switch (error.status) {
           case 401:
-            this.spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
+            this._spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
+              if (data.refresh_token) {
+                this._spotifyService.refreshToken = data.refresh_token;
+              }
+              if (data.access_token) {
+                this._spotifyService.accessToken = data.access_token;
+              }
+
               return next.handle(req);
             });
             break;

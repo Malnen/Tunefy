@@ -8,12 +8,12 @@ export class SpinnerDirective implements AfterViewInit {
   @Input() customColor: string;
 
   constructor(
-    private elem: ElementRef) {
+    private _elem: ElementRef) {
   }
 
   ngAfterViewInit(): void {
     if (!!this.customColor) {
-      const element = this.elem.nativeElement;
+      const element = this._elem.nativeElement;
       const circle = element.querySelector('circle');
       circle.style.stroke = this.customColor;
     }

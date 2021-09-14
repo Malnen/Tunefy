@@ -13,27 +13,27 @@ export class CallbackComponent implements OnInit {
 
   spinnerColor = ColorsEnum.ORANGE;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private spotifyService: SpotifyService) {
+  constructor(private _route: ActivatedRoute,
+              private _router: Router,
+              private _spotifyService: SpotifyService) {
   }
 
   ngOnInit(): void {
-    const error = this.route.snapshot.queryParamMap.get('error');
+    const error = this._route.snapshot.queryParamMap.get('error');
 
     if (error != null && error !== '') {
-      this.router.navigate(['./error']);
+      this._router.navigate(['./error']);
     } else {
-      this.spotifyService.accessToken = this.route.snapshot.queryParamMap.get('code');
-      this.spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
+      this._spotifyService.accessToken = this._route.snapshot.queryParamMap.get('code');
+      this._spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
         if (data.refresh_token) {
-          this.spotifyService.refreshToken = data.refresh_token;
+          this._spotifyService.refreshToken = data.refresh_token;
         }
         if (data.access_token) {
-          this.spotifyService.accessToken = data.access_token;
+          this._spotifyService.accessToken = data.access_token;
         }
 
-        this.router.navigate(['./main']);
+        this._router.navigate(['./main']);
       });
     }
 

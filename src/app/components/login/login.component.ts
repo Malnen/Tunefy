@@ -13,8 +13,8 @@ export class LoginComponent implements OnInit {
 
   isHover = false;
 
-  constructor(private spotifyService: SpotifyService,
-              private router: Router) {
+  constructor(private _spotifyService: SpotifyService,
+              private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   spotifyAuth(): void {
-    this.spotifyService.spotifyAuth();
+    this._spotifyService.spotifyAuth();
   }
 
   onMouseOver(): void {
@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
   }
 
   private checkRefreshToken(): void {
-    if (this.spotifyService.refreshToken != null && this.spotifyService.refreshToken !== '') {
-      this.router.navigate(['./main']);
+    if (this._spotifyService.refreshToken != null && this._spotifyService.refreshToken !== '') {
+      this._router.navigate(['./main']);
     }
   }
 

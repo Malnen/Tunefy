@@ -12,7 +12,7 @@ export class ErrorPageComponent implements OnInit {
   spinnerColor = ColorsEnum.ORANGE;
   counter = 5;
 
-  constructor(private router: Router) {
+  constructor(private _router: Router) {
   }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class ErrorPageComponent implements OnInit {
 
   private redirectTimer(): void {
     if (this.counter <= 0) {
-      this.router.navigate(['./']);
+      this._router.navigate(['./']);
     }
 
     this.counter -= 1;
