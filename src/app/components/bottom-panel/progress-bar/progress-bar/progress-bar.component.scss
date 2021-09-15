@@ -1,0 +1,42 @@
+@import "src/colors";
+
+.container {
+  display: flex;
+  justify-content: center;
+
+  .progress-bar {
+    width: 50%;
+
+    .background {
+      height: 8px;
+      background: $lightBackground;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .foreground {
+      height: 8px;
+      background: $lighterBackground;
+      border-radius: 10px;
+      width: 100%;
+      margin-top: -8px;
+
+      .thumb {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        margin-top: -8px;
+        background: white;
+        position: relative;
+      }
+
+      &:hover {
+        height: 10px;
+        margin-top: -9px;
+        background: $orange;
+      }
+
+    }
+  }
+
+}

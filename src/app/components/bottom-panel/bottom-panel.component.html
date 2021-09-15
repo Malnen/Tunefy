@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="buttons">
+    <button class="previous"
+            (click)="previous()">
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+    <button *ngIf="player?.is_playing"
+            class="pause"
+            (click)="pause()">
+      <mat-icon>pause
+      </mat-icon>
+    </button>
+    <button *ngIf="!player?.is_playing"
+            class="play"
+            (click)="play()">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button class="next"
+            (click)="next()">
+      <mat-icon>skip_next</mat-icon>
+    </button>
+  </div>
+  <div class="progress-bar">
+    <app-progress-bar [player]="player"></app-progress-bar>
+  </div>
+</div>

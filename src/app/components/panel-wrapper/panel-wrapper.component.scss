@@ -1,0 +1,27 @@
+@import 'node_modules/@angular/material/theming';
+@import "src/colors";
+
+.top {
+  display: flex;
+
+  .left-side {
+    height: 100%;
+  }
+
+  .right-side {
+    height: 100%;
+    flex: 1;
+  }
+
+}
+
+.bottom {
+  @include mat-elevation-transition();
+  @include mat-elevation(4);
+  background: $darkerBackground;
+
+  &:hover{
+    @include mat-elevation(8);
+  }
+
+}

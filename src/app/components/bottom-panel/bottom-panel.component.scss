@@ -1,0 +1,58 @@
+@import 'node_modules/@angular/material/theming';
+@import "src/colors";
+
+.container {
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 1rem 0 1rem;
+
+    .previous, .next {
+      margin:0 1rem 0 1rem;
+      background: none;
+      outline: none;
+      border: none;
+      color: $lighterBackground;
+      line-height: 4rem;
+
+      mat-icon{
+        transform: scale(1.25);
+      }
+
+      &:hover{
+        font-weight: 600;
+        color: white;
+        transform: scale(1.1);
+      }
+
+    }
+
+    .play, .pause {
+      height: 3rem;
+      width: 3rem;
+      outline: none;
+      border: none;
+      border-radius: 50%;
+      color: $darkerBackground;
+      @include mat-elevation-transition();
+      @include mat-elevation(0);
+      line-height: 4rem;
+
+      mat-icon{
+        transform: scale(1.25);
+      }
+
+      &:hover{
+        @include mat-elevation(4);
+        font-weight: 600;
+        color: $orange;
+        transform: scale(1.1);
+
+      }
+
+    }
+
+  }
+
+}
