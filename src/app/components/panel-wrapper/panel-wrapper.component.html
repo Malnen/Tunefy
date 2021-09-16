@@ -1,17 +1,20 @@
-<div class="top"
-     (window:resize)="onResize()"
-     [style.height]="topHeight+'px'">
-  <div class="left-side"
-       appResizable
-       [resizableMinWidth]=200
-       [resizableMaxWidth]=500>
-    <app-left-panel></app-left-panel>
+<div class="container"
+     #container>
+  <div class="top"
+       (resize)="onResize()"
+       [style.height]="topHeight+'px'">
+    <div class="left-side"
+         appResizable
+         [resizableMinWidth]=200
+         [resizableMaxWidth]=500>
+      <app-left-panel></app-left-panel>
+    </div>
+    <div class="right-side">
+      <app-right-panel></app-right-panel>
+    </div>
   </div>
-  <div class="right-side">
-    <app-right-panel></app-right-panel>
+  <div class="bottom"
+       [style.height]="bottomHeight+'px'">
+    <app-bottom-panel></app-bottom-panel>
   </div>
-</div>
-<div class="bottom"
-     [style.height]="bottomHeight+'px'">
-  <app-bottom-panel></app-bottom-panel>
 </div>

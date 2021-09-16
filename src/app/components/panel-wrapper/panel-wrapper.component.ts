@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector : 'app-panel-wrapper',
-  templateUrl : './panel-wrapper.component.html',
-  styleUrls : [ './panel-wrapper.component.scss' ]
+  selector: 'app-panel-wrapper',
+  templateUrl: './panel-wrapper.component.html',
+  styleUrls: ['./panel-wrapper.component.scss']
 })
 export class PanelWrapperComponent implements OnInit {
+
+  @ViewChild('container') container: HTMLElement;
 
   topHeight: number;
   bottomHeight = 125;
@@ -18,7 +20,7 @@ export class PanelWrapperComponent implements OnInit {
   }
 
   onResize(): void {
-    this.topHeight = window.innerHeight - this.bottomHeight;
+    this.topHeight = window.innerHeight - this.bottomHeight - 1;
   }
 
 }

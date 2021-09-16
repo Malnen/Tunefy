@@ -1,14 +1,30 @@
-<div class="container">
-  <div class="progress-bar">
-    <div class="background">
+<div class="container"
+     (window:resize)="onResize()">
+  <div class="progress-ms">
+    {{progressMs}}
+  </div>
+  <div class="progress-bar"
+       #progressBar
+       (mouseover)="onMouseOver()"
+       (mouseleave)="onMouseLeave()"
+       (mousedown)="onProgressBarDown()"
+       (window:mouseup)="onProgressBarUp()"
+       (click)="onProgressbarClick($event)"
+       (mousemove)="onProgressBarMove($event)">
+    <div class="background"
+         #background>
 
     </div>
     <div class="foreground"
+         [class.hover]="hover"
          [style.width]="progress+ '%'">
-      <div class="thumb"
-           [style.marginLeft]="progress + '%'">
-
+      <div *ngIf="hover"
+           class="thumb"
+           [style.marginLeft]="thumbMarginLeft +'px'">
       </div>
     </div>
+  </div>
+  <div class="duration">
+    {{durationMs}}
   </div>
 </div>

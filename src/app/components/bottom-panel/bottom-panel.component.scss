@@ -9,21 +9,22 @@
     padding: 1rem 1rem 0 1rem;
 
     .previous, .next {
-      margin:0 1rem 0 1rem;
+      margin: 0 1rem 0 1rem;
       background: none;
       outline: none;
       border: none;
       color: $lighterBackground;
       line-height: 4rem;
 
-      mat-icon{
+      mat-icon {
         transform: scale(1.25);
-      }
 
-      &:hover{
-        font-weight: 600;
-        color: white;
-        transform: scale(1.1);
+        &:hover {
+          font-weight: 600;
+          color: white;
+          transform: scale(1.1);
+        }
+
       }
 
     }
@@ -39,11 +40,11 @@
       @include mat-elevation(0);
       line-height: 4rem;
 
-      mat-icon{
+      mat-icon {
         transform: scale(1.25);
       }
 
-      &:hover{
+      &:hover {
         @include mat-elevation(4);
         font-weight: 600;
         color: $orange;

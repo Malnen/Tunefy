@@ -1,8 +1,7 @@
 <div class="container">
   <div class="buttons">
-    <button class="previous"
-            (click)="previous()">
-      <mat-icon>skip_previous</mat-icon>
+    <button class="previous">
+      <mat-icon (click)="previous()">skip_previous</mat-icon>
     </button>
     <button *ngIf="player?.is_playing"
             class="pause"
@@ -11,13 +10,11 @@
       </mat-icon>
     </button>
     <button *ngIf="!player?.is_playing"
-            class="play"
-            (click)="play()">
-      <mat-icon>play_arrow</mat-icon>
+            class="play">
+      <mat-icon (click)="play()">play_arrow</mat-icon>
     </button>
-    <button class="next"
-            (click)="next()">
-      <mat-icon>skip_next</mat-icon>
+    <button class="next">
+      <mat-icon (click)="next()">skip_next</mat-icon>
     </button>
   </div>
   <div class="progress-bar">

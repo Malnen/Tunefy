@@ -3,36 +3,40 @@
 .container {
   display: flex;
   justify-content: center;
+  padding-top: 0.5rem;
+
+  .progress-ms, .duration {
+    color: $lighterBackground;
+    margin:  -0.5rem 1rem 0 1rem;
+  }
 
   .progress-bar {
     width: 50%;
 
     .background {
-      height: 8px;
+      height: 6px;
       background: $lightBackground;
       border-radius: 10px;
       width: 100%;
     }
 
     .foreground {
-      height: 8px;
+      height: 6px;
       background: $lighterBackground;
       border-radius: 10px;
       width: 100%;
-      margin-top: -8px;
+      margin-top: -6px;
 
       .thumb {
         height: 16px;
         width: 16px;
         border-radius: 50%;
-        margin-top: -8px;
         background: white;
-        position: relative;
+        position: absolute;
+        margin-top: -4px;
       }
 
-      &:hover {
-        height: 10px;
-        margin-top: -9px;
+      &.hover {
         background: $orange;
       }
 
