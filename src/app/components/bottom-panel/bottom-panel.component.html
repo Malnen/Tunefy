@@ -1,5 +1,13 @@
 <div class="container">
   <div class="buttons">
+    <button class="shuffle">
+      <mat-icon *ngIf="!currentShuffleState"
+                (click)="toggleShuffleState()">shuffle
+      </mat-icon>
+      <mat-icon *ngIf="currentShuffleState"
+                (click)="toggleShuffleState()">shuffle_on
+      </mat-icon>
+    </button>
     <button class="previous">
       <mat-icon (click)="previous()">skip_previous</mat-icon>
     </button>
@@ -16,8 +24,43 @@
     <button class="next">
       <mat-icon (click)="next()">skip_next</mat-icon>
     </button>
+    <button class="repeat">
+      <mat-icon *ngIf="currentRepeatState === repeatState.OFF || player?.repeat_state == null"
+                (click)="toggleRepeatState()">repeat
+      </mat-icon>
+      <mat-icon *ngIf="currentRepeatState === repeatState.CONTEXT"
+                (click)="toggleRepeatState()">repeat_on
+      </mat-icon>
+      <mat-icon *ngIf="currentRepeatState === repeatState.TRACK"
+                (click)="toggleRepeatState()">repeat_one_on
+      </mat-icon>
+    </button>
+
+    <button class="devices">
+      <mat-icon (click)="toggleDevicePopUp()">devices</mat-icon>
+      <div *ngIf="devicesPopUpOpen"
+           class="mask"
+           (click)="toggleDevicePopUp()"></div>
+      <div *ngIf="devicePopUpShow"
+           class="devices-pop-up"
+           (mouseover)="onDevicePopUpMouseOver()"
+           (mouseleave)="onDevicePopUpMouseLeave()"
+           [style.opacity]="opacity"
+           [style.transition]="'opacity 0.2s'"
+           [style]="devicesPopUpHover ?
+            '--box-shadow: ' +
+            '0px 3px 5px -1px rgb(0 0 0 / 20%), ' +
+            '0px 6px 10px 0px rgb(0 0 0 / 14%), ' +
+            '0px 1px 18px 0px rgb(0 0 0 / 12%)'
+            :
+            '--box-shadow: ' +
+            '0px 2px 4px -1px rgb(0 0 0 / 20%), ' +
+            '0px 4px 5px 0px rgb(0 0 0 / 14%), ' +
+            '0px 1px 10px 0px rgb(0 0 0 / 12%)'">
+      </div>
+    </button>
   </div>
-  <div class="progress-bar">
+  <div class="app-progress-bar">
     <app-progress-bar [player]="player"></app-progress-bar>
   </div>
 </div>

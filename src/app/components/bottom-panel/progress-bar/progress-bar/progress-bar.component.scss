@@ -4,14 +4,16 @@
   display: flex;
   justify-content: center;
   padding-top: 0.5rem;
+  background: none;
 
   .progress-ms, .duration {
     color: $lighterBackground;
-    margin:  -0.5rem 1rem 0 1rem;
+    margin: -0.5rem 1rem 0 1rem;
   }
 
-  .progress-bar {
-    width: 50%;
+  .app-progress-bar {
+    width: 75%;
+    background-color: rgba(0, 0, 0, 0);
 
     .background {
       height: 6px;
@@ -28,16 +30,9 @@
       margin-top: -6px;
 
       .thumb {
-        height: 16px;
-        width: 16px;
         border-radius: 50%;
         background: white;
         position: absolute;
-        margin-top: -4px;
-      }
-
-      &.hover {
-        background: $orange;
       }
 
     }

@@ -21,7 +21,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     console.error(message);
   });
 
-
   player.addListener('ready', ({device_id}) => {
     const event = new Event('playerInitialized');
     event.id = device_id;

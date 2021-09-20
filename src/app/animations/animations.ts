@@ -30,5 +30,29 @@ export const Animations = {
       animate('0.02s')
     ]),
   ]),
+  backgroundColor: trigger('backgroundColor', [
+    state('true', style({
+        backgroundColor: '{{firstColor}}',
+      }), {
+        params: {
+          firstColor: 'white',
+        }
+      }
+    ),
+    state('false', style({
+        backgroundColor: '{{secondColor}}',
+      }), {
+        params: {
+          secondColor: 'black',
+        }
+      }
+    ),
+    transition('true => false', [
+      animate('0.1s')
+    ]),
+    transition('false => true', [
+      animate('0.1s')
+    ]),
+  ]),
 
 };

@@ -2,22 +2,47 @@
 @import "src/colors";
 
 .container {
+  max-width: 100%;
 
   .buttons {
     display: flex;
     justify-content: center;
     padding: 1rem 1rem 0 1rem;
 
+    .repeat, .shuffle {
+      background: none;
+      outline: none;
+      border: none;
+      line-height: 4rem;
+      color: $lighterBackground;
+      pointer-events: none;
+
+      mat-icon {
+        transform: scale(0.8);
+        pointer-events: all;
+
+        &:hover {
+          font-weight: 400;
+          color: white;
+          transform: scale(0.9);
+        }
+
+      }
+
+    }
+
     .previous, .next {
-      margin: 0 1rem 0 1rem;
+      margin: 0 0.25rem 0 0.25rem;
       background: none;
       outline: none;
       border: none;
       color: $lighterBackground;
       line-height: 4rem;
+      pointer-events: none;
 
       mat-icon {
         transform: scale(1.25);
+        pointer-events: all;
 
         &:hover {
           font-weight: 600;
@@ -31,7 +56,8 @@
 
     .play, .pause {
       height: 3rem;
-      width: 3rem;
+      min-width: 3rem;
+      margin: 0 0.5rem 0 0.5rem;
       outline: none;
       border: none;
       border-radius: 50%;
@@ -54,6 +80,52 @@
 
     }
 
+  }
+
+  .devices {
+    color: $lighterBackground;
+    background: none;
+    border: none;
+    outline: none;
+
+    .mask {
+      background: transparent;
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      left: 0;
+      top: 0;
+      cursor: auto;
+    }
+
+    --box-shadow: none;
+
+    .devices-pop-up {
+      width: 200px;
+      height: 300px;
+      background: $background;
+      border-radius: 3px;
+      position: absolute;
+      margin-left: -90px;
+      margin-top: -340px;
+      box-shadow: var(--box-shadow);
+      opacity: 0;
+      @include mat-elevation-transition();
+    }
+
+  }
+
+  .devices-pop-up::before {
+    border: 10px solid transparent;
+    border-top-color: $background;
+    bottom: -20px;
+    content: "";
+    left: auto;
+    margin-left: -10px;
+    margin-right: -10px;
+    position: absolute;
+    right: 100px;
+    z-index: 1;
   }
 
 }

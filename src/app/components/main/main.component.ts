@@ -34,8 +34,8 @@ export class MainComponent implements OnInit {
   private addPlayerInitializedEventListener(): void {
     window.addEventListener('playerInitialized', (event: PlayerInitialized) => {
       this._spotifyService.deviceId = event.id;
-    //  this._spotifyService.setAsCurrentDevice().subscribe((data: any) => {
-     // });
+    /*  this._spotifyService.setAsCurrentDevice().subscribe((data: any) => {
+      });*/
     });
   }
 

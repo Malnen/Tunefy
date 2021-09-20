@@ -21,6 +21,7 @@ import { ResizableDirective } from './app/directives/resizable.directive';
 import { BottomPanelComponent } from './app/components/bottom-panel/bottom-panel.component';
 import { ProgressBarComponent } from './app/components/bottom-panel/progress-bar/progress-bar/progress-bar.component';
 import { MatIconModule } from '@angular/material/icon';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     MatRippleModule,
     MatProgressSpinnerModule,
-    MatIconModule
+    MatIconModule,
+    NgbModule
   ],
   providers: [
     {

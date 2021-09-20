@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {Devices} from '../../models/devices.interface';
 import {TrackAnalysis} from '../../models/track-analysis.interface';
 import {Player} from '../../models/player.interface';
+import {RepeatState} from '../../enums/repeat-state.enum';
 
 @Injectable()
 export class SpotifyService {
@@ -47,7 +48,7 @@ export class SpotifyService {
   constructor(private _http: HttpClient,
               private _router: Router) {
     this.initializeTokenRefresher();
-    setInterval(() => this.refreshPlayer(), 1000);
+    setInterval(() => this.refreshPlayer(), 500);
   }
 
   get accessToken(): string {
@@ -135,6 +136,19 @@ export class SpotifyService {
     return this._http.put(url, null, options);
   }
 
+  forcePlay(): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player';
+    const options = this.getOptions();
+    const paylaod = {
+      device_ids: [
+        this.deviceId
+      ],
+      play: true
+    };
+
+    return this._http.put(url, paylaod, options);
+  }
+
   pause(): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player/pause';
     const options = this.getOptions();
@@ -197,6 +211,22 @@ export class SpotifyService {
 
   seek(ms: number): Observable<any> {
     const url = `https://api.spotify.com/v1/me/player/seek?position_ms=${ms}`;
+    const options = this.getOptions();
+    const payload = {};
+
+    return this._http.put(url, payload, options);
+  }
+
+  setRepeatState(state: RepeatState): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/player/repeat?state=${state}`;
+    const options = this.getOptions();
+    const payload = {};
+
+    return this._http.put(url, payload, options);
+  }
+
+  setShuffleState(state: boolean): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/player/shuffle?state=${state}`;
     const options = this.getOptions();
     const payload = {};
 

@@ -27,6 +27,15 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
               return next.handle(req);
             });
             break;
+          case 404:
+            if (error.error.error.reason === 'NO_ACTIVE_DEVICE') {
+              this._spotifyService.refreshTokens();
+              this._spotifyService.setAsCurrentDevice();
+              this._spotifyService.forcePlay();
+              return next.handle(req);
+            }
+
+            break;
         }
         return throwError(error.message);
       })
