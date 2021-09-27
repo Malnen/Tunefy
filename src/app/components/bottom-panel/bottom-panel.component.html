@@ -1,52 +1,82 @@
 <div class="container">
-  <div class="buttons">
-    <button class="shuffle">
-      <mat-icon *ngIf="!currentShuffleState"
-                (click)="toggleShuffleState()">shuffle
-      </mat-icon>
-      <mat-icon *ngIf="currentShuffleState"
-                (click)="toggleShuffleState()">shuffle_on
-      </mat-icon>
-    </button>
-    <button class="previous">
-      <mat-icon (click)="previous()">skip_previous</mat-icon>
-    </button>
-    <button *ngIf="player?.is_playing"
-            class="pause"
-            (click)="pause()">
-      <mat-icon>pause
-      </mat-icon>
-    </button>
-    <button *ngIf="!player?.is_playing"
-            class="play">
-      <mat-icon (click)="play()">play_arrow</mat-icon>
-    </button>
-    <button class="next">
-      <mat-icon (click)="next()">skip_next</mat-icon>
-    </button>
-    <button class="repeat">
-      <mat-icon *ngIf="currentRepeatState === repeatState.OFF || player?.repeat_state == null"
-                (click)="toggleRepeatState()">repeat
-      </mat-icon>
-      <mat-icon *ngIf="currentRepeatState === repeatState.CONTEXT"
-                (click)="toggleRepeatState()">repeat_on
-      </mat-icon>
-      <mat-icon *ngIf="currentRepeatState === repeatState.TRACK"
-                (click)="toggleRepeatState()">repeat_one_on
-      </mat-icon>
-    </button>
+  <div class="left-side">
+    <div class="item-container">
+      <div class="image">
+        <img *ngIf="image"
+             src="{{image?.url}}">
+      </div>
+      <div class="text">
+        <div class="name">
+          {{currentItem?.name}}
+        </div>
+        <div *ngFor="let artist of artists;let i = index"
+             class="artists">
+          <div *ngIf="i<3"
+               class="artist">
+            {{artist.name}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="middle">
 
+    <div class="buttons">
+      <button class="shuffle">
+        <mat-icon *ngIf="!currentShuffleState"
+                  (click)="toggleShuffleState()">shuffle
+        </mat-icon>
+        <mat-icon *ngIf="currentShuffleState"
+                  (click)="toggleShuffleState()">shuffle_on
+        </mat-icon>
+      </button>
+      <button class="previous">
+        <mat-icon (click)="previous()">skip_previous</mat-icon>
+      </button>
+      <button *ngIf="player?.is_playing"
+              class="pause"
+              (click)="pause()">
+        <mat-icon>pause
+        </mat-icon>
+      </button>
+      <button *ngIf="!player?.is_playing"
+              class="play">
+        <mat-icon (click)="play()">play_arrow</mat-icon>
+      </button>
+      <button class="next">
+        <mat-icon (click)="next()">skip_next</mat-icon>
+      </button>
+      <button class="repeat">
+        <mat-icon *ngIf="currentRepeatState === repeatState.OFF || player?.repeat_state == null"
+                  (click)="toggleRepeatState()">repeat
+        </mat-icon>
+        <mat-icon *ngIf="currentRepeatState === repeatState.CONTEXT"
+                  (click)="toggleRepeatState()">repeat_on
+        </mat-icon>
+        <mat-icon *ngIf="currentRepeatState === repeatState.TRACK"
+                  (click)="toggleRepeatState()">repeat_one_on
+        </mat-icon>
+      </button>
+    </div>
+    <div class="app-volume-bar">
+      <app-progress-bar [player]="player"></app-progress-bar>
+    </div>
+  </div>
+  <div class="right-side">
     <button class="devices">
       <mat-icon (click)="toggleDevicePopUp()">devices</mat-icon>
       <div *ngIf="devicesPopUpOpen"
            class="mask"
            (click)="toggleDevicePopUp()"></div>
       <div *ngIf="devicePopUpShow"
+           #devicePopUp
            class="devices-pop-up"
+           [class.hover]="devicesPopUpHover"
            (mouseover)="onDevicePopUpMouseOver()"
            (mouseleave)="onDevicePopUpMouseLeave()"
+           [style.marginTop]="devicePopUpMarginTop + 'px'"
            [style.opacity]="opacity"
-           [style.transition]="'opacity 0.2s'"
+           [style.transition]="'opacity 0.2s, height 0.2s, margin-top 0.2s'"
            [style]="devicesPopUpHover ?
             '--box-shadow: ' +
             '0px 3px 5px -1px rgb(0 0 0 / 20%), ' +
@@ -57,10 +87,16 @@
             '0px 2px 4px -1px rgb(0 0 0 / 20%), ' +
             '0px 4px 5px 0px rgb(0 0 0 / 14%), ' +
             '0px 1px 10px 0px rgb(0 0 0 / 12%)'">
+        <app-devices-wrapper (devicesLoaded)="onDevicesLoaded($event)"></app-devices-wrapper>
       </div>
     </button>
-  </div>
-  <div class="app-progress-bar">
-    <app-progress-bar [player]="player"></app-progress-bar>
+    <div class="volume-container">
+      <button class="volume">
+        <mat-icon (click)="onVolumeClick()">{{volumeState}}</mat-icon>
+      </button>
+      <div class="volume-bar">
+        <app-volume-bar [player]="player"></app-volume-bar>
+      </div>
+    </div>
   </div>
 </div>

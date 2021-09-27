@@ -3,50 +3,164 @@
 
 .container {
   max-width: 100%;
+  display: flex;
 
-  .buttons {
+  .left-side {
+    min-width: 350px;
+    width: 30%;
+    height: 125px;
     display: flex;
-    justify-content: center;
-    padding: 1rem 1rem 0 1rem;
+    align-items: center;
 
-    .repeat, .shuffle {
-      background: none;
-      outline: none;
-      border: none;
-      line-height: 4rem;
-      color: $lighterBackground;
-      pointer-events: none;
+    .item-container {
+      display: flex;
 
-      mat-icon {
-        transform: scale(0.8);
-        pointer-events: all;
+      .image {
+        height: 100px;
+        width: 100px;
 
-        &:hover {
-          font-weight: 400;
-          color: white;
-          transform: scale(0.9);
+        img {
+          max-height: 90%;
+          max-width: 90%;
+          min-height: 90%;
+          min-width: 90%;
+          transition: min-width 0.2s, min-height 0.2s, max-width 0.2s, max-height 0.2s, box-shadow 0.2s;
+          @include mat-elevation(4);
+
+          &:hover {
+            max-height: 100%;
+            max-width: 100%;
+            min-height: 100%;
+            min-width: 100%;
+            @include mat-elevation(8);
+          }
+
+        }
+
+      }
+
+      .text {
+        max-width: 240px;
+        min-width: 240px;
+
+        .name {
+          padding: 10px;
+          color: $evenLighterBackground;
+          font-size: 1.25rem;
+          max-height: 2rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &:hover {
+            color: white;
+            font-size: 1.3rem;
+          }
+
+        }
+
+        .artists {
+          padding-left: 10px;
+          color: $lighterBackground;
+          text-overflow: ellipsis;
+          font-size: 1rem;
+          max-height: 2rem;
+          overflow: hidden;
+          white-space: nowrap;
+          display: table;
+
+          .artist {
+
+            &:hover {
+              color: white;
+              font-size: 1.05rem;
+            }
+
+          }
+
         }
 
       }
 
     }
 
-    .previous, .next {
-      margin: 0 0.25rem 0 0.25rem;
-      background: none;
-      outline: none;
-      border: none;
-      color: $lighterBackground;
-      line-height: 4rem;
-      pointer-events: none;
+  }
 
-      mat-icon {
-        transform: scale(1.25);
-        pointer-events: all;
+  .middle {
+    min-width: 875px;
+    width: 55%;
+    height: 100%;
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      padding: 1rem 1rem 0 1rem;
+
+      .repeat, .shuffle, {
+        background: none;
+        outline: none;
+        border: none;
+        line-height: 4rem;
+        color: $lighterBackground;
+        pointer-events: none;
+
+        mat-icon {
+          transform: scale(0.8);
+          pointer-events: all;
+
+          &:hover {
+            font-weight: 400;
+            color: white;
+            transform: scale(0.9);
+          }
+
+        }
+
+      }
+
+      .previous, .next {
+        margin: 0 0.25rem 0 0.25rem;
+        background: none;
+        outline: none;
+        border: none;
+        color: $lighterBackground;
+        line-height: 4rem;
+        pointer-events: none;
+
+        mat-icon {
+          transform: scale(1.25);
+          pointer-events: all;
+
+          &:hover {
+            font-weight: 600;
+            color: white;
+            transform: scale(1.1);
+          }
+
+        }
+
+      }
+
+      .play, .pause {
+        height: 3rem;
+        min-width: 3rem;
+        margin: 0 0.5rem 0 0.5rem;
+        outline: none;
+        border: none;
+        border-radius: 50%;
+        color: $darkerBackground;
+        @include mat-elevation-transition();
+        @include mat-elevation(0);
+        line-height: 4rem;
+
+        mat-icon {
+          transform: scale(1.25);
+        }
 
         &:hover {
+          @include mat-elevation(4);
           font-weight: 600;
-          color: white;
+          color: $orange;
           transform: scale(1.1);
         }
 
@@ -54,78 +168,116 @@
 
     }
 
-    .play, .pause {
-      height: 3rem;
-      min-width: 3rem;
-      margin: 0 0.5rem 0 0.5rem;
-      outline: none;
+  }
+
+  .right-side {
+    min-width: 350px;
+    width: 30%;
+    height: 100px;
+    display: flex;
+
+    .volume-container {
+      width: 270px;
+      display: flex;
+      margin: 0 20px;
+
+      .volume {
+        color: $lighterBackground;
+        background: none;
+        border: none;
+        outline: none;
+        width: 35px;
+        height: 100%;
+        line-height: 35px;
+        font-size: 35px;
+
+
+        .mat-icon {
+          height: 35px;
+          width: 35px;
+          font-size: 35px;
+
+          &:hover {
+            color: white;
+            transform: scale(1.1);
+          }
+
+        }
+
+      }
+
+      .volume-bar {
+        width: 200px;
+        margin-top: 37px;
+        justify-content: center;
+      }
+
+    }
+
+    .devices {
+      color: $lighterBackground;
+      background: none;
       border: none;
-      border-radius: 50%;
-      color: $darkerBackground;
-      @include mat-elevation-transition();
-      @include mat-elevation(0);
-      line-height: 4rem;
+      outline: none;
+      width: 35px;
+      height: 100%;
+      line-height: 35px;
+      font-size: 35px;
 
-      mat-icon {
-        transform: scale(1.25);
+
+      .mat-icon {
+        font-size: 35px;
+        height: 35px;
+        width: 35px;
+
+        &:hover {
+          color: white;
+          transform: scale(1.1);
+        }
+
       }
 
-      &:hover {
-        @include mat-elevation(4);
-        font-weight: 600;
-        color: $orange;
-        transform: scale(1.1);
+      .mask {
+        background: transparent;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        left: 0;
+        top: 0;
+        cursor: auto;
+      }
 
+      --box-shadow: none;
+
+      .devices-pop-up {
+        font-weight: normal;
+        width: 400px;
+        background: $devicesBackground;
+        border-radius: 3px;
+        position: absolute;
+        margin-left: -165px;
+        cursor: auto;
+        box-shadow: var(--box-shadow);
+        opacity: 0;
+        @include mat-elevation-transition();
       }
 
     }
 
-  }
-
-  .devices {
-    color: $lighterBackground;
-    background: none;
-    border: none;
-    outline: none;
-
-    .mask {
-      background: transparent;
-      width: 100vw;
-      height: 100vh;
+    .devices-pop-up::before {
+      border: 10px solid transparent;
+      border-top-color: $devicesBackground;
+      bottom: -20px;
+      content: "";
+      left: auto;
+      margin-left: -10px;
+      margin-right: -10px;
       position: absolute;
-      left: 0;
-      top: 0;
+      right: 200px;
       cursor: auto;
+      z-index: 1;
     }
 
-    --box-shadow: none;
-
-    .devices-pop-up {
-      width: 200px;
-      height: 300px;
-      background: $background;
-      border-radius: 3px;
-      position: absolute;
-      margin-left: -90px;
-      margin-top: -340px;
-      box-shadow: var(--box-shadow);
-      opacity: 0;
-      @include mat-elevation-transition();
-    }
-
-  }
-
-  .devices-pop-up::before {
-    border: 10px solid transparent;
-    border-top-color: $background;
-    bottom: -20px;
-    content: "";
-    left: auto;
-    margin-left: -10px;
-    margin-right: -10px;
-    position: absolute;
-    right: 100px;
-    z-index: 1;
   }
 
 }

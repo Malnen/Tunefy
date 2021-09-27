@@ -1,27 +1,42 @@
-import {Component, OnInit} from '@angular/core';
-import {Player} from '../../models/player.interface';
-import {SpotifyService} from '../../services/spotify/spotify.service';
-import {RepeatState} from '../../enums/repeat-state.enum';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Player } from '../../models/player.interface';
+import { SpotifyService } from '../../services/spotify/spotify.service';
+import { RepeatState } from '../../enums/repeat-state.enum';
+import { Devices } from '../../models/devices.interface';
+import { VolumeState } from '../../enums/volume-state.enum';
+import { Item } from '../../models/item.interface';
+import { Image } from '../../models/image.interface';
+import { Artist } from '../../models/artist.interface';
 
 @Component({
-  selector: 'app-bottom-panel',
-  templateUrl: './bottom-panel.component.html',
-  styleUrls: ['./bottom-panel.component.scss']
+  selector : 'app-bottom-panel',
+  templateUrl : './bottom-panel.component.html',
+  styleUrls : [ './bottom-panel.component.scss' ]
 })
 export class BottomPanelComponent implements OnInit {
+
+  @ViewChild('devicePopUp') devicePopUp: ElementRef;
 
   player: Player;
   repeatState = RepeatState;
   currentRepeatState: RepeatState = RepeatState.OFF;
   currentShuffleState: boolean;
+  currentVolume = 100;
   devicesPopUpOpen: boolean;
   devicesPopUpHover: boolean;
   devicePopUpShow: boolean;
   opacity = 0;
+  devicePopUpMarginTop: number;
+  volumeState: VolumeState = VolumeState.VOLUME_UP;
+  currentItem: Item;
+  image: Image;
+  artists: Artist[];
 
   private _timer: number;
   private _ignoreNextRepeatState: boolean;
   private _ignoreNextShuffleState: boolean;
+  private _ignoreVolumeState: boolean;
+  private _lastVolumePercentage = 100;
 
   constructor(private _spotifyService: SpotifyService) {
   }
@@ -29,12 +44,10 @@ export class BottomPanelComponent implements OnInit {
   ngOnInit(): void {
     this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
       this.player = player;
-      if (!this._ignoreNextRepeatState) {
-        this.currentRepeatState = player?.repeat_state;
-      }
-      if (!this._ignoreNextShuffleState) {
-        this.currentShuffleState = player?.shuffle_state;
-      }
+      this.setRepeatState();
+      this.setShuffleState();
+      this.setVolumeIcon();
+      this.setItem();
     });
   }
 
@@ -86,6 +99,7 @@ export class BottomPanelComponent implements OnInit {
     this.devicesPopUpOpen = !this.devicesPopUpOpen;
     if (this.devicesPopUpOpen) {
       this.devicePopUpShow = true;
+      this.devicePopUpMarginTop = -170;
       setTimeout(() => this.opacity = 1, 10);
     } else {
       this.opacity = 0;
@@ -101,14 +115,85 @@ export class BottomPanelComponent implements OnInit {
     this.devicesPopUpHover = false;
   }
 
+  onDevicesLoaded(devices: Devices): void {
+    setTimeout(() => {
+      const height = this.devicePopUp.nativeElement.offsetHeight;
+      const offset = 50;
+      this.devicePopUpMarginTop = -(height + offset);
+    }, 0);
+  }
+
+  onVolumeClick(): void {
+    let volume: number;
+    switch (this.volumeState) {
+      case VolumeState.VOLUME_OFF:
+        volume = this._lastVolumePercentage;
+        if (volume === 0) {
+          volume = 100;
+        }
+
+        this.currentVolume = volume;
+        break;
+      default:
+        this._lastVolumePercentage = this.currentVolume;
+        volume = 0;
+        this.currentVolume = volume;
+    }
+
+    this.player.device.volume_percent = volume;
+    this.setVolumeIcon();
+    this._timer = setTimeout(() => this._ignoreVolumeState = false, 2000);
+    this._spotifyService.setVolume(volume).subscribe();
+  }
+
   private getNextState(): any {
     const currentState = this.player.repeat_state?.toUpperCase();
     const index = Object.keys(this.repeatState).indexOf(currentState);
     const enumLength = Object.keys(this.repeatState).length;
     if (index < enumLength - 1) {
-      return Object.values(this.repeatState)[index + 1];
+      return Object.values(this.repeatState)[ index + 1 ];
     } else {
-      return Object.values(this.repeatState)[0];
+      return Object.values(this.repeatState)[ 0 ];
+    }
+  }
+
+  private setRepeatState(): void {
+    if (!this._ignoreNextRepeatState) {
+      this.currentRepeatState = this.player?.repeat_state;
+    }
+  }
+
+  private setShuffleState(): void {
+    if (!this._ignoreNextShuffleState) {
+      this.currentShuffleState = this.player?.shuffle_state;
+    }
+  }
+
+  private setVolumeIcon(): void {
+    if (!this._ignoreVolumeState) {
+      this.currentVolume = this.player?.device.volume_percent;
+      const volume = this.currentVolume;
+      if (volume <= 0) {
+        this.volumeState = VolumeState.VOLUME_OFF;
+      } else if (volume > 0 && volume <= 50) {
+        this.volumeState = VolumeState.VOLUME_DOWN;
+      } else {
+        this.volumeState = VolumeState.VOLUME_UP;
+      }
+    }
+  }
+
+  private setItem(): void {
+    if (this.player) {
+      const item = this.player?.item;
+      this.currentItem = item;
+
+      const images = item?.album.images;
+      if (images) {
+        this.image = images[ 0 ];
+      }
+
+      this.artists = item?.artists;
     }
   }
 

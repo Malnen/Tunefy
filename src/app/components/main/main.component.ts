@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {SpotifyService} from '../../services/spotify/spotify.service';
-import {Router} from '@angular/router';
-import {TokenResponse} from '../../models/token-response.interface';
-import {ScriptLoaderService} from '../../services/script-loader/script-loader.service';
-import {PlayerInitialized} from '../../models/player-initialized.interface';
+import { Component, OnInit } from '@angular/core';
+import { SpotifyService } from '../../services/spotify/spotify.service';
+import { Router } from '@angular/router';
+import { TokenResponse } from '../../models/token-response.interface';
+import { ScriptLoaderService } from '../../services/script-loader/script-loader.service';
+import { PlayerInitialized } from '../../models/player-initialized.interface';
+import { Player } from '../../models/player.interface';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector : 'app-main',
+  templateUrl : './main.component.html',
+  styleUrls : [ './main.component.scss' ]
 })
 export class MainComponent implements OnInit {
 
@@ -27,15 +28,19 @@ export class MainComponent implements OnInit {
 
   private checkRefreshToken(): void {
     if (this._spotifyService.refreshToken == null) {
-      this._router.navigate(['./']);
+      this._router.navigate([ './' ]);
     }
   }
 
   private addPlayerInitializedEventListener(): void {
     window.addEventListener('playerInitialized', (event: PlayerInitialized) => {
       this._spotifyService.deviceId = event.id;
-    /*  this._spotifyService.setAsCurrentDevice().subscribe((data: any) => {
-      });*/
+      this._spotifyService.getPlayer().subscribe((player: Player) => {
+        if (player == null) {
+          this._spotifyService.setAsCurrentDevice().subscribe((data: any) => {
+          });
+        }
+      });
     });
   }
 

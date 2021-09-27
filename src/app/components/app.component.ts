@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
-import {SpotifyService} from '../services/spotify/spotify.service';
-import {CookieService} from 'ngx-cookie-service';
+import { Component } from '@angular/core';
+import { SpotifyService } from '../services/spotify/spotify.service';
+import { CookieService } from 'ngx-cookie-service';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [
+  selector : 'app-root',
+  templateUrl : './app.component.html',
+  styleUrls : [ './app.component.scss' ],
+  providers : [
     SpotifyService,
     CookieService
   ]
@@ -14,4 +15,7 @@ import {CookieService} from 'ngx-cookie-service';
 export class AppComponent {
   title = 'Tunefy';
 
+  constructor(iconRegistry: MatIconRegistry) {
+    iconRegistry.registerFontClassAlias('icomoon', 'icon-tunefy-devices');
+  }
 }

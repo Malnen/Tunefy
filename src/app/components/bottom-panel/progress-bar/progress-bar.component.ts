@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {SpotifyService} from '../../../../services/spotify/spotify.service';
-import {Player} from '../../../../models/player.interface';
+import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {SpotifyService} from '../../../services/spotify/spotify.service';
+import {Player} from '../../../models/player.interface';
 import * as moment from 'moment';
-import {Animations} from '../../../../animations/animations';
+import {Animations} from '../../../animations/animations';
 
 @Component({
   selector: 'app-progress-bar',
@@ -64,8 +64,7 @@ export class ProgressBarComponent implements OnInit, OnChanges {
     clearTimeout(this._holdTimer);
     if (this.hold || this._click) {
       const ms = Math.floor(this.player.item.duration_ms * this._percentage / 100);
-      this._spotifyService.seek(ms).subscribe((data: any) => {
-      });
+      this._spotifyService.seek(ms).subscribe();
       this._ignoreNextPlayerUpdate = true;
       setTimeout(() => this._ignoreNextPlayerUpdate = false, 1000);
     }

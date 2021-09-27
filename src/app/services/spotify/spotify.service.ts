@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {TokenResponse} from '../../models/token-response.interface';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {Router} from '@angular/router';
-import {Devices} from '../../models/devices.interface';
-import {TrackAnalysis} from '../../models/track-analysis.interface';
-import {Player} from '../../models/player.interface';
-import {RepeatState} from '../../enums/repeat-state.enum';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { TokenResponse } from '../../models/token-response.interface';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { Devices } from '../../models/devices.interface';
+import { TrackAnalysis } from '../../models/track-analysis.interface';
+import { Player } from '../../models/player.interface';
+import { RepeatState } from '../../enums/repeat-state.enum';
 
 @Injectable()
 export class SpotifyService {
@@ -40,10 +40,7 @@ export class SpotifyService {
   private _refreshToken: string;
   private _accessToken: string;
   private _deviceId: string;
-  private _player: Player = {
-    is_playing: false
-  };
-  private _playerSubject: Subject<Player> = new BehaviorSubject<Player>(this._player);
+  private _playerSubject: Subject<Player> = new BehaviorSubject<Player>(null);
 
   constructor(private _http: HttpClient,
               private _router: Router) {
@@ -111,7 +108,7 @@ export class SpotifyService {
 
   spotifyRefreshToken(): Observable<TokenResponse> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type' : 'application/x-www-form-urlencoded'
     });
     const isRefreshTokenPresent = this.refreshToken !== '' && this.refreshToken != null;
     const payload = new HttpParams()
@@ -123,7 +120,7 @@ export class SpotifyService {
       .append(isRefreshTokenPresent ? 'refresh_token' : 'code',
         isRefreshTokenPresent ? this.refreshToken : this.accessToken);
 
-    const options = {headers};
+    const options = { headers };
     const url = 'https://accounts.spotify.com/api/token';
 
     return this._http.post<TokenResponse>(url, payload.toString(), options);
@@ -140,10 +137,10 @@ export class SpotifyService {
     const url = 'https://api.spotify.com/v1/me/player';
     const options = this.getOptions();
     const paylaod = {
-      device_ids: [
+      device_ids : [
         this.deviceId
       ],
-      play: true
+      play : true
     };
 
     return this._http.put(url, paylaod, options);
@@ -173,17 +170,25 @@ export class SpotifyService {
   logout(): void {
     this.accessToken = '';
     this.refreshToken = '';
-    this._router.navigate(['./']);
+    this._router.navigate([ './' ]);
   }
 
-  setAsCurrentDevice(): Observable<any> {
+  setAsCurrentDevice(id?: string): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player';
     const options = this.getOptions();
     const paylaod = {
-      device_ids: [
-        this.deviceId
+      device_ids : [
+        id ?? this.deviceId
       ]
     };
+
+    return this._http.put(url, paylaod, options);
+  }
+
+  setVolume(volume: number): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/player/volume?volume_percent=${ volume }`;
+    const options = this.getOptions();
+    const paylaod = {};
 
     return this._http.put(url, paylaod, options);
   }
@@ -210,7 +215,7 @@ export class SpotifyService {
   }
 
   seek(ms: number): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/seek?position_ms=${ms}`;
+    const url = `https://api.spotify.com/v1/me/player/seek?position_ms=${ ms }`;
     const options = this.getOptions();
     const payload = {};
 
@@ -218,7 +223,7 @@ export class SpotifyService {
   }
 
   setRepeatState(state: RepeatState): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/repeat?state=${state}`;
+    const url = `https://api.spotify.com/v1/me/player/repeat?state=${ state }`;
     const options = this.getOptions();
     const payload = {};
 
@@ -226,7 +231,7 @@ export class SpotifyService {
   }
 
   setShuffleState(state: boolean): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/shuffle?state=${state}`;
+    const url = `https://api.spotify.com/v1/me/player/shuffle?state=${ state }`;
     const options = this.getOptions();
     const payload = {};
 
@@ -234,9 +239,15 @@ export class SpotifyService {
   }
 
   refreshPlayer(): void {
-    this.getPlayer().subscribe((data: Player) => {
-      this._player = data;
-      this._playerSubject.next(this._player);
+    this.getPlayer().subscribe((player: Player) => {
+      if (player == null) {
+        if (this.deviceId != null) {
+          this.setAsCurrentDevice().subscribe((data: any) => {
+          });
+        }
+      } else {
+        this._playerSubject.next(player);
+      }
     });
   }
 
@@ -248,10 +259,10 @@ export class SpotifyService {
 
   private getOptions(): any {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.accessToken}`
+      'Content-Type' : 'application/json',
+      Authorization : `Bearer ${ this.accessToken }`
     });
-    return {headers};
+    return { headers };
   }
 
 }

@@ -11,8 +11,8 @@
     margin: -0.5rem 1rem 0 1rem;
   }
 
-  .app-progress-bar {
-    width: 75%;
+  .app-volume-bar {
+    width: calc(100% - 10px);
     background-color: rgba(0, 0, 0, 0);
 
     .background {
