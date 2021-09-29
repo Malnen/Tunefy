@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {SpotifyService} from '../spotify/spotify.service';
-import {TokenResponse} from '../../models/token-response.interface';
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { SpotifyService } from '../spotify/spotify.service';
+import { TokenResponse } from '../../models/token-response.interface';
 
 @Injectable()
 export class GlobalHttpInterceptor implements HttpInterceptor {
@@ -37,6 +37,7 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
 
             break;
         }
+
         return throwError(error.message);
       })
     );

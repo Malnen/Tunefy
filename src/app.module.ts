@@ -22,9 +22,12 @@ import { BottomPanelComponent } from './app/components/bottom-panel/bottom-panel
 import { ProgressBarComponent } from './app/components/bottom-panel/progress-bar/progress-bar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DevicesWrapperComponent } from './app/components/bottom-panel/devices-wrapper/devices-wrapper.component';
+import { DevicesWrapperComponent } from './app/components/bottom-panel/pop-up/devices-wrapper/devices-wrapper.component';
 import { HoverDirective } from './app/directives/hover.directive';
 import { VolumeBarComponent } from './app/components/bottom-panel/volume-bar/volume-bar.component';
+import { PopUpComponent } from './app/components/bottom-panel/pop-up/pop-up.component';
+import { LyricsWrapperComponent } from './app/components/bottom-panel/pop-up/lyrics-wrapper/lyrics-wrapper.component';
+import { SafeHtmlPipe } from './app/pipes/safe-html.pipe';
 
 @NgModule({
   declarations : [
@@ -42,7 +45,10 @@ import { VolumeBarComponent } from './app/components/bottom-panel/volume-bar/vol
     ProgressBarComponent,
     DevicesWrapperComponent,
     HoverDirective,
-    VolumeBarComponent
+    VolumeBarComponent,
+    PopUpComponent,
+    LyricsWrapperComponent,
+    SafeHtmlPipe
   ],
   imports : [
     BrowserModule,

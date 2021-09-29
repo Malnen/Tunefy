@@ -16,6 +16,7 @@ export class AppComponent {
   title = 'Tunefy';
 
   constructor(iconRegistry: MatIconRegistry) {
-    iconRegistry.registerFontClassAlias('icomoon', 'icon-tunefy-devices');
+    iconRegistry.registerFontClassAlias('devices', 'icon-tunefy-devices');
+    iconRegistry.registerFontClassAlias('lyrics', 'icon-tunefy-lyrics');
   }
 }

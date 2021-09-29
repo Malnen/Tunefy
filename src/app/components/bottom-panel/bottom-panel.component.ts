@@ -7,6 +7,7 @@ import { VolumeState } from '../../enums/volume-state.enum';
 import { Item } from '../../models/item.interface';
 import { Image } from '../../models/image.interface';
 import { Artist } from '../../models/artist.interface';
+import { PopUpContentType } from '../../enums/pop-up-content-type.enum';
 
 @Component({
   selector : 'app-bottom-panel',
@@ -15,22 +16,16 @@ import { Artist } from '../../models/artist.interface';
 })
 export class BottomPanelComponent implements OnInit {
 
-  @ViewChild('devicePopUp') devicePopUp: ElementRef;
-
   player: Player;
   repeatState = RepeatState;
   currentRepeatState: RepeatState = RepeatState.OFF;
   currentShuffleState: boolean;
   currentVolume = 100;
-  devicesPopUpOpen: boolean;
-  devicesPopUpHover: boolean;
-  devicePopUpShow: boolean;
-  opacity = 0;
-  devicePopUpMarginTop: number;
   volumeState: VolumeState = VolumeState.VOLUME_UP;
   currentItem: Item;
   image: Image;
   artists: Artist[];
+  popUpContentType = PopUpContentType;
 
   private _timer: number;
   private _ignoreNextRepeatState: boolean;
@@ -93,34 +88,6 @@ export class BottomPanelComponent implements OnInit {
     this._timer = setTimeout(() => this._ignoreNextShuffleState = false, 2000);
     this._spotifyService.setShuffleState(nextState).subscribe((data: any) => {
     });
-  }
-
-  toggleDevicePopUp(): void {
-    this.devicesPopUpOpen = !this.devicesPopUpOpen;
-    if (this.devicesPopUpOpen) {
-      this.devicePopUpShow = true;
-      this.devicePopUpMarginTop = -170;
-      setTimeout(() => this.opacity = 1, 10);
-    } else {
-      this.opacity = 0;
-      setTimeout(() => this.devicePopUpShow = false, 250);
-    }
-  }
-
-  onDevicePopUpMouseOver(): void {
-    this.devicesPopUpHover = true;
-  }
-
-  onDevicePopUpMouseLeave(): void {
-    this.devicesPopUpHover = false;
-  }
-
-  onDevicesLoaded(devices: Devices): void {
-    setTimeout(() => {
-      const height = this.devicePopUp.nativeElement.offsetHeight;
-      const offset = 50;
-      this.devicePopUpMarginTop = -(height + offset);
-    }, 0);
   }
 
   onVolumeClick(): void {
