@@ -1,4 +1,5 @@
 export enum PopUpContentType {
   DEVICES,
-  LYRICS
+  LYRICS,
+  QUEUE
 }

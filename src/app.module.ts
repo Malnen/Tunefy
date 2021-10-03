@@ -28,6 +28,10 @@ import { VolumeBarComponent } from './app/components/bottom-panel/volume-bar/vol
 import { PopUpComponent } from './app/components/bottom-panel/pop-up/pop-up.component';
 import { LyricsWrapperComponent } from './app/components/bottom-panel/pop-up/lyrics-wrapper/lyrics-wrapper.component';
 import { SafeHtmlPipe } from './app/pipes/safe-html.pipe';
+import { QueueWrapperComponent } from './app/components/bottom-panel/pop-up/queue-wrapper/queue-wrapper.component';
+import { SearchBarComponent } from './app/components/right-panel/search-bar/search-bar.component';
+import { ArtistResultComponent } from './app/components/right-panel/search-bar/artist-result/artist-result.component';
+import { TrackResultComponent } from './app/components/right-panel/search-bar/track-result/track-result.component';
 
 @NgModule({
   declarations : [
@@ -48,7 +52,12 @@ import { SafeHtmlPipe } from './app/pipes/safe-html.pipe';
     VolumeBarComponent,
     PopUpComponent,
     LyricsWrapperComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    QueueWrapperComponent,
+    SearchBarComponent,
+    ArtistResultComponent,
+    TrackResultComponent,
+    TrackResultComponent
   ],
   imports : [
     BrowserModule,

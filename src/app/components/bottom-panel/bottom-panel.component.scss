@@ -19,21 +19,28 @@
       .image {
         height: 100px;
         width: 100px;
+        overflow: hidden;
 
         img {
           max-height: 90%;
           max-width: 90%;
           min-height: 90%;
           min-width: 90%;
-          transition: min-width 0.1s, min-height 0.1s, max-width 0.1s, max-height 0.1s, box-shadow 0.1s;
+          transition: min-width 0.2s,
+          min-height 0.2s,
+          max-width 0.2s,
+          max-height 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
           @include mat-elevation(4);
 
-          &:hover {
-            max-height: 100%;
-            max-width: 100%;
-            min-height: 100%;
-            min-width: 100%;
+          &.hover {
+            max-height: 110%;
+            max-width: 110%;
+            min-height: 110%;
+            min-width: 110%;
             @include mat-elevation(8);
+            transform: translate(-5%, -5%);
           }
 
         }
@@ -97,136 +104,150 @@
       justify-content: center;
       padding: 1rem 1rem 0 1rem;
 
-      .lyrics {
+      .lyrics, .queue {
         width: 50px;
         padding-top: 8px;
       }
 
-    .repeat, .shuffle, {
-      background: none;
-      outline: none;
-      border: none;
-      line-height: 4rem;
-      color: $lighterBackground;
-      pointer-events: none;
+      .repeat, .shuffle, {
+        background: none;
+        outline: none;
+        border: none;
+        line-height: 4rem;
+        color: $lighterBackground;
+        pointer-events: none;
 
-      mat-icon {
-        transform: scale(0.8);
-        pointer-events: all;
+        mat-icon {
+          transform: scale(0.8);
+          pointer-events: all;
 
-        &:hover {
-          font-weight: 400;
-          color: white;
-          transform: scale(0.9);
+          &:hover {
+            font-weight: 400;
+            color: white;
+            transform: scale(0.9);
+
+            &:active {
+              transform: scale(0.75);
+            }
+
+          }
+
         }
 
       }
 
-    }
+      .previous, .next {
+        margin: 0 0.25rem 0 0.25rem;
+        background: none;
+        outline: none;
+        border: none;
+        color: $lighterBackground;
+        line-height: 4rem;
+        pointer-events: none;
 
-    .previous, .next {
-      margin: 0 0.25rem 0 0.25rem;
-      background: none;
-      outline: none;
-      border: none;
-      color: $lighterBackground;
-      line-height: 4rem;
-      pointer-events: none;
+        mat-icon {
+          transform: scale(1.25);
+          pointer-events: all;
 
-      mat-icon {
-        transform: scale(1.25);
-        pointer-events: all;
+          &:hover {
+            font-weight: 600;
+            color: white;
+            transform: scale(1.1);
+
+            &:active {
+              transform: scale(0.95);
+            }
+
+          }
+
+        }
+
+      }
+
+      .play, .pause {
+        height: 3rem;
+        min-width: 3rem;
+        margin: 0 0.5rem 0 0.5rem;
+        outline: none;
+        border: none;
+        border-radius: 50%;
+        color: $darkerBackground;
+        @include mat-elevation-transition();
+        @include mat-elevation(0);
+        line-height: 4rem;
+
+        mat-icon {
+          transform: scale(1.25);
+        }
 
         &:hover {
+          @include mat-elevation(4);
           font-weight: 600;
-          color: white;
+          color: $orange;
           transform: scale(1.1);
         }
 
-      }
+        &:active {
+          transform: scale(0.95);
+        }
 
-    }
-
-    .play, .pause {
-      height: 3rem;
-      min-width: 3rem;
-      margin: 0 0.5rem 0 0.5rem;
-      outline: none;
-      border: none;
-      border-radius: 50%;
-      color: $darkerBackground;
-      @include mat-elevation-transition();
-      @include mat-elevation(0);
-      line-height: 4rem;
-
-      mat-icon {
-        transform: scale(1.25);
-      }
-
-      &:hover {
-        @include mat-elevation(4);
-        font-weight: 600;
-        color: $orange;
-        transform: scale(1.1);
       }
 
     }
 
   }
 
-}
-
-.right-side {
-  min-width: 350px;
-  width: 30%;
-  height: 100px;
-  display: flex;
-  justify-content: flex-end;
-
-  .devices {
-    padding-top: 60px;
-  }
-
-  .volume-container {
-    width: 270px;
+  .right-side {
+    min-width: 350px;
+    width: 30%;
+    height: 100px;
     display: flex;
-    margin: 0 20px;
-    padding-top: 30px;
+    justify-content: flex-end;
 
-    .volume {
-      color: $lighterBackground;
+    .devices {
+      padding-top: 60px;
+    }
+
+    .volume-container {
+      width: 270px;
+      display: flex;
+      margin: 0 20px;
       padding-top: 30px;
-      background: none;
-      border: none;
-      outline: none;
-      width: 35px;
-      height: 100%;
-      line-height: 35px;
-      font-size: 35px;
 
-
-      .mat-icon {
-        height: 35px;
+      .volume {
+        color: $lighterBackground;
+        padding-top: 30px;
+        background: none;
+        border: none;
+        outline: none;
         width: 35px;
+        height: 100%;
+        line-height: 35px;
         font-size: 35px;
 
-        &:hover {
-          color: white;
-          transform: scale(1.1);
+
+        .mat-icon {
+          height: 35px;
+          width: 35px;
+          font-size: 35px;
+
+          &:hover {
+            color: white;
+            transform: scale(1.1);
+          }
+
         }
 
       }
 
-    }
+      .volume-bar {
+        width: 200px;
+        margin-top: 37px;
+        justify-content: center;
+      }
 
-    .volume-bar {
-      width: 200px;
-      margin-top: 37px;
-      justify-content: center;
     }
 
   }
-
-}
 
 }

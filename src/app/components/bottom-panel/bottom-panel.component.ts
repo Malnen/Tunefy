@@ -1,8 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Player } from '../../models/player.interface';
 import { SpotifyService } from '../../services/spotify/spotify.service';
 import { RepeatState } from '../../enums/repeat-state.enum';
-import { Devices } from '../../models/devices.interface';
 import { VolumeState } from '../../enums/volume-state.enum';
 import { Item } from '../../models/item.interface';
 import { Image } from '../../models/image.interface';

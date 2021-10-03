@@ -61,6 +61,10 @@
                   (click)="toggleRepeatState()">repeat_one_on
         </mat-icon>
       </button>
+      <div class="queue">
+        <app-pop-up [icon]="'queue_music'"
+                    [popUpContentType]="popUpContentType.QUEUE"></app-pop-up>
+      </div>
     </div>
     <div class="app-volume-bar">
       <app-progress-bar [player]="player"></app-progress-bar>

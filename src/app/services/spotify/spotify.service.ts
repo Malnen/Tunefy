@@ -7,12 +7,13 @@ import { Devices } from '../../models/devices.interface';
 import { TrackAnalysis } from '../../models/track-analysis.interface';
 import { Player } from '../../models/player.interface';
 import { RepeatState } from '../../enums/repeat-state.enum';
+import { SearchResponse } from '../../models/search-response.interface';
 
 @Injectable()
 export class SpotifyService {
 
-  private readonly clientId: string = '6a6b154241b04bc1bd0f4656b98d8aa4';
-  private readonly clientSecret: string = 'e21ffa9272b14229896cf7003b46f8ae';
+  private readonly clientId: string = 'f65acf8953b54bd0b83627545be8ece4'; // '6a6b154241b04bc1bd0f4656b98d8aa4';
+  private readonly clientSecret: string = '0cba5ea640b241b294596f215bbe9e15'; // 'e21ffa9272b14229896cf7003b46f8ae';
   private readonly redirectUri: string = 'http://localhost:4200/callback/';
   private readonly scopes: string[] = [
     'ugc-image-upload',
@@ -41,6 +42,8 @@ export class SpotifyService {
   private _accessToken: string;
   private _deviceId: string;
   private _playerSubject: Subject<Player> = new BehaviorSubject<Player>(null);
+  private _wait = false;
+  private _waitTimer: number;
 
   constructor(private _http: HttpClient,
               private _router: Router) {
@@ -239,6 +242,10 @@ export class SpotifyService {
   }
 
   refreshPlayer(): void {
+    if (this._wait) {
+      return;
+    }
+
     this.getPlayer().subscribe((player: Player) => {
       if (player == null) {
         if (this.deviceId != null) {
@@ -249,6 +256,19 @@ export class SpotifyService {
         this._playerSubject.next(player);
       }
     });
+  }
+
+  search(query: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/search?q=${ encodeURI(query) }&type=track%2Cartist&limit=5&offset=0`;
+    const options = this.getOptions();
+
+    return this._http.get<SearchResponse>(url, options);
+  }
+
+  wait(): void {
+    this._wait = true;
+    clearTimeout(this._waitTimer);
+    this._waitTimer = setTimeout(() => this._wait = false, 15000);
   }
 
   private initializeTokenRefresher(): void {

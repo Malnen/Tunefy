@@ -14,32 +14,38 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error) => {
-        switch (error.status) {
-          case 401:
-            this._spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
-              if (data.refresh_token) {
-                this._spotifyService.refreshToken = data.refresh_token;
-              }
-              if (data.access_token) {
-                this._spotifyService.accessToken = data.access_token;
+          switch (error.status) {
+            case 401:
+              this._spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
+                if (data.refresh_token) {
+                  this._spotifyService.refreshToken = data.refresh_token;
+                }
+                if (data.access_token) {
+                  this._spotifyService.accessToken = data.access_token;
+                }
+
+                return next.handle(req);
+              });
+              break;
+            case 404:
+              if (error.error.error.reason === 'NO_ACTIVE_DEVICE') {
+                this._spotifyService.refreshTokens();
+                return next.handle(req);
               }
 
-              return next.handle(req);
-            });
-            break;
-          case 404:
-            if (error.error.error.reason === 'NO_ACTIVE_DEVICE') {
-              this._spotifyService.refreshTokens();
-              this._spotifyService.setAsCurrentDevice();
-              this._spotifyService.forcePlay();
-              return next.handle(req);
-            }
+              break;
+            case 429:
+              if (error.error === 'Too many requests') {
+                this._spotifyService.wait();
+                return throwError(error.message);
+              }
 
-            break;
+              break;
+          }
+
+          return throwError(error.message);
         }
-
-        return throwError(error.message);
-      })
+      )
     );
   }
 }
