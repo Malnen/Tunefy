@@ -1,0 +1,36 @@
+@import "src/colors";
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+  background: none;
+
+  .app-volume-bar {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+
+    .background {
+      height: 6px;
+      background: $lightBackground;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .foreground {
+      height: 6px;
+      background: $lighterBackground;
+      border-radius: 10px;
+      width: 100%;
+      margin-top: -6px;
+
+      .thumb {
+        border-radius: 50%;
+        background: white;
+        position: absolute;
+      }
+
+    }
+  }
+
+}

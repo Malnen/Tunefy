@@ -1,0 +1,15 @@
+@import "src/colors";
+
+.container {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 0 0;
+  max-height: 100%;
+
+  &.loading {
+    display: flex;
+    padding: 30px 0 30px 0;
+  }
+
+}

@@ -1,0 +1,32 @@
+<div class="container"
+     appHover
+     (hover)="onHover($event)"
+     [class.loading]="loading">
+  <mat-spinner *ngIf="loading"
+               appSpinner
+               [diameter]="60"
+               [customColor]="spinnerColor"></mat-spinner>
+  <div *ngIf="!loading">
+    <div class="lyrics"
+         [class.hover]="hover">
+      <div class="label"
+           [class.hover]="hover">
+        {{currentItem.name}}
+      </div>
+      <div *ngIf="hasError">
+        Nie odnaleziono tekstu dla tego utworu
+      </div>
+      <div *ngIf="!hasError"
+           #lyricsContainer
+           class="lyrics-container"
+           (scroll)="onScroll($event)"
+           [class.hover]="hover">
+        <div class="blur"
+             [style.backgroundImage]="backgroundImage"></div>
+        <div class="content"
+             [innerHTML]="lyrics | safeHtml">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

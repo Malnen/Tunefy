@@ -1,0 +1,11 @@
+<div *ngIf="initialized"
+     appHover
+     class="content"
+     [class.hover]="hover"
+     [style.top]="top+'px'"
+     [style.left]="left+'px'"
+     (hover)="onHover($event)">
+  <app-option *ngFor="let option of options"
+              [option]="option"
+              (clicked)="onMaskClick()"></app-option>
+</div>

@@ -1,0 +1,53 @@
+<div class="content"
+     #menuParent
+     appHover
+     (contextmenu)="onContextMenu($event)"
+     (hover)="onHover($event)"
+     [class.hover]="hover"
+     [class.is-current]="isCurrentTrack">
+  <app-context-menu *ngIf="openContextMenu"
+                    appContextMenuClickedOutside
+                    (maskClick)="onContextMenuClickedOutside()"
+                    (clickedInsideParent)="onContextMenuClickInside($event)"
+                    (maskContextClick)="onContextMenuClickInside($event)"
+                    (clickOutside)="onContextMenuClickedOutside()"
+                    [options]="options"
+                    [parent]="menuParent"
+                    [clickedOutside]="openContextMenu"
+                    [event]="mouseEvent"
+                    [open]="openContextMenu"></app-context-menu>
+  <div class="image"
+       (mouseover)="onImageMouseOver()"
+       (mouseleave)="onImageMouseLeave()">
+    <div *ngIf="imageHover"
+         class="play-button">
+      <button *ngIf="!isCurrentTrack"
+              (click)="onPlayClick()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button *ngIf="isCurrentTrack"
+              (click)="onPauseClick()">
+        <mat-icon>pause</mat-icon>
+      </button>
+    </div>
+    <img *ngIf="track.album.images[0]"
+         src="{{track.album.images[0].url}}"
+         [class.hover]="hover">
+  </div>
+  <div class="text">
+    <div class="name"
+         [class.hover]="hover"
+         [class.is-current]="isCurrentTrack">
+      {{track.name}}
+      <mat-icon *ngIf="track.explicit">explicit</mat-icon>
+    </div>
+    <div class="bottom">
+      <div class="album">
+        Album: <span class="album-name">{{track.album.name}}</span>
+      </div>
+      <div class="release-date">
+        Data wydania: <span class="date">{{track.album.release_date}}</span>
+      </div>
+    </div>
+  </div>
+</div>

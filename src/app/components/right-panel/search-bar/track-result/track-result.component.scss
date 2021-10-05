@@ -1,0 +1,144 @@
+@import 'node_modules/@angular/material/theming';
+@import "src/colors";
+
+.content {
+  color: white;
+  transition: background 0.2s;
+  padding: 10px;
+  display: flex;
+
+  &.hover {
+    background: $searchBarHover;
+  }
+
+  &.is-current {
+    background: $searchBarCurrent;
+
+    &.hover {
+      background: $searchBarCurrentHover;
+    }
+
+  }
+
+  .image {
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+    position: relative;
+
+    .play-button {
+      height: 50px;
+      width: 50px;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+
+      button {
+        border-radius: 50px;
+        height: 80%;
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+
+        .mat-icon {
+          margin-left: 2px;
+          margin-top: 2px;
+          height: 100%;
+          width: 100%;
+          line-height: 35px;
+        }
+
+      }
+
+    }
+
+    img {
+      max-height: 90%;
+      max-width: 90%;
+      min-height: 90%;
+      min-width: 90%;
+      transition: min-width 0.2s,
+      min-height 0.2s,
+      max-width 0.2s,
+      max-height 0.2s,
+      box-shadow 0.2s,
+      transform 0.2s;
+      @include mat-elevation(4);
+
+      &.hover {
+        max-height: 110%;
+        max-width: 110%;
+        min-height: 110%;
+        min-width: 110%;
+        @include mat-elevation(8);
+        transform: translate(-5%, -5%);
+      }
+
+    }
+
+  }
+
+  .text {
+    padding: 1rem;
+    width: calc(100% - 50px);
+
+    .name {
+      transition: color 0.2s;
+      color: white;
+      font-size: 1.5rem;
+
+      &.hover {
+        color: $orange
+      }
+
+      &.is-current {
+        color: $lightOrange;
+
+        &.hover {
+          color: $orange
+        }
+
+      }
+
+    }
+
+    .bottom {
+      display: flex;
+
+      .album {
+        color: $followers;
+        font-size: 1rem;
+        text-align: left;
+        width: 50%;
+        text-transform: capitalize;
+
+        .album-name {
+          font-size: 1.2rem;
+          color: $followersTotal;
+        }
+
+      }
+
+      .release-date {
+        color: $followers;
+        font-size: 1rem;
+        text-align: right;
+        width: 50%;
+
+        .date {
+          font-size: 1.2rem;
+          color: $followersTotal;
+        }
+
+      }
+
+    }
+
+  }
+
+}

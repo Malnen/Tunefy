@@ -1,0 +1,32 @@
+<div class="content"
+     appHover
+     (hover)="onHover($event)"
+     [class.hover]="hover">
+  <div class="image">
+    <img *ngIf="album.images[0]"
+         src="{{album.images[0].url}}"
+         [class.hover]="hover">
+  </div>
+  <div class="text">
+    <div class="name"
+         [class.hover]="hover">
+      {{album.name}}
+    </div>
+    <div class="bottom">
+      <div class="artists">
+        <div *ngFor="let artist of album.artists"
+             class="artist">
+          {{artist.name}}
+        </div>
+      </div>
+      <div class="info">
+        <div class="release-date">
+          Data wydania: <span class="date">{{album.release_date}}</span>
+        </div>
+        <div class="total-tracks">
+          Ilość Utworów: <span class="total">{{album.total_tracks}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

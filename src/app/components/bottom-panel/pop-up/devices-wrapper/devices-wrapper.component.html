@@ -1,0 +1,36 @@
+<div class="container"
+     appHover
+     (hover)="onHover($event)"
+     [class.loading]="loading">
+  <mat-spinner *ngIf="loading"
+               appSpinner
+               [diameter]="60"
+               [customColor]="spinnerColor"></mat-spinner>
+  <div *ngIf="!loading"
+       class="devices"
+       [class.hover]="hover">
+    <div class="label"
+         [class.hover]="hover">
+      Podłączone urządzenia
+    </div>
+    <mat-icon class="icon-tunefy-devices"
+              fontSet="devices"
+              [class.hover]="hover">
+    </mat-icon>
+    <div class="devices-container">
+      <div class="device" *ngFor="let device of devices.devices"
+           matRipple
+           [class.active]="device.id==player?.device?.id"
+           (click)="onDeviceClick(device.id)">
+        <div class="icon"
+             [ngSwitch]="device.type">
+          <mat-icon *ngSwitchCase="deviceType.COMPUTER">computer</mat-icon>
+          <mat-icon *ngSwitchCase="deviceType.SMARTPHONE">smartphone</mat-icon>
+        </div>
+        <div class="device-name">
+          {{device.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

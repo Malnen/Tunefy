@@ -1,0 +1,17 @@
+@import "src/colors";
+
+.content {
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  .label {
+    color: $contextMenuText;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: $contextMenuHover;
+  }
+
+}

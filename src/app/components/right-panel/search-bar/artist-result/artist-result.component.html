@@ -1,0 +1,27 @@
+<div class="content"
+     appHover
+     (hover)="onHover($event)"
+     [class.hover]="hover">
+  <div class="image">
+    <img *ngIf="artist.images[0]"
+         src="{{artist.images[0].url}}"
+         [class.hover]="hover">
+  </div>
+  <div class="text">
+    <div class="name"
+         [class.hover]="hover">
+      {{artist.name}}
+    </div>
+    <div class="bottom">
+      <div class="genres">
+        <div *ngFor="let genre of artist.genres"
+             class="genre">
+          {{genre}}
+        </div>
+      </div>
+      <div class="followers">
+        Obserwujący: <span class="total">{{artist.followers.total}}</span>
+      </div>
+    </div>
+  </div>
+</div>

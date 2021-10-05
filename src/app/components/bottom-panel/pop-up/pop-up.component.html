@@ -1,0 +1,41 @@
+<div class="content">
+  <button class="devices">
+    <mat-icon *ngIf="icon"
+              (click)="togglePopUp()">{{icon}}</mat-icon>
+    <mat-icon *ngIf="!icon"
+              (click)="togglePopUp()"
+              fontSet="{{fontSet}}"
+              class="{{iconClass}}"></mat-icon>
+    <div *ngIf="popUpOpen"
+         class="mask"
+         (click)="togglePopUp()"></div>
+    <div *ngIf="popUpShow"
+         #popUp
+         class="devices-pop-up"
+         [class.hover]="popUpHover"
+         (mouseover)="onPopUpMouseOver()"
+         (mouseleave)="onPopUpMouseLeave()"
+         [style.marginTop]="marginTop + 'px'"
+         [style.opacity]="opacity"
+         [style.transition]="'opacity 0.2s, height 0.2s, margin-top 0.2s'"
+         [style]="popUpHover ?
+            '--box-shadow: ' +
+            '0px 3px 5px -1px rgb(0 0 0 / 20%), ' +
+            '0px 6px 10px 0px rgb(0 0 0 / 14%), ' +
+            '0px 1px 18px 0px rgb(0 0 0 / 12%)'
+            :
+            '--box-shadow: ' +
+            '0px 2px 4px -1px rgb(0 0 0 / 20%), ' +
+            '0px 4px 5px 0px rgb(0 0 0 / 14%), ' +
+            '0px 1px 10px 0px rgb(0 0 0 / 12%)'">
+      <div [ngSwitch]="popUpContentType">
+        <app-devices-wrapper *ngSwitchCase="popUpContentTypeEnum.DEVICES"
+                             (loaded)="onLoaded()"></app-devices-wrapper>
+        <app-lyrics-wrapper *ngSwitchCase="popUpContentTypeEnum.LYRICS"
+                            (loaded)="onLoaded()"></app-lyrics-wrapper>
+        <app-queue-wrapper *ngSwitchCase="popUpContentTypeEnum.QUEUE"
+                            (loaded)="onLoaded()"></app-queue-wrapper>
+      </div>
+    </div>
+  </button>
+</div>

@@ -1,0 +1,30 @@
+<div class="container"
+     (window:resize)="onResize()">
+  <div class="app-volume-bar"
+       #volumeBar
+       (mouseover)="onMouseOver()"
+       (mouseleave)="onMouseLeave()"
+       (mousedown)="onProgressBarDown()"
+       (click)="onProgressbarClick($event)"
+       (window:mouseup)="onProgressBarUp()"
+       (mousemove)="onProgressBarMove($event)">
+    <div class="background"
+         #background>
+
+    </div>
+    <div class="foreground"
+         #foreground
+         [@backgroundColor]="{value: hover ? 'true' : 'false',params:{firstColor:'orange',secondColor:'grey'}}"
+         [class.hover]="hover"
+         [style.width]="percentage+ '%'"
+         [style.transition]=" hold?'width 0s':'width 0.2s'">
+      <div class="thumb"
+           [style.transition]="hold?'margin-left 0s':'margin-left 0.2s'+', height 0.1s, width 0.1s, margin-top 0.1s'"
+           [style.marginLeft]="thumbMarginLeft +'px'"
+           [style.width]="hover?'16px':'0px'"
+           [style.marginTop]="hover?'-4px':'4px'"
+           [style.height]="hover?'16px':'0px'">
+      </div>
+    </div>
+  </div>
+</div>

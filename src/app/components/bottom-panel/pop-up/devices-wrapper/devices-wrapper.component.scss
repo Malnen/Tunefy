@@ -1,0 +1,101 @@
+@import "src/colors";
+
+.container {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 0 0;
+  max-height: 100%;
+
+  &.loading {
+    padding: 30px 0 30px 0;
+    display: flex;
+  }
+
+
+  .devices {
+    width: 100%;
+
+    .label {
+      font-size: 2rem;
+      color: white;
+      font-weight: 500;
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    .icon-tunefy-devices {
+      transition: color 0.2s;
+      font-size: 10rem;
+      height: 150px;
+      width: 100%;
+      color: white;
+
+      &.hover {
+        color: $orange;
+      }
+
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      background: none;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: none;
+      border-radius: 15px;
+      transition: background 0.2s;
+    }
+
+    &.hover {
+
+      ::-webkit-scrollbar-thumb {
+        background: $scroll;
+      }
+
+    }
+
+    .devices-container {
+      max-height: 500px;
+      overflow-y: overlay;
+
+      .device {
+        width: 100%;
+        height: 4rem;
+        color: white;
+        line-height: 4rem;
+        font-size: 1.25rem;
+        text-align: left;
+        display: flex;
+        transition: background 0.2s;
+        padding: 0 30px;
+
+        .icon {
+          width: 20%;
+          font-size: 1.25rem;
+          font-weight: 200;
+          line-height: 2rem;
+          display: flex;
+          align-items: center;
+        }
+
+        &.active {
+          color: $orange;
+        }
+
+        .device-name {
+          width: 80%;
+        }
+
+        &:hover {
+          background: $lightBackground;
+        }
+
+      }
+
+    }
+
+  }
+
+}
