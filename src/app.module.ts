@@ -32,6 +32,11 @@ import { QueueWrapperComponent } from './app/components/bottom-panel/pop-up/queu
 import { SearchBarComponent } from './app/components/right-panel/search-bar/search-bar.component';
 import { ArtistResultComponent } from './app/components/right-panel/search-bar/artist-result/artist-result.component';
 import { TrackResultComponent } from './app/components/right-panel/search-bar/track-result/track-result.component';
+import { AlbumResultComponent } from './app/components/right-panel/search-bar/album-result/album-result.component';
+import { ContextMenuComponent } from './app/components/context-menu/context-menu.component';
+import { OptionComponent } from './app/components/context-menu/option/option/option.component';
+import { BaseComponent } from './app/components/base-component/base.component';
+import { ContextMenuClickedOutsideDirective } from './app/directives/context-menu-clicked-outside.directive';
 
 @NgModule({
   declarations : [
@@ -57,7 +62,12 @@ import { TrackResultComponent } from './app/components/right-panel/search-bar/tr
     SearchBarComponent,
     ArtistResultComponent,
     TrackResultComponent,
-    TrackResultComponent
+    TrackResultComponent,
+    AlbumResultComponent,
+    ContextMenuComponent,
+    OptionComponent,
+    BaseComponent,
+    ContextMenuClickedOutsideDirective
   ],
   imports : [
     BrowserModule,

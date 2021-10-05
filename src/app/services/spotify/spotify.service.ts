@@ -8,6 +8,7 @@ import { TrackAnalysis } from '../../models/track-analysis.interface';
 import { Player } from '../../models/player.interface';
 import { RepeatState } from '../../enums/repeat-state.enum';
 import { SearchResponse } from '../../models/search-response.interface';
+import { Item } from '../../models/item.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -129,11 +130,20 @@ export class SpotifyService {
     return this._http.post<TokenResponse>(url, payload.toString(), options);
   }
 
-  play(): Observable<any> {
+  play(track?: Item): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
+    let payload = {};
+    if (track != null) {
+      payload = {
+        context_uri : track?.album.uri,
+        offset : {
+          position : track.track_number - 1
+        }
+      };
+    }
 
-    return this._http.put(url, null, options);
+    return this._http.put(url, payload, options);
   }
 
   forcePlay(): Observable<any> {
@@ -246,6 +256,10 @@ export class SpotifyService {
       return;
     }
 
+    if (!(this.accessToken || this.refreshToken)) {
+      return;
+    }
+
     this.getPlayer().subscribe((player: Player) => {
       if (player == null) {
         if (this.deviceId != null) {
@@ -259,7 +273,7 @@ export class SpotifyService {
   }
 
   search(query: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/search?q=${ encodeURI(query) }&type=track%2Cartist&limit=5&offset=0`;
+    const url = `https://api.spotify.com/v1/search?q=${ encodeURI(query) }&type=track%2Calbum%2Cartist&limit=5&offset=0`;
     const options = this.getOptions();
 
     return this._http.get<SearchResponse>(url, options);
@@ -269,6 +283,13 @@ export class SpotifyService {
     this._wait = true;
     clearTimeout(this._waitTimer);
     this._waitTimer = setTimeout(() => this._wait = false, 15000);
+  }
+
+  addTrackToQueue(track: Item): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/player/queue?uri=${ track.uri }`;
+    const options = this.getOptions();
+
+    return this._http.post(url, null, options);
   }
 
   private initializeTokenRefresher(): void {

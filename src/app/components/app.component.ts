@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SpotifyService } from '../services/spotify/spotify.service';
 import { CookieService } from 'ngx-cookie-service';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -18,5 +18,9 @@ export class AppComponent {
   constructor(iconRegistry: MatIconRegistry) {
     iconRegistry.registerFontClassAlias('devices', 'icon-tunefy-devices');
     iconRegistry.registerFontClassAlias('lyrics', 'icon-tunefy-lyrics');
+  }
+
+  onContextMenu(event: MouseEvent): void {
+    event.preventDefault();
   }
 }

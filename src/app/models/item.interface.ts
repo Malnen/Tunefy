@@ -11,4 +11,5 @@ export interface Item {
   name: string;
   track_number: number;
   type: string;
+  uri: string;
 }

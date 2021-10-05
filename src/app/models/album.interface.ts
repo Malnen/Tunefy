@@ -9,4 +9,5 @@ export interface Album {
   name: string;
   release_date: string;
   total_tracks: number;
+  uri: string;
 }
