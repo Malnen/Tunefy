@@ -292,6 +292,14 @@ export class SpotifyService {
     return this._http.post(url, null, options);
   }
 
+  getProfile(): Observable<any> {
+    const url = `https://api.spotify.com/v1/me`;
+    const options = this.getOptions();
+
+    return this._http.get<SearchResponse>(url, options);
+  }
+
+
   private initializeTokenRefresher(): void {
     setInterval(() => {
       this.refreshTokens();
