@@ -1,0 +1,139 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.container {
+  padding: 5px;
+  margin: 0;
+  @include mat-elevation(4);
+  background: $profileMainBackground;
+  border-radius: 10px;
+  display: flex;
+
+  &:hover {
+    @include mat-elevation(6);
+  }
+
+  .premium {
+    color: $profileName;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 10px;
+    line-height: 10px;
+  }
+
+  .image {
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    background: $profileImageBackground;
+    border-radius: 50px;
+    overflow: hidden;
+    @include mat-elevation(2);
+
+    img {
+      max-width: 40px;
+      max-height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+    }
+
+  }
+
+  .content {
+    background: $profileBackground;
+    width: 360px;
+    height: 30px;
+    border-radius: 10px;
+    user-select: none;
+    margin-left: 10px;
+    overflow: hidden;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    @include mat-elevation(2);
+    @include mat-elevation-transition();
+    transition: height 0.2s;
+
+    &.open {
+      height: 60px;
+    }
+
+    .top {
+      display: flex;
+
+      .name {
+        width: 80%;
+        height: 30px;
+        padding: 0 10px;
+        text-align: left;
+        vertical-align: middle;
+        line-height: 30px;
+        font-size: 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        color: $profileName;
+        text-overflow: ellipsis;
+      }
+
+      .arrow {
+        width: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $profileName;
+
+        mat-icon {
+          transition: transform 0.15s;
+
+          &.open {
+            transform: rotate(180deg);
+          }
+
+        }
+
+      }
+
+    }
+
+    .logout {
+      padding: 0 10px;
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      color: $profileName;
+      text-overflow: ellipsis;
+      line-height: 30px;
+      font-size: 15px;
+      background: none;
+      outline: none;
+      border: none;
+      text-align: left;
+      transition: color 0.2s, font-weight 0.1s;
+
+      &:hover {
+        color: $profileNameHover;
+        font-weight: 500;
+      }
+
+    }
+
+  }
+
+  .mask {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: 9999999999;
+    background: $loadingMask;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}

@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="image">
+    <img *ngIf="profile?.images[0]"
+         src="{{profile?.images[0].url}}">
+  </div>
+  <div class="content"
+       [class.open]="open"
+       (click)="onClick()">
+    <div class="top">
+      <div *ngIf="profile"
+           class="name">
+        {{profile.display_name}}
+      </div>
+      <div class="arrow">
+        <mat-icon [class.open]="open">expand_more</mat-icon>
+      </div>
+    </div>
+    <div *ngIf="showContent"
+         class="expanded">
+      <button class="logout"
+              (click)="logout()">
+        Wyloguj
+      </button>
+    </div>
+  </div>
+  <div *ngIf="showMask"
+       class="mask">
+    <mat-spinner appSpinner
+                 [customColor]="spinnerColor"
+    ></mat-spinner>
+  </div>
+  <div *ngIf="profile.product == 'premium'"
+       class="premium">
+    <mat-icon>workspace_premium</mat-icon>
+  </div>
+</div>
