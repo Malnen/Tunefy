@@ -1,4 +1,5 @@
 import { Directive, ElementRef, OnInit, Input } from '@angular/core';
+import { ColorsEnum } from '../enums/colors.enum';
 
 @Directive({
   selector : '[appResizable]'
@@ -10,10 +11,11 @@ export class ResizableDirective implements OnInit {
   @Input() resizableMinWidth = 10;
   @Input() resizableMaxWidth = 1920;
 
+  colors = ColorsEnum;
   dragging = false;
 
   constructor(private _el: ElementRef) {
-
+    this._el.nativeElement.style.transition = 'border 0.2s';
     const setNewWidth = (width: number) => {
       let newWidth = Math.max(this.resizableMinWidth, width);
       newWidth = Math.min(this.resizableMaxWidth, newWidth);
@@ -100,7 +102,7 @@ export class ResizableDirective implements OnInit {
   }
 
   private setBorderColored(): void {
-    this._el.nativeElement.style[ 'border-right' ] = 2 + 'px solid #e08214';
+    this._el.nativeElement.style[ 'border-right' ] = 2 + `px solid ${ this.colors.RESIZABLE_BORDER }`;
   }
 
 }

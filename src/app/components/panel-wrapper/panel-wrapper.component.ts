@@ -1,9 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { LinkTileService } from '../../services/link-tile/link-tile.service';
 
 @Component({
-  selector: 'app-panel-wrapper',
-  templateUrl: './panel-wrapper.component.html',
-  styleUrls: ['./panel-wrapper.component.scss']
+  selector : 'app-panel-wrapper',
+  templateUrl : './panel-wrapper.component.html',
+  styleUrls : [ './panel-wrapper.component.scss' ],
+  providers : [ LinkTileService ]
 })
 export class PanelWrapperComponent implements OnInit {
 

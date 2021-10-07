@@ -21,6 +21,8 @@
   }
 
   .bottom {
+    z-index: 100;
+    position: relative;
     @include mat-elevation-transition();
     @include mat-elevation(4);
     background: $darkerBackground;

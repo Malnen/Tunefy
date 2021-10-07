@@ -20,6 +20,7 @@
         height: 100px;
         width: 100px;
         overflow: hidden;
+        user-select: none;
 
         img {
           max-height: 90%;
@@ -98,6 +99,7 @@
     min-width: 875px;
     width: 55%;
     height: 100%;
+    user-select: none;
 
     .buttons {
       display: flex;
@@ -118,6 +120,7 @@
         pointer-events: none;
 
         mat-icon {
+          transition: transform 0.1s;
           transform: scale(0.8);
           pointer-events: all;
 
@@ -146,6 +149,7 @@
         pointer-events: none;
 
         mat-icon {
+          transition: transform 0.1s;
           transform: scale(1.25);
           pointer-events: all;
 
@@ -175,8 +179,10 @@
         @include mat-elevation-transition();
         @include mat-elevation(0);
         line-height: 4rem;
+        transition: transform 0.1s;
 
         mat-icon {
+          transition: transform 0.1s;
           transform: scale(1.25);
         }
 
@@ -198,6 +204,7 @@
   }
 
   .right-side {
+    user-select: none;
     min-width: 350px;
     width: 30%;
     height: 100px;
@@ -206,6 +213,7 @@
 
     .devices {
       padding-top: 60px;
+      transition: transform 0.1s;
     }
 
     .volume-container {
@@ -225,11 +233,11 @@
         line-height: 35px;
         font-size: 35px;
 
-
         .mat-icon {
           height: 35px;
           width: 35px;
           font-size: 35px;
+          transition: transform 0.1s;
 
           &:hover {
             color: white;

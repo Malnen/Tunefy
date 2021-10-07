@@ -1,3 +1,33 @@
 <div class="container">
-  <app-profile-bar></app-profile-bar>
+  <div class="profile">
+    <app-profile-bar></app-profile-bar>
+  </div>
+  <div class="top"
+       appHover
+       (hover)="onTopHover($event)"
+       [class.hover]="topHover">
+    <div class="link-wrapper">
+      <app-link-tile [label]="'Home'"
+                     [icon]="'home'"></app-link-tile>
+      <app-link-tile [label]="'Polubione utwory'"
+                     [icon]="'bookmark'"></app-link-tile>
+      <app-link-tile [label]="'Pliki lokalne'"
+                     [icon]="'library_music'"></app-link-tile>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="bottom"
+       appHover
+       (hover)="onBottomHover($event)"
+       [class.hover]="bottomHover">
+    <div class="label">Playlisty</div>
+    <div class="playlists">
+      <div class="playlist-container">
+        <app-link-tile *ngFor="let playlist of playlists?.items"
+                       [label]="playlist.name"
+                       [icon]="'menu'"
+                       [playlist]="playlist"></app-link-tile>
+      </div>
+    </div>
+  </div>
 </div>

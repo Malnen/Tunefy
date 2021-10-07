@@ -9,6 +9,7 @@ import { Player } from '../../models/player.interface';
 import { RepeatState } from '../../enums/repeat-state.enum';
 import { SearchResponse } from '../../models/search-response.interface';
 import { Item } from '../../models/item.interface';
+import { Playlists } from '../../models/playlists.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -299,6 +300,12 @@ export class SpotifyService {
     return this._http.get<SearchResponse>(url, options);
   }
 
+  getPlaylists(limit = 50, newUrl?: string): Observable<any> {
+    const url = newUrl ?? `https://api.spotify.com/v1/me/playlists?limit=${ limit }`;
+    const options = this.getOptions();
+
+    return this._http.get<Playlists>(url, options);
+  }
 
   private initializeTokenRefresher(): void {
     setInterval(() => {

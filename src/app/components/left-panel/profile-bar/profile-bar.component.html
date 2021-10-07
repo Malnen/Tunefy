@@ -9,7 +9,7 @@
     <div class="top">
       <div *ngIf="profile"
            class="name">
-        {{profile.display_name}}
+        {{profile?.display_name}}
       </div>
       <div class="arrow">
         <mat-icon [class.open]="open">expand_more</mat-icon>
@@ -29,7 +29,7 @@
                  [customColor]="spinnerColor"
     ></mat-spinner>
   </div>
-  <div *ngIf="profile.product == 'premium'"
+  <div *ngIf="profile?.product == 'premium'"
        class="premium">
     <mat-icon>workspace_premium</mat-icon>
   </div>

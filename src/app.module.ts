@@ -38,6 +38,7 @@ import { OptionComponent } from './app/components/context-menu/option/option/opt
 import { BaseComponent } from './app/components/base-component/base.component';
 import { ContextMenuClickedOutsideDirective } from './app/directives/context-menu-clicked-outside.directive';
 import { ProfileBarComponent } from './app/components/left-panel/profile-bar/profile-bar.component';
+import { LinkTileComponent } from './app/components/left-panel/link-tile/link-tile.component';
 
 @NgModule({
   declarations : [
@@ -69,7 +70,8 @@ import { ProfileBarComponent } from './app/components/left-panel/profile-bar/pro
     OptionComponent,
     BaseComponent,
     ContextMenuClickedOutsideDirective,
-    ProfileBarComponent
+    ProfileBarComponent,
+    LinkTileComponent
   ],
   imports : [
     BrowserModule,
