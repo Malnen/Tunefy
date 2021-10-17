@@ -1,17 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Playlists } from '../../models/playlists.interface';
 import { SpotifyService } from '../../services/spotify/spotify.service';
+import { LinkTileComponent } from './link-tile/link-tile.component';
+import { ContentType } from '../../enums/content-type.enum';
 
 @Component({
   selector : 'app-left-panel',
   templateUrl : './left-panel.component.html',
   styleUrls : [ './left-panel.component.scss' ]
 })
-export class LeftPanelComponent implements OnInit {
+export class LeftPanelComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('home') home: LinkTileComponent;
 
   topHover: boolean;
   bottomHover: boolean;
   playlists: Playlists;
+
+  contentType = ContentType;
 
   constructor(private _spotifyService: SpotifyService) { }
 
@@ -20,6 +26,10 @@ export class LeftPanelComponent implements OnInit {
       this.playlists = playlists;
       this.getNextPlaylists();
     });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => this.home.onTileClick(), 0);
   }
 
   onTopHover(event: boolean): void {

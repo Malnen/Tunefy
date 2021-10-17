@@ -2,6 +2,7 @@
 @import "src/colors";
 
 .container {
+  user-select: none;
   height: 100%;
   padding: 0;
   display: flex;
@@ -43,7 +44,7 @@
     max-width: 100%;
     border-radius: 50px;
     margin: 0 10px;
-    background: $leftPanelDivider;
+    background: $divider;
   }
 
   .bottom {

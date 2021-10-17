@@ -3,6 +3,7 @@ import {SpotifyService} from '../../../services/spotify/spotify.service';
 import {Player} from '../../../models/player.interface';
 import * as moment from 'moment';
 import {Animations} from '../../../animations/animations';
+import Timeout = NodeJS.Timeout;
 
 @Component({
   selector: 'app-progress-bar',
@@ -28,7 +29,7 @@ export class ProgressBarComponent implements OnInit, OnChanges {
   private _percentage = 0;
   private _click: boolean;
   private _ignoreNextPlayerUpdate: boolean;
-  private _holdTimer: number;
+  private _holdTimer: any;
 
   constructor(private _spotifyService: SpotifyService) {
   }

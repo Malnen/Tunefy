@@ -16,7 +16,7 @@ export class ProfileBarComponent implements OnInit {
   showMask: boolean;
   spinnerColor = ColorsEnum.ORANGE;
 
-  private _timer: number;
+  private _timer: any;
 
   constructor(private _spotifyService: SpotifyService) { }
 

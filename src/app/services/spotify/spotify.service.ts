@@ -10,6 +10,11 @@ import { RepeatState } from '../../enums/repeat-state.enum';
 import { SearchResponse } from '../../models/search-response.interface';
 import { Item } from '../../models/item.interface';
 import { Playlists } from '../../models/playlists.interface';
+import { RecentlyPlayed } from '../../models/recently-played.interface';
+import { Artist } from '../../models/artist.interface';
+import { Artists } from '../../models/artists.interface';
+import { PlaylistTracks } from '../../models/playlist-tracks.interface';
+import { Playlist } from '../../models/playlist.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -45,7 +50,7 @@ export class SpotifyService {
   private _deviceId: string;
   private _playerSubject: Subject<Player> = new BehaviorSubject<Player>(null);
   private _wait = false;
-  private _waitTimer: number;
+  private _waitTimer: any;
 
   constructor(private _http: HttpClient,
               private _router: Router) {
@@ -305,6 +310,40 @@ export class SpotifyService {
     const options = this.getOptions();
 
     return this._http.get<Playlists>(url, options);
+  }
+
+  getRecentlyPlayed(): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/player/recently-played?limit=50`;
+    const options = this.getOptions();
+
+    return this._http.get<RecentlyPlayed>(url, options);
+  }
+
+  getArtists(ids: string[]): Observable<any> {
+    const url = `https://api.spotify.com/v1/artists?ids=${ ids.join('%2C') }`;
+    const options = this.getOptions();
+
+    return this._http.get<Artists>(url, options);
+  }
+
+  getTracks(playlistId: string): Observable<any> {
+    const url = `	https://api.spotify.com/v1/playlists/${ playlistId }/tracks`;
+    const options = this.getOptions();
+
+    return this._http.get<PlaylistTracks>(url, options);
+  }
+
+  playPlaylist(playlist: Playlist, offset?: number): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player/play';
+    const options = this.getOptions();
+    const payload = {
+      context_uri : playlist.uri,
+      offset : {
+        position : offset ?? 0
+      }
+    };
+
+    return this._http.put(url, payload, options);
   }
 
   private initializeTokenRefresher(): void {

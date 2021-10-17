@@ -24,7 +24,7 @@ export class VolumeBarComponent implements OnInit, OnChanges {
 
   private _click: boolean;
   private _ignoreNextPlayerUpdate: boolean;
-  private _holdTimer: number;
+  private _holdTimer: any;
 
   constructor(private _spotifyService: SpotifyService) {
   }

@@ -1,3 +1,40 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
 .content {
   height: 100%;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+
+  app-search-bar {
+    height: 15%;
+    width: 100%;
+  }
+
+  .panel {
+    overflow: overlay;
+    width: 100%;
+
+  }
+
+  &.hover {
+
+    ::-webkit-scrollbar-thumb {
+      background: $scroll;
+    }
+
+  }
+
+  ::-webkit-scrollbar {
+     width: 6px;
+     background: none;
+   }
+
+  ::-webkit-scrollbar-thumb {
+    background: none;
+    border-radius: 15px;
+    transition: background 0.2s;
+  }
+
 }

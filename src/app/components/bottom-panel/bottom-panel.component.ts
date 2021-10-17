@@ -7,6 +7,7 @@ import { Item } from '../../models/item.interface';
 import { Image } from '../../models/image.interface';
 import { Artist } from '../../models/artist.interface';
 import { PopUpContentType } from '../../enums/pop-up-content-type.enum';
+import Timeout = NodeJS.Timeout;
 
 @Component({
   selector : 'app-bottom-panel',
@@ -26,7 +27,7 @@ export class BottomPanelComponent implements OnInit {
   artists: Artist[];
   popUpContentType = PopUpContentType;
 
-  private _timer: number;
+  private _timer: any;
   private _ignoreNextRepeatState: boolean;
   private _ignoreNextShuffleState: boolean;
   private _ignoreVolumeState: boolean;

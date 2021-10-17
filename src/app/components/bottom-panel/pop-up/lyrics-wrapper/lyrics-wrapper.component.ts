@@ -20,7 +20,7 @@ export class LyricsWrapperComponent extends BasePopUpContentComponent implements
   player: Player;
   currentItem: Item;
   lyrics: string;
-  backgroundImage: string;
+  maskImage: string;
   hasError = false;
 
   private _topBlurOpacity = 0;
@@ -39,7 +39,7 @@ export class LyricsWrapperComponent extends BasePopUpContentComponent implements
         this.loading = true;
         this.currentItem = player.item;
         this.getLyrics();
-        this.setBackgroundImage();
+        this.setMask();
         this.emitLoadedEvent();
       }
     });
@@ -47,9 +47,8 @@ export class LyricsWrapperComponent extends BasePopUpContentComponent implements
 
   onScroll(event?: Event): void {
     const target = event?.target as HTMLElement;
-    this._topBlurOpacity = this.calculateTopBlur(target);
-    this._bottomBlurOpacity = this.calculateBottomBlur(target);
-    this.setBackgroundImage();
+    this.calculateBlur(target);
+    this.setMask();
   }
 
   private getLyrics(): void {
@@ -87,41 +86,38 @@ export class LyricsWrapperComponent extends BasePopUpContentComponent implements
     return convertedLyrics;
   }
 
-  private calculateTopBlur(target: HTMLElement | undefined): number {
-    const scrollTop = target ? target.scrollTop : 0;
-    const blurTop = scrollTop / 100;
-    if (blurTop > 1) {
-      return 1;
-    } else if (blurTop < 0) {
-      return 0;
+  private calculateBlur(target: HTMLElement | undefined): void {
+    const scrollPosition = target ? target.scrollTop / (target.scrollHeight - target.clientHeight) : 0;
+
+    let blurTop: number;
+    let blurBottom: number;
+
+    if (scrollPosition < 0.1) {
+      blurTop = scrollPosition * 10;
+      blurBottom = 1;
+    } else if (scrollPosition > 0.1 && scrollPosition < 0.9) {
+      blurTop = 1;
+      blurBottom = 1;
+    } else {
+      blurTop = 1;
+      blurBottom = (1 - scrollPosition) * 10;
     }
 
-    return blurTop;
+    this._topBlurOpacity = blurTop;
+    this._bottomBlurOpacity = blurBottom;
   }
 
-  private calculateBottomBlur(target: HTMLElement | undefined): number {
-    const scrollTop = target ? target.scrollHeight - target.scrollTop - target.clientHeight : 0;
-    const blurTop = scrollTop / 50;
-    if (blurTop > 1) {
-      return 1;
-    } else if (blurTop < 0) {
-      return 0;
-    }
-
-    return blurTop;
-  }
-
-  private setBackgroundImage(): void {
+  private setMask(): void {
     const color = ColorsEnum.POP_UP_BACKGROUND;
     const tinyColor = new TinyColor(color);
     const r = tinyColor.r;
     const g = tinyColor.g;
     const b = tinyColor.b;
-    this.backgroundImage = `linear-gradient(to top,
-    rgba(${ r }, ${ g }, ${ b }, ${ this._bottomBlurOpacity }) 0%,
-    rgba(255, 255, 255, 0) 15%,
-    rgba(255, 255, 255, 0) 85%,
-    rgba(${ r }, ${ g }, ${ b }, ${ this._topBlurOpacity })`;
+    this.maskImage = `linear-gradient(to top,
+    rgba(${ r }, ${ g }, ${ b }, ${ 1 - this._bottomBlurOpacity }) 0%,
+    rgba(255, 255, 255, 1) 15%,
+    rgba(255, 255, 255, 1) 85%,
+    rgba(${ r }, ${ g }, ${ b }, ${ 1 - this._topBlurOpacity }) 100%)`;
   }
 
 }

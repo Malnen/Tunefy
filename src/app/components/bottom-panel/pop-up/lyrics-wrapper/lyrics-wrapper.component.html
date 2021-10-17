@@ -20,9 +20,8 @@
            #lyricsContainer
            class="lyrics-container"
            (scroll)="onScroll($event)"
-           [class.hover]="hover">
-        <div class="blur"
-             [style.backgroundImage]="backgroundImage"></div>
+           [class.hover]="hover"
+           [style.-webkit-mask-image]="maskImage">
         <div class="content"
              [innerHTML]="lyrics | safeHtml">
         </div>

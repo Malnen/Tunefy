@@ -14,7 +14,6 @@ export class TrackResultComponent extends BaseComponent implements OnInit {
 
   @Input() track: Item;
 
-  hover: boolean;
   imageHover: boolean;
   player: Player;
   isCurrentTrack: boolean;
@@ -34,10 +33,6 @@ export class TrackResultComponent extends BaseComponent implements OnInit {
       this.player = player;
       this.isCurrentTrack = this.player?.item?.id === this.track.id;
     });
-  }
-
-  onHover(event: boolean): void {
-    this.hover = event;
   }
 
   onImageMouseOver(): void {

@@ -7,7 +7,9 @@
        (hover)="onTopHover($event)"
        [class.hover]="topHover">
     <div class="link-wrapper">
-      <app-link-tile [label]="'Home'"
+      <app-link-tile #home
+                     [contentType]="contentType.home"
+                     [label]="'Home'"
                      [icon]="'home'"></app-link-tile>
       <app-link-tile [label]="'Polubione utwory'"
                      [icon]="'bookmark'"></app-link-tile>
@@ -24,6 +26,7 @@
     <div class="playlists">
       <div class="playlist-container">
         <app-link-tile *ngFor="let playlist of playlists?.items"
+                       [contentType]="contentType.playlist"
                        [label]="playlist.name"
                        [icon]="'menu'"
                        [playlist]="playlist"></app-link-tile>

@@ -15,6 +15,7 @@
 
     .item-container {
       display: flex;
+      user-select: none;
 
       .image {
         height: 100px;

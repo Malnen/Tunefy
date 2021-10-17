@@ -5,4 +5,9 @@ export interface Playlist {
   href: string;
   name: string;
   images: Image[];
+  uri: string;
+  tracks: {
+    total: number;
+    href: string;
+  };
 }

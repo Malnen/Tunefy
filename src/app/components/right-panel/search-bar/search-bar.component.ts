@@ -2,17 +2,18 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ColorsEnum } from '../../../enums/colors.enum';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { SearchResponse } from '../../../models/search-response.interface';
+import { HoverableComponent } from '../../hoverable/hoverable.component';
+import Timeout = NodeJS.Timeout;
 
 @Component({
   selector : 'app-search-bar',
   templateUrl : './search-bar.component.html',
   styleUrls : [ './search-bar.component.scss' ]
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent extends HoverableComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
 
-  hover: boolean;
   showSearchResult = false;
   loading = false;
   spinnerColor = ColorsEnum.ORANGE;
@@ -20,15 +21,11 @@ export class SearchBarComponent implements OnInit {
   searchResult: SearchResponse;
   searchValue: string;
 
-  private _timer: number;
+  private _timer: any;
 
-  constructor(private _spotifyService: SpotifyService) { }
+  constructor(private _spotifyService: SpotifyService) {super(); }
 
   ngOnInit(): void {
-  }
-
-  onHover(event: boolean): void {
-    this.hover = event;
   }
 
   onFocus(): void {
@@ -75,7 +72,6 @@ export class SearchBarComponent implements OnInit {
     const timer = setTimeout(() => this.searchResultHeight = 150, 0);
     this.searchValue = this.searchInput.nativeElement.value;
     this._spotifyService.search(this.searchValue).subscribe((response: SearchResponse) => {
-      console.log(response);
       this.searchResult = response;
       clearTimeout(timer);
       setTimeout(() => this.searchResultHeight = 600, 0);

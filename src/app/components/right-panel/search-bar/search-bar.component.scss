@@ -2,15 +2,19 @@
 @import "src/colors";
 
 .content {
+  user-select: none;
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 100;
 
   .search-wrapper {
     width: 600px;
     margin: 30px;
-    background: $searchBarBackground;
+    background: rgba($searchBarBackground, 0.80);
     overflow: hidden;
     border-radius: 8px;
+    backdrop-filter: blur(20px);
     z-index: 2;
     @include mat-elevation(4);
     @include mat-elevation-transition();

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LinkTileService } from '../../services/link-tile/link-tile.service';
+import { LinkTileService } from '../../services/link-tile.service';
 
 @Component({
   selector : 'app-panel-wrapper',

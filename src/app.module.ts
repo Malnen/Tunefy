@@ -39,6 +39,10 @@ import { BaseComponent } from './app/components/base-component/base.component';
 import { ContextMenuClickedOutsideDirective } from './app/directives/context-menu-clicked-outside.directive';
 import { ProfileBarComponent } from './app/components/left-panel/profile-bar/profile-bar.component';
 import { LinkTileComponent } from './app/components/left-panel/link-tile/link-tile.component';
+import { HomePanelComponent } from './app/components/right-panel/home-panel/home-panel.component';
+import { RecentlyPlayedTileComponent } from './app/components/right-panel/home-panel/recently-played-tile/recently-played-tile.component';
+import { RecentlyPlayedArtistTileComponent } from './app/components/right-panel/home-panel/recently-played-artist-tile/recently-played-artist-tile.component';
+import { PlaylistPanelComponent } from './app/components/right-panel/playlist-panel/playlist-panel.component';
 
 @NgModule({
   declarations : [
@@ -71,7 +75,11 @@ import { LinkTileComponent } from './app/components/left-panel/link-tile/link-ti
     BaseComponent,
     ContextMenuClickedOutsideDirective,
     ProfileBarComponent,
-    LinkTileComponent
+    LinkTileComponent,
+    HomePanelComponent,
+    RecentlyPlayedTileComponent,
+    RecentlyPlayedArtistTileComponent,
+    PlaylistPanelComponent
   ],
   imports : [
     BrowserModule,
