@@ -52,11 +52,40 @@
     overflow: hidden;
 
     .label {
+      display: flex;
       user-select: none;
       color: $linkTileColor;
       font-size: 1.5rem;
       font-weight: 450;
       padding: 20px;
+
+      .text {
+        width: 80%;
+      }
+
+      .button {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .mat-icon {
+
+          &:hover {
+            font-weight: 600;
+            color: white;
+            transform: scale(1.1);
+
+            &:active {
+              transform: scale(0.95);
+            }
+
+          }
+
+        }
+
+      }
+
     }
 
     .playlists {

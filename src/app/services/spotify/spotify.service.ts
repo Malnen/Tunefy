@@ -11,10 +11,11 @@ import { SearchResponse } from '../../models/search-response.interface';
 import { Item } from '../../models/item.interface';
 import { Playlists } from '../../models/playlists.interface';
 import { RecentlyPlayed } from '../../models/recently-played.interface';
-import { Artist } from '../../models/artist.interface';
 import { Artists } from '../../models/artists.interface';
 import { PlaylistTracks } from '../../models/playlist-tracks.interface';
 import { Playlist } from '../../models/playlist.interface';
+import { PlaylistItem } from '../../models/playlist-item.interface';
+import { Profile } from '../../models/profile.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -48,14 +49,17 @@ export class SpotifyService {
   private _refreshToken: string;
   private _accessToken: string;
   private _deviceId: string;
-  private _playerSubject: Subject<Player> = new BehaviorSubject<Player>(null);
+  private _playerSubject = new BehaviorSubject<Player>(null);
   private _wait = false;
   private _waitTimer: any;
+  private _profile: Profile;
+  private _profileSubject = new Subject<Profile>();
 
   constructor(private _http: HttpClient,
               private _router: Router) {
     this.initializeTokenRefresher();
     setInterval(() => this.refreshPlayer(), 500);
+    this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
   }
 
   get accessToken(): string {
@@ -94,6 +98,14 @@ export class SpotifyService {
 
   hasPlayerUpdated(): Observable<Player> {
     return this._playerSubject.asObservable();
+  }
+
+  hasProfileUpdate(): Observable<Profile> {
+    return this._profileSubject.asObservable();
+  }
+
+  updateProfile(profile: Profile): void {
+    this._profileSubject.next(profile);
   }
 
   spotifyAuth(): void {
@@ -326,8 +338,16 @@ export class SpotifyService {
     return this._http.get<Artists>(url, options);
   }
 
-  getTracks(playlistId: string): Observable<any> {
-    const url = `	https://api.spotify.com/v1/playlists/${ playlistId }/tracks`;
+  getTracks(playlistId: string, next?: string): Observable<any> {
+    const url = next != null ? `${ next }&market=PL` : `https://api.spotify.com/v1/playlists/${ playlistId }/tracks?market=PL`;
+    const options = this.getOptions();
+
+    return this._http.get<PlaylistTracks>(url, options);
+  }
+
+  checkIfTrackAreFollowed(items: PlaylistItem[]): Observable<any> {
+    const ids = items.map((item: PlaylistItem) => item.track.id);
+    const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ ids.join(',') }`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
@@ -344,6 +364,24 @@ export class SpotifyService {
     };
 
     return this._http.put(url, payload, options);
+  }
+
+  creatPlaylist(name: string): Observable<any> {
+    const url = `	https://api.spotify.com/v1/users/${ this._profile.id }/playlists`;
+    const options = this.getOptions();
+    const payload = {
+      name,
+      public : true
+    };
+
+    return this._http.post(url, payload, options);
+  }
+
+  deletePlaylist(id: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/playlists/${ id }/followers`;
+    const options = this.getOptions();
+
+    return this._http.delete(url, options);
   }
 
   private initializeTokenRefresher(): void {

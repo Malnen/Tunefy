@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base-component/base.component';
 import { ContentType } from '../../enums/content-type.enum';
 import { LinkTileComponent } from '../left-panel/link-tile/link-tile.component';
-import { LinkTileService } from '../../services/link-tile.service';
+import { LinkTileService } from '../../services/link-tile/link-tile.service';
+import { ContextMenuService } from '../../services/context-menu/context-menu.service';
 
 @Component({
   selector : 'app-right-panel',
@@ -14,8 +15,9 @@ export class RightPanelComponent extends BaseComponent implements OnInit {
   contentTypeEnum = ContentType;
   activeLinkTile: LinkTileComponent;
 
-  constructor(private _linkTileService: LinkTileService) {
-    super();
+  constructor(contextMenuService: ContextMenuService,
+              private _linkTileService: LinkTileService) {
+    super(contextMenuService);
   }
 
   ngOnInit(): void {

@@ -22,7 +22,15 @@
        appHover
        (hover)="onBottomHover($event)"
        [class.hover]="bottomHover">
-    <div class="label">Playlisty</div>
+    <div class="label">
+      <div class="text">
+        Playlisty
+      </div>
+      <div class="button"
+           (click)="addPlaylist()">
+        <mat-icon>add</mat-icon>
+      </div>
+    </div>
     <div class="playlists">
       <div class="playlist-container">
         <app-link-tile *ngFor="let playlist of playlists?.items"

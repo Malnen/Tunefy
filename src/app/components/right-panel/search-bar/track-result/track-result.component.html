@@ -1,21 +1,9 @@
 <div class="content"
-     #menuParent
      appHover
      (contextmenu)="onContextMenu($event)"
      (hover)="onHover($event)"
      [class.hover]="hover"
      [class.is-current]="isCurrentTrack">
-  <app-context-menu *ngIf="openContextMenu"
-                    appContextMenuClickedOutside
-                    (maskClick)="onContextMenuClickedOutside()"
-                    (clickedInsideParent)="onContextMenuClickInside($event)"
-                    (maskContextClick)="onContextMenuClickInside($event)"
-                    (clickOutside)="onContextMenuClickedOutside()"
-                    [options]="options"
-                    [parent]="menuParent"
-                    [clickedOutside]="openContextMenu"
-                    [event]="mouseEvent"
-                    [open]="openContextMenu"></app-context-menu>
   <div class="image"
        (mouseover)="onImageMouseOver()"
        (mouseleave)="onImageMouseLeave()">

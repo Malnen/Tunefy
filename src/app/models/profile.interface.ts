@@ -4,4 +4,5 @@ export interface Profile {
   display_name: string;
   images: Image[];
   product: string;
+  id: string;
 }

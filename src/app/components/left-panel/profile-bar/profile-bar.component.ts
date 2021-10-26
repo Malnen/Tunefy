@@ -21,8 +21,9 @@ export class ProfileBarComponent implements OnInit {
   constructor(private _spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
+    this._spotifyService.hasProfileUpdate().subscribe((profile: Profile) => this.profile = profile);
     this._spotifyService.getProfile().subscribe((profile: Profile) => {
-      this.profile = profile;
+      this._spotifyService.updateProfile(profile);
     });
   }
 

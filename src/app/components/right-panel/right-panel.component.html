@@ -4,9 +4,11 @@
      [class.hover]="hover">
   <app-search-bar></app-search-bar>
   <div [ngSwitch]="activeLinkTile?.contentType"
-       class="panel">
+       class="panel"
+       #container>
     <app-home-panel *ngSwitchCase="contentTypeEnum.home"></app-home-panel>
     <app-playlist-panel *ngSwitchCase="contentTypeEnum.playlist"
-                        [playlist]="activeLinkTile.playlist"></app-playlist-panel>
+                        [playlist]="activeLinkTile.playlist"
+                        [container]="container"></app-playlist-panel>
   </div>
 </div>

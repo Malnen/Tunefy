@@ -7,7 +7,6 @@ import { Item } from '../../models/item.interface';
 import { Image } from '../../models/image.interface';
 import { Artist } from '../../models/artist.interface';
 import { PopUpContentType } from '../../enums/pop-up-content-type.enum';
-import Timeout = NodeJS.Timeout;
 
 @Component({
   selector : 'app-bottom-panel',

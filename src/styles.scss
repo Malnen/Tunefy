@@ -1,5 +1,8 @@
 @import "colors";
 @import "node_modules/bootstrap/scss/bootstrap";
+@import 'node_modules/@angular/material/theming';
+@import 'src/app/components/dialogs/add-playlist-dialog/add-playlist-dialog.component';
+@import 'src/app/components/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 
 .body {
   margin: 0;

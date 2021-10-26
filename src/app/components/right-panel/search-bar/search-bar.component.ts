@@ -3,7 +3,6 @@ import { ColorsEnum } from '../../../enums/colors.enum';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { SearchResponse } from '../../../models/search-response.interface';
 import { HoverableComponent } from '../../hoverable/hoverable.component';
-import Timeout = NodeJS.Timeout;
 
 @Component({
   selector : 'app-search-bar',
@@ -13,6 +12,7 @@ import Timeout = NodeJS.Timeout;
 export class SearchBarComponent extends HoverableComponent implements OnInit {
 
   @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild('content') content: ElementRef;
 
   showSearchResult = false;
   loading = false;
@@ -20,6 +20,7 @@ export class SearchBarComponent extends HoverableComponent implements OnInit {
   searchResultHeight = 0;
   searchResult: SearchResponse;
   searchValue: string;
+  maskLeft: number;
 
   private _timer: any;
 
@@ -37,7 +38,6 @@ export class SearchBarComponent extends HoverableComponent implements OnInit {
 
   onKeyPress(): void {
     clearTimeout(this._timer);
-    this.searchValue = this.searchInput.nativeElement.value;
     this._timer = setTimeout(this.search.bind(this), 500);
   }
 
@@ -63,11 +63,18 @@ export class SearchBarComponent extends HoverableComponent implements OnInit {
     this.searchValue = '';
     setTimeout(() => {
       this.searchResult = {};
+      this.showSearchResult = false;
     }, 200);
   }
 
+  private setMaskLeft(): void {
+    this.maskLeft = -this.content.nativeElement.offsetLeft;
+  }
+
   private search(): void {
+    this.searchValue = this.searchInput.nativeElement.value;
     this.showSearchResult = true;
+    this.setMaskLeft();
     this.loading = true;
     const timer = setTimeout(() => this.searchResultHeight = 150, 0);
     this.searchValue = this.searchInput.nativeElement.value;

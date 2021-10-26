@@ -12,4 +12,8 @@ export interface Item {
   track_number: number;
   type: string;
   uri: string;
+  followed: boolean;
+  available_markets: string[];
+  disabled: boolean;
+  restrictions: any;
 }

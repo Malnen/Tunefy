@@ -3,6 +3,7 @@ import { Playlists } from '../../models/playlists.interface';
 import { SpotifyService } from '../../services/spotify/spotify.service';
 import { LinkTileComponent } from './link-tile/link-tile.component';
 import { ContentType } from '../../enums/content-type.enum';
+import { DialogService } from '../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-left-panel',
@@ -19,12 +20,13 @@ export class LeftPanelComponent implements OnInit, AfterViewInit {
 
   contentType = ContentType;
 
-  constructor(private _spotifyService: SpotifyService) { }
+  constructor(private _dialog: DialogService,
+              private _spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
-    this._spotifyService.getPlaylists(50).subscribe((playlists: Playlists) => {
-      this.playlists = playlists;
-      this.getNextPlaylists();
+    this.loadPlaylists();
+    this._dialog.hasPlaylistsUpdated().subscribe(() => {
+      this.loadPlaylists();
     });
   }
 
@@ -38,6 +40,20 @@ export class LeftPanelComponent implements OnInit, AfterViewInit {
 
   onBottomHover(event: boolean): void {
     this.bottomHover = event;
+  }
+
+  addPlaylist(): void {
+    this._dialog.openAddPlaylistDialog();
+  }
+
+  private loadPlaylists(): void {
+    this._spotifyService.getPlaylists(50).subscribe((playlists: Playlists) => {
+      if (this.playlists) {
+        this.playlists = null;
+      }
+      this.playlists = playlists;
+      this.getNextPlaylists();
+    });
   }
 
   private getNextPlaylists(): void {

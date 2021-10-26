@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomMouseEvent } from '../../models/custom-mouse-event.interface';
 import { Option } from '../../models/option.interface';
 import { HoverableComponent } from '../hoverable/hoverable.component';
+import { ContextMenuService } from '../../services/context-menu/context-menu.service';
 
 @Component({
   selector : 'app-base-component',
@@ -14,7 +15,7 @@ export class BaseComponent extends HoverableComponent implements OnInit {
   mouseEvent: CustomMouseEvent;
   options = [];
 
-  constructor() {super(); }
+  constructor(private _contextMenuService: ContextMenuService) {super(); }
 
   ngOnInit(): void {
   }
@@ -23,18 +24,12 @@ export class BaseComponent extends HoverableComponent implements OnInit {
     if (this.options.length > 0) {
       this.mouseEvent = event;
       this.openContextMenu = true;
+      this._contextMenuService.updateOptions(this.options);
     }
   }
 
   onContextMenuClickedOutside(): void {
     this.openContextMenu = false;
-  }
-
-  onContextMenuClickInside(event: MouseEvent): void {
-    this.openContextMenu = false;
-    const customEvent = event as CustomMouseEvent;
-    customEvent.maskContextMenuClicked = true;
-    setTimeout(() => this.onContextMenu(customEvent), 0);
   }
 
 }

@@ -1,63 +1,66 @@
-<div *ngIf="showSearchResult"
-     class="mask"
-     (click)="onMaskClick()"></div>
 <div class="content"
-     appHover
-     (hover)="onHover($event)"
-     [class.hover]="hover">
-  <div class="search-wrapper"
+     #content>
+  <div *ngIf="showSearchResult"
+       class="mask"
+       [style.left]="maskLeft+'px'"
+       (click)="onMaskClick()"></div>
+  <div appHover
+       (hover)="onHover($event)"
        [class.hover]="hover">
-    <div class="top">
-      <button class="search-button">
-        <mat-icon (click)="onSearchClick()">search</mat-icon>
-      </button>
-      <input class="search"
-             #searchInput
-             placeholder="Utwór, Wykonawca, Album"
-             (focus)="onFocus()"
-             (keypress)="onKeyPress()">
-      <button class="clear-button">
-        <mat-icon *ngIf="searchValue?.length > 0"
-                  (click)="onClearClick()">clear
-        </mat-icon>
-      </button>
-    </div>
-    <div *ngIf="showSearchResult"
-         class="bottom"
-         [style.maxHeight]="searchResultHeight+'px'"
-         [class.loading]="loading">
-      <mat-spinner *ngIf="loading"
-                   appSpinner
-                   [diameter]="60"
-                   [customColor]="spinnerColor"></mat-spinner>
-      <div *ngIf="!loading"
-           class="results">
-        <div *ngIf="searchResult.tracks?.items.length > 0"
-             class="tracks">
-          <div class="text">
-            Utwory
+    <div class="search-wrapper"
+         [class.hover]="hover">
+      <div class="top">
+        <button class="search-button">
+          <mat-icon (click)="onSearchClick()">search</mat-icon>
+        </button>
+        <input class="search"
+               #searchInput
+               placeholder="Utwór, Wykonawca, Album"
+               (focus)="onFocus()"
+               (keypress)="onKeyPress()">
+        <button class="clear-button">
+          <mat-icon *ngIf="searchValue?.length > 0"
+                    (click)="onClearClick()">clear
+          </mat-icon>
+        </button>
+      </div>
+      <div *ngIf="showSearchResult"
+           class="bottom"
+           [style.maxHeight]="searchResultHeight+'px'"
+           [class.loading]="loading">
+        <mat-spinner *ngIf="loading"
+                     appSpinner
+                     [diameter]="60"
+                     [customColor]="spinnerColor"></mat-spinner>
+        <div *ngIf="!loading"
+             class="results">
+          <div *ngIf="searchResult.tracks?.items.length > 0"
+               class="tracks">
+            <div class="text">
+              Utwory
+            </div>
+            <div class="divider"></div>
+            <app-track-result *ngFor="let track of searchResult.tracks?.items"
+                              [track]="track"></app-track-result>
           </div>
-          <div class="divider"></div>
-          <app-track-result *ngFor="let track of searchResult.tracks?.items"
-                            [track]="track"></app-track-result>
-        </div>
-        <div *ngIf="searchResult.artists?.items.length > 0"
-             class="artists">
-          <div class="text">
-            Artyści
+          <div *ngIf="searchResult.artists?.items.length > 0"
+               class="artists">
+            <div class="text">
+              Artyści
+            </div>
+            <div class="divider"></div>
+            <app-artist-result *ngFor="let artist of searchResult.artists?.items"
+                               [artist]="artist"></app-artist-result>
           </div>
-          <div class="divider"></div>
-          <app-artist-result *ngFor="let artist of searchResult.artists?.items"
-                             [artist]="artist"></app-artist-result>
-        </div>
-        <div *ngIf="searchResult.albums?.items.length > 0"
-             class="albums">
-          <div class="text">
-            Albumy
+          <div *ngIf="searchResult.albums?.items.length > 0"
+               class="albums">
+            <div class="text">
+              Albumy
+            </div>
+            <div class="divider"></div>
+            <app-album-result *ngFor="let album of searchResult.albums?.items"
+                              [album]="album"></app-album-result>
           </div>
-          <div class="divider"></div>
-          <app-album-result *ngFor="let album of searchResult.albums?.items"
-                             [album]="album"></app-album-result>
         </div>
       </div>
     </div>

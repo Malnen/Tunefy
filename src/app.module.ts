@@ -36,13 +36,19 @@ import { AlbumResultComponent } from './app/components/right-panel/search-bar/al
 import { ContextMenuComponent } from './app/components/context-menu/context-menu.component';
 import { OptionComponent } from './app/components/context-menu/option/option/option.component';
 import { BaseComponent } from './app/components/base-component/base.component';
-import { ContextMenuClickedOutsideDirective } from './app/directives/context-menu-clicked-outside.directive';
 import { ProfileBarComponent } from './app/components/left-panel/profile-bar/profile-bar.component';
 import { LinkTileComponent } from './app/components/left-panel/link-tile/link-tile.component';
 import { HomePanelComponent } from './app/components/right-panel/home-panel/home-panel.component';
 import { RecentlyPlayedTileComponent } from './app/components/right-panel/home-panel/recently-played-tile/recently-played-tile.component';
 import { RecentlyPlayedArtistTileComponent } from './app/components/right-panel/home-panel/recently-played-artist-tile/recently-played-artist-tile.component';
 import { PlaylistPanelComponent } from './app/components/right-panel/playlist-panel/playlist-panel.component';
+import { TrackTableComponent } from './app/components/right-panel/playlist-panel/track-table/track-table.component';
+import { TrackCellComponent } from './app/components/right-panel/playlist-panel/track-table/track-cell/track-cell.component';
+import { AddPlaylistDialogComponent } from './app/components/dialogs/add-playlist-dialog/add-playlist-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeletePlaylistDialogComponent } from './app/components/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 
 @NgModule({
   declarations : [
@@ -73,13 +79,16 @@ import { PlaylistPanelComponent } from './app/components/right-panel/playlist-pa
     ContextMenuComponent,
     OptionComponent,
     BaseComponent,
-    ContextMenuClickedOutsideDirective,
     ProfileBarComponent,
     LinkTileComponent,
     HomePanelComponent,
     RecentlyPlayedTileComponent,
     RecentlyPlayedArtistTileComponent,
-    PlaylistPanelComponent
+    PlaylistPanelComponent,
+    TrackTableComponent,
+    TrackCellComponent,
+    AddPlaylistDialogComponent,
+    DeletePlaylistDialogComponent
   ],
   imports : [
     BrowserModule,
@@ -89,7 +98,10 @@ import { PlaylistPanelComponent } from './app/components/right-panel/playlist-pa
     MatRippleModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    NgbModule
+    NgbModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers : [
     {
