@@ -1,0 +1,116 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 30px 0 30px 0;
+}
+
+.content {
+  overflow: hidden;
+  user-select: none;
+
+  .top {
+    display: flex;
+    background: $background;
+    z-index: 1;
+    position: relative;
+
+    .label {
+      width: 75%;
+      color: $homeLabel;
+      padding: 30px 20px 10px 20px;
+      font-size: 1.75rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .show-more {
+      width: 25%;
+      color: $homeLabel;
+      padding: 30px 20px 10px 20px;
+      background: $background;
+      text-align: right;
+      font-size: 1.25rem;
+      z-index: 1;
+      position: relative;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: flex;
+      justify-content: flex-end;
+
+      &:hover {
+        color: $homeLabelHover;
+      }
+
+      .arrow {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        mat-icon {
+          transition: transform 0.15s;
+
+          &.open {
+            transform: rotate(180deg);
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+  .divider {
+    height: 2px;
+    max-width: 100%;
+    border-radius: 50px;
+    margin: 0 10px;
+    background: $divider;
+    position: relative;
+    z-index: 2;
+  }
+
+  .artists {
+    margin-top: 50px;
+  }
+
+  .tracks, .artists {
+    position: relative;
+    transition: max-height 0.2s;
+
+    .mask {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-image: linear-gradient(to bottom,
+              rgba(2, 0, 36, 0) 0%,
+              rgba(255, 255, 255, 0) 70%,
+              $background 78%,
+              $background 100%);
+      opacity: 0.5;
+      pointer-events: none;
+      transition: background 2s;
+      content: "";
+      z-index: 1;
+    }
+
+    .tracks-wrapper, .artists-wrapper {
+      background: $background;
+
+      app-recently-played-tile, app-recently-played-artist-tile {
+        vertical-align: top;
+        display: inline-block;
+        background: $background;
+      }
+
+    }
+
+  }
+
+}

@@ -1,0 +1,31 @@
+<div class="content"
+     appHover
+     (contextmenu)="onContextMenu($event)"
+     (hover)="onHover($event)">
+  <div class="top">
+    <div class="text">
+      {{recentlyPlayed.track.name}}
+    </div>
+    <div class="play"
+         [class.hover]="hover">
+      <div *ngIf="!isPlaying"
+           class="button"
+           [class.hover]="hover"
+           (click)="play()">
+        <mat-icon [class.hover]="hover">play_arrow</mat-icon>
+      </div>
+      <div *ngIf="isPlaying"
+           class="button"
+           [class.hover]="hover"
+           (click)="pause()">
+        <mat-icon [class.hover]="hover">pause</mat-icon>
+      </div>
+    </div>
+  </div>
+  <mat-icon *ngIf="!hasImage"></mat-icon>
+  <div *ngIf="hasImage"
+       class="image">
+    <img src="{{image.url}}"
+         (error)="onImageError()">
+  </div>
+</div>

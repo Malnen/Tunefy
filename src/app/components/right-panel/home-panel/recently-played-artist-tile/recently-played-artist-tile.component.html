@@ -1,0 +1,16 @@
+<div class="content"
+     appHover
+     (contextmenu)="onContextMenu($event)"
+     (hover)="onHover($event)">
+  <div class="top">
+    <div class="text">
+      {{artist.name}}
+    </div>
+  </div>
+  <mat-icon *ngIf="!hasImage"></mat-icon>
+  <div *ngIf="hasImage"
+       class="image">
+    <img src="{{image.url}}"
+         (error)="onImageError()">
+  </div>
+</div>

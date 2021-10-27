@@ -1,0 +1,137 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+  width: 100%;
+  height: 50px;
+  color: $playlistHeader;
+  padding: 5px 20px 5px 20px;
+
+  .divider {
+    width: 100%;
+    height: 2px;
+    background: $divider;
+    margin: 2px 0 0 0;
+  }
+
+  .wrapper {
+    display: flex;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+
+    &.disabled {
+      color: $playlistCellDisabled;
+    }
+
+    &.hover {
+      background: $playlistCellHoverBackground;
+      color: $playlistCellHover;
+
+      &.disabled {
+        background: $playlistCellHoverDisabledBackground;
+        color: $playlistCellDisabled;
+      }
+
+    }
+
+
+    .follow, .title, .artist, .added, .duration {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .number {
+      text-align: center;
+      font-size: 0.85rem;
+      height: 50px;
+      line-height: 46px;
+      width: 7.5%;
+    }
+
+    .play-button {
+      text-align: center;
+      font-size: 0.85rem;
+      height: 50px;
+      line-height: 46px;
+      width: 7.5%;
+      color: $playlistCellHover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .follow {
+      width: 7.5%;
+      justify-content: center;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      width: 30%;
+      font-size: 1.05rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .image {
+        min-height: 40px;
+        min-width: 40px;
+        max-height: 40px;
+        max-width: 40px;
+        overflow: hidden;
+        position: relative;
+        margin: 2px 5px 2px 0;
+
+        img {
+          max-height: 90%;
+          max-width: 90%;
+          min-height: 90%;
+          min-width: 90%;
+          transition: min-width 0.2s,
+          min-height 0.2s,
+          max-width 0.2s,
+          max-height 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+          @include mat-elevation(4);
+
+          &.hover {
+            max-height: 110%;
+            max-width: 110%;
+            min-height: 110%;
+            min-width: 110%;
+            @include mat-elevation(8);
+            transform: translate(-5%, -5%);
+          }
+
+        }
+
+      }
+
+    }
+
+    .artist {
+      width: 25%;
+      font-size: 1.05rem;
+      display: flex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .added {
+      width: 17.5%;
+      justify-content: center;
+      font-size: 1.05rem;
+    }
+
+    .duration {
+      width: 12.5%;
+      justify-content: center;
+    }
+
+  }
+
+}

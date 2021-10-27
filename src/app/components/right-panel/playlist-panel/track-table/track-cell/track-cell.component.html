@@ -1,0 +1,36 @@
+<div class="content"
+     appHover
+     (hover)="onHover($event)">
+  <div class="divider"></div>
+  <div class="wrapper"
+       [class.hover]="hover"
+       [class.disabled]="track.disabled">
+    <div *ngIf="!hover || track.disabled"
+         class="number">
+      {{index + 1}}
+    </div>
+    <div *ngIf="hover && !track.disabled"
+         class="play-button"
+         (click)="play()">
+      <mat-icon>play_arrow</mat-icon>
+    </div>
+    <div class="follow">
+      <mat-icon *ngIf="track.followed">bookmark</mat-icon>
+      <mat-icon *ngIf="!track.followed">bookmark_border</mat-icon>
+    </div>
+    <div class="title">
+      <div class="image">
+        <img *ngIf="hasImage"
+             [class.hover]="hover"
+             src="{{image.url}}"
+             (error)="onImageError()">
+      </div>
+      {{track.name}}
+    </div>
+    <div class="artist">{{artists}}</div>
+    <div class="added">{{addedAt}}</div>
+    <div class="duration">
+      {{duration}}
+    </div>
+  </div>
+</div>

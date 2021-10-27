@@ -1,0 +1,41 @@
+<div class="content">
+  <div class="top">
+    <div class="image">
+      <img *ngIf="hasImage"
+           src="{{image?.url}}">
+      <mat-icon *ngIf="!hasImage">music_note</mat-icon>
+    </div>
+    <div class="text">
+      <div class="title">
+        {{playlist.name}}
+      </div>
+      <div class="total">
+        Ilość urtowrów: {{playlist.tracks?.total}}
+      </div>
+      <div class="buttons">
+        <div class="play">
+          <button (click)="play()">
+            <mat-icon *ngIf="!isCurrent || !isPlaying">play_arrow</mat-icon>
+            <mat-icon *ngIf="isCurrent && isPlaying">pause</mat-icon>
+          </button>
+        </div>
+        <div class="play-random">
+          <button (click)="playRandom()">Odtwarzaj losowo</button>
+        </div>
+      </div>
+    </div>
+    <div class="search">
+      <div class="search-wrapper">
+        <input #searchInput
+               (input)="onInputChange()"
+               placeholder="Szukaj...">
+        <mat-icon (click)="clearSearchValue()">close</mat-icon>
+      </div>
+    </div>
+  </div>
+  <app-track-table [tracks]="tracksToRender"
+                   [loading]="loading"
+                   [forceLoading]="forceLoading"
+                   [playlist]="playlist"
+                   (sorted)="onSorted()"></app-track-table>
+</div>

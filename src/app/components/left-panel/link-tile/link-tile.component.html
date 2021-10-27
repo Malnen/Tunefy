@@ -1,0 +1,18 @@
+<div class="content"
+     appHover
+     (hover)="onHover($event)"
+     (click)="onTileClick()"
+     (contextmenu)="onContextMenu($event)"
+     [class.hover]="hover"
+     [class.active]="isActive">
+  <mat-icon *ngIf="!hasImage">{{icon}}</mat-icon>
+  <div *ngIf="hasImage"
+       class="image">
+    <img src="{{image.url}}"
+         [class.hover]="hover"
+         (error)="onImageError()">
+  </div>
+  <div class="label"
+       [class.hover]="hover"
+       [class.active]="isActive">{{label}}</div>
+</div>

@@ -1,0 +1,73 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+  color: $linkTileColor;
+  padding: 10px;
+  display: flex;
+  border-radius: 7px;
+  width: 100%;
+  min-height: 50px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: color 0.1s, background 0.1s, height 0.1s;
+
+  &.active {
+    background: $linkTileActive;
+
+    &.hover {
+      background: $linkTileActiveHover;
+    }
+
+  }
+
+  .image {
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+
+    img {
+      max-height: 90%;
+      max-width: 90%;
+      min-height: 90%;
+      min-width: 90%;
+      transition: min-width 0.2s,
+      min-height 0.2s,
+      max-width 0.2s,
+      max-height 0.2s,
+      box-shadow 0.2s,
+      transform 0.2s;
+      @include mat-elevation(4);
+
+      &.hover {
+        max-height: 110%;
+        max-width: 110%;
+        min-height: 110%;
+        min-width: 110%;
+        @include mat-elevation(8);
+        transform: translate(-5%, -5%);
+      }
+
+    }
+
+  }
+
+  .label {
+    padding-left: 0.5rem;
+    font-size: 1.1rem;
+    line-height: 30px;
+    text-align: left;
+    color: $linkTileColor;
+
+    &.hover, &.active {
+      color: $linkTileColorHover;
+    }
+
+  }
+
+  &.hover {
+    background: $linkTileHover;
+    color: $linkTileColorHover;
+  }
+
+}
