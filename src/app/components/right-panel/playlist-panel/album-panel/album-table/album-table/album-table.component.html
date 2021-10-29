@@ -1,0 +1,73 @@
+<div class="content"
+     [class.loading]="loading">
+  <div class="wrapper">
+    <div class="header">
+      <div class="number"
+           (click)="onHeaderClick(sortType.INDEX)">
+        <mat-icon>tag</mat-icon>
+        <mat-icon *ngIf="sort === sortType.INDEX"
+                  class="arrow"
+                  [class.down]="!asc">arrow_upward
+        </mat-icon>
+      </div>
+      <div class="follow"
+           (click)="onHeaderClick(sortType.FOLLOW)">
+        <mat-icon>bookmark</mat-icon>
+        <mat-icon *ngIf="sort === sortType.FOLLOW"
+                  class="arrow"
+                  [class.down]="!asc">arrow_upward
+        </mat-icon>
+      </div>
+      <div class="title"
+           (click)="onHeaderClick(sortType.TRACK)">
+        Tytuł
+        <mat-icon *ngIf="sort === sortType.TRACK"
+                  class="arrow"
+                  [class.down]="!asc">arrow_upward
+        </mat-icon>
+      </div>
+      <div class="artist"
+           (click)="onHeaderClick(sortType.ARTIST)">
+        Wykonawca
+        <mat-icon *ngIf="sort === sortType.ARTIST"
+                  class="arrow"
+                  [class.down]="!asc">arrow_upward
+        </mat-icon>
+      </div>
+      <div class="added"
+           (click)="onHeaderClick(sortType.ADDED_DATE)">
+        Data dodania
+        <mat-icon *ngIf="sort === sortType.ADDED_DATE"
+                  class="arrow"
+                  [class.down]="!asc">arrow_upward
+        </mat-icon>
+      </div>
+      <div class="duration"
+           (click)="onHeaderClick(sortType.DURATION)">
+        <mat-icon>timer</mat-icon>
+        <mat-icon *ngIf="sort === sortType.DURATION"
+                  class="arrow"
+                  [class.down]="!asc">arrow_upward
+        </mat-icon>
+      </div>
+    </div>
+    <div *ngIf="!forceLoading"
+         class="cells">
+      <app-album-track-cell *ngFor="let track of tracks;let i = index"
+                      [item]="track"
+                      [index]="i"
+                      [album]="album"></app-album-track-cell>
+    </div>
+    <div *ngIf="isEmpty && !loading"
+         class="empty">
+      Playlista jest pusta
+    </div>
+    <div *ngIf="loading || forceLoading"
+         class="loading">
+      <mat-spinner
+              appSpinner
+              [diameter]="60"
+              [customColor]="spinnerColor"></mat-spinner>
+    </div>
+  </div>
+</div>
