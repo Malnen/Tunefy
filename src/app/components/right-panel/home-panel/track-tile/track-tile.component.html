@@ -1,7 +1,9 @@
 <div class="content"
      appHover
+     matRipple
      (contextmenu)="onContextMenu($event)"
-     (hover)="onHover($event)">
+     (hover)="onHover($event)"
+     (click)="onClick()">
   <div class="top">
     <div class="text">
       {{recentlyPlayed.track.name}}
@@ -11,13 +13,13 @@
       <div *ngIf="!isPlaying"
            class="button"
            [class.hover]="hover"
-           (click)="play()">
+           (click)="play($event)">
         <mat-icon [class.hover]="hover">play_arrow</mat-icon>
       </div>
       <div *ngIf="isPlaying"
            class="button"
            [class.hover]="hover"
-           (click)="pause()">
+           (click)="pause($event)">
         <mat-icon [class.hover]="hover">pause</mat-icon>
       </div>
     </div>

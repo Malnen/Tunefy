@@ -4,6 +4,7 @@ import { ContentType } from '../../enums/content-type.enum';
 import { LinkTileComponent } from '../left-panel/link-tile/link-tile.component';
 import { LinkTileService } from '../../services/link-tile/link-tile.service';
 import { ContextMenuService } from '../../services/context-menu/context-menu.service';
+import { ActiveLinkConfig } from '../../models/active-link-config.interface';
 
 @Component({
   selector : 'app-right-panel',
@@ -13,7 +14,7 @@ import { ContextMenuService } from '../../services/context-menu/context-menu.ser
 export class RightPanelComponent extends BaseComponent implements OnInit {
 
   contentTypeEnum = ContentType;
-  activeLinkTile: LinkTileComponent;
+  activeLinkConfig: ActiveLinkConfig;
 
   constructor(contextMenuService: ContextMenuService,
               private _linkTileService: LinkTileService) {
@@ -21,8 +22,8 @@ export class RightPanelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._linkTileService.onLinkTileUpdate().subscribe((link: LinkTileComponent) => {
-      this.activeLinkTile = link;
+    this._linkTileService.onLinkTileUpdate().subscribe((link: ActiveLinkConfig) => {
+      this.activeLinkConfig = link;
     });
   }
 

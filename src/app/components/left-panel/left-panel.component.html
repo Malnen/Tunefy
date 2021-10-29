@@ -8,10 +8,11 @@
        [class.hover]="topHover">
     <div class="link-wrapper">
       <app-link-tile #home
-                     [contentType]="contentType.home"
+                     [activeLinkConfig]="{contentType: contentType.home}"
                      [label]="'Home'"
                      [icon]="'home'"></app-link-tile>
       <app-link-tile [label]="'Polubione utwory'"
+                     [activeLinkConfig]="{contentType: contentType.followed}"
                      [icon]="'bookmark'"></app-link-tile>
       <app-link-tile [label]="'Pliki lokalne'"
                      [icon]="'library_music'"></app-link-tile>
@@ -34,10 +35,12 @@
     <div class="playlists">
       <div class="playlist-container">
         <app-link-tile *ngFor="let playlist of playlists?.items"
-                       [contentType]="contentType.playlist"
+                       [activeLinkConfig]="{
+                        contentType:contentType.playlist,
+                        playlist:playlist
+                        }"
                        [label]="playlist.name"
-                       [icon]="'menu'"
-                       [playlist]="playlist"></app-link-tile>
+                       [icon]="'menu'"></app-link-tile>
       </div>
     </div>
   </div>

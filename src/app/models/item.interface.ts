@@ -16,4 +16,5 @@ export interface Item {
   available_markets: string[];
   disabled: boolean;
   restrictions: any;
+  index: number;
 }

@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Image } from '../../../models/image.interface';
-import { Playlist } from '../../../models/playlist.interface';
-import { ContentType } from '../../../enums/content-type.enum';
 import { LinkTileService } from '../../../services/link-tile/link-tile.service';
 import { BaseComponent } from '../../base-component/base.component';
 import { ContextMenuService } from '../../../services/context-menu/context-menu.service';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { DialogService } from '../../../services/dialog/dialog.service';
+import { ActiveLinkConfig } from '../../../models/active-link-config.interface';
 
 @Component({
   selector : 'app-link-tile',
@@ -17,8 +16,7 @@ export class LinkTileComponent extends BaseComponent implements OnInit {
 
   @Input() label: string;
   @Input() icon: string;
-  @Input() playlist: Playlist;
-  @Input() contentType: ContentType;
+  @Input() activeLinkConfig: ActiveLinkConfig;
 
   image: Image;
   hasImage: boolean;
@@ -30,10 +28,10 @@ export class LinkTileComponent extends BaseComponent implements OnInit {
               private _dialogService: DialogService) {super(contextMenuService); }
 
   ngOnInit(): void {
-    this.image = this.playlist?.images[ 0 ];
+    this.image = this.activeLinkConfig?.playlist?.images[ 0 ];
     this.hasImage = this.image != null;
-    this._linkTileService.onLinkTileUpdate().subscribe((linkTile: LinkTileComponent) => {
-      this.isActive = this === linkTile;
+    this._linkTileService.onLinkTileUpdate().subscribe((config: ActiveLinkConfig) => {
+      this.isActive = this.activeLinkConfig === config;
     });
     this.setOptions();
   }
@@ -43,11 +41,11 @@ export class LinkTileComponent extends BaseComponent implements OnInit {
   }
 
   onTileClick(): void {
-    this._linkTileService.updateLinkTile(this);
+    this._linkTileService.updateLinkTile(this.activeLinkConfig);
   }
 
   private setOptions(): void {
-    if (this.playlist) {
+    if (this.activeLinkConfig?.playlist) {
       this.options = [
         {
           label : 'Usuń',
@@ -58,7 +56,7 @@ export class LinkTileComponent extends BaseComponent implements OnInit {
   }
 
   private deletePlaylist(): void {
-    this._dialogService.openDeletePlaylistDialog(this.playlist);
+    this._dialogService.openDeletePlaylistDialog(this.activeLinkConfig.playlist);
   }
 
 }

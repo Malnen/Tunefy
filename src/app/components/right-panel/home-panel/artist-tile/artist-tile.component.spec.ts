@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecentlyPlayedArtistTileComponent } from './recently-played-artist-tile.component';
+import { ArtistTileComponent } from './artist-tile.component';
 
 describe('RecentlyPlayedArtistComponent', () => {
-  let component: RecentlyPlayedArtistTileComponent;
-  let fixture: ComponentFixture<RecentlyPlayedArtistTileComponent>;
+  let component: ArtistTileComponent;
+  let fixture: ComponentFixture<ArtistTileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecentlyPlayedArtistTileComponent ]
+      declarations: [ ArtistTileComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecentlyPlayedArtistTileComponent);
+    fixture = TestBed.createComponent(ArtistTileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -103,7 +103,7 @@
     .tracks-wrapper, .artists-wrapper {
       background: $background;
 
-      app-recently-played-tile, app-recently-played-artist-tile {
+      app-track-tile, app-artist-tile {
         vertical-align: top;
         display: inline-block;
         background: $background;

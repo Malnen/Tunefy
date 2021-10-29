@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { LinkTileComponent } from '../../components/left-panel/link-tile/link-tile.component';
+import { Album } from '../../models/album.interface';
+import { ActiveLinkConfig } from '../../models/active-link-config.interface';
 
 @Injectable()
 export class LinkTileService {
 
-  private _linkTileSubject = new Subject<LinkTileComponent>();
+  private _linkTileSubject = new Subject<ActiveLinkConfig>();
 
   constructor() { }
 
-  onLinkTileUpdate(): Observable<LinkTileComponent> {
+  onLinkTileUpdate(): Observable<ActiveLinkConfig> {
     return this._linkTileSubject.asObservable();
   }
 
-  updateLinkTile(value: LinkTileComponent): void {
+  updateLinkTile(value: ActiveLinkConfig): void {
     this._linkTileSubject.next(value);
   }
 

@@ -28,7 +28,7 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   hasImage = true;
 
   constructor(contextMenuService: ContextMenuService,
-              private _spotifyService: SpotifyService) {
+              protected spotifyService: SpotifyService) {
     super(contextMenuService);
   }
 
@@ -45,11 +45,19 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   }
 
   play(): void {
-    this._spotifyService.playPlaylist(this.playlist, this.playlistItem.index).subscribe();
+    this.spotifyService.playPlaylist(this.playlist, this.playlistItem.index).subscribe();
   }
 
-  private setTrack(): void {
+  protected setTrack(): void {
     this.track = this.playlistItem.track;
+  }
+
+  protected setImage(): void {
+    this.image = this.track.album.images[ 0 ];
+  }
+
+  protected setAddedAt(): void {
+    this.addedAt = moment(this.playlistItem.added_at).format('YYYY-MM-DD');
   }
 
   private setDuration(): void {
@@ -59,14 +67,6 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   private setArtists(): void {
     const artists = this.track.artists.map((artist: Artist) => artist.name);
     this.artists = artists.join(', ');
-  }
-
-  private setAddedAt(): void {
-    this.addedAt = moment(this.playlistItem.added_at).format('YYYY-MM-DD');
-  }
-
-  private setImage(): void {
-    this.image = this.track.album.images[ 0 ];
   }
 
 }

@@ -39,8 +39,8 @@ import { BaseComponent } from './app/components/base-component/base.component';
 import { ProfileBarComponent } from './app/components/left-panel/profile-bar/profile-bar.component';
 import { LinkTileComponent } from './app/components/left-panel/link-tile/link-tile.component';
 import { HomePanelComponent } from './app/components/right-panel/home-panel/home-panel.component';
-import { RecentlyPlayedTileComponent } from './app/components/right-panel/home-panel/recently-played-tile/recently-played-tile.component';
-import { RecentlyPlayedArtistTileComponent } from './app/components/right-panel/home-panel/recently-played-artist-tile/recently-played-artist-tile.component';
+import { TrackTileComponent } from './app/components/right-panel/home-panel/track-tile/track-tile.component';
+import { ArtistTileComponent } from './app/components/right-panel/home-panel/artist-tile/artist-tile.component';
 import { PlaylistPanelComponent } from './app/components/right-panel/playlist-panel/playlist-panel.component';
 import { TrackTableComponent } from './app/components/right-panel/playlist-panel/track-table/track-table.component';
 import { TrackCellComponent } from './app/components/right-panel/playlist-panel/track-table/track-cell/track-cell.component';
@@ -49,6 +49,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DeletePlaylistDialogComponent } from './app/components/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
+import { FollowedPanelComponent } from './app/components/right-panel/playlist-panel/followed-panel/followed-panel.component';
+import { AlbumPanelComponent } from './app/components/right-panel/playlist-panel/album-panel/album-panel.component';
+import { AlbumTableComponent } from './app/components/right-panel/playlist-panel/album-panel/album-table/album-table/album-table.component';
+import { AlbumTrackCellComponent } from './app/components/right-panel/playlist-panel/album-panel/album-table/album-table/album-track-cell/album-track-cell/album-track-cell.component';
 
 @NgModule({
   declarations : [
@@ -82,13 +86,17 @@ import { DeletePlaylistDialogComponent } from './app/components/dialogs/delete-p
     ProfileBarComponent,
     LinkTileComponent,
     HomePanelComponent,
-    RecentlyPlayedTileComponent,
-    RecentlyPlayedArtistTileComponent,
+    TrackTileComponent,
+    ArtistTileComponent,
     PlaylistPanelComponent,
     TrackTableComponent,
     TrackCellComponent,
     AddPlaylistDialogComponent,
-    DeletePlaylistDialogComponent
+    DeletePlaylistDialogComponent,
+    FollowedPanelComponent,
+    AlbumPanelComponent,
+    AlbumTableComponent,
+    AlbumTrackCellComponent
   ],
   imports : [
     BrowserModule,

@@ -5,6 +5,8 @@ import { Player } from '../../../models/player.interface';
 import { ColorsEnum } from '../../../enums/colors.enum';
 import { Artist } from '../../../models/artist.interface';
 import { Artists } from '../../../models/artists.interface';
+import { LinkTileService } from '../../../services/link-tile/link-tile.service';
+import { RecentlyPlayedItem } from '../../../models/recently-played-item.interface';
 
 @Component({
   selector : 'app-home-panel',

@@ -5,13 +5,15 @@ import { SpotifyService } from '../../../../services/spotify/spotify.service';
 import { Player } from '../../../../models/player.interface';
 import { BaseComponent } from '../../../base-component/base.component';
 import { ContextMenuService } from '../../../../services/context-menu/context-menu.service';
+import { LinkTileService } from '../../../../services/link-tile/link-tile.service';
+import { ContentType } from '../../../../enums/content-type.enum';
 
 @Component({
-  selector : 'app-recently-played-tile',
-  templateUrl : './recently-played-tile.component.html',
-  styleUrls : [ './recently-played-tile.component.scss' ]
+  selector : 'app-track-tile',
+  templateUrl : './track-tile.component.html',
+  styleUrls : [ './track-tile.component.scss' ]
 })
-export class RecentlyPlayedTileComponent extends BaseComponent implements OnInit {
+export class TrackTileComponent extends BaseComponent implements OnInit {
 
   @Input() recentlyPlayed: RecentlyPlayedItem;
 
@@ -20,7 +22,8 @@ export class RecentlyPlayedTileComponent extends BaseComponent implements OnInit
   isPlaying = false;
 
   constructor(contextMenuService: ContextMenuService,
-              private _spotifyService: SpotifyService) {
+              private _spotifyService: SpotifyService,
+              private _linkTileService: LinkTileService) {
     super(contextMenuService);
     this.options = [
       {
@@ -41,12 +44,24 @@ export class RecentlyPlayedTileComponent extends BaseComponent implements OnInit
     this.hasImage = false;
   }
 
-  play(): void {
+  play(event: Event): void {
     this._spotifyService.play(this.recentlyPlayed.track).subscribe();
+    event.stopImmediatePropagation();
+    event.preventDefault();
   }
 
-  pause(): void {
+  pause(event: Event): void {
     this._spotifyService.pause().subscribe();
+    event.stopImmediatePropagation();
+    event.preventDefault();
+  }
+
+  onClick(): void {
+    const config = {
+      contentType : ContentType.album,
+      album : this.recentlyPlayed.track.album
+    };
+    this._linkTileService.updateLinkTile(config);
   }
 
   private addToQueue(): void {

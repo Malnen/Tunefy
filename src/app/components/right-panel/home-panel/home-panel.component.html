@@ -25,8 +25,8 @@
          class="mask"></div>
     <div class="tracks-wrapper"
          #tracksWrapper>
-      <app-recently-played-tile *ngFor="let recentlyPlayed of recentlyPlayed?.items"
-                                [recentlyPlayed]="recentlyPlayed"></app-recently-played-tile>
+      <app-track-tile *ngFor="let recentlyPlayed of recentlyPlayed?.items"
+                      [recentlyPlayed]="recentlyPlayed"></app-track-tile>
     </div>
   </div>
   <div class="artists"
@@ -48,8 +48,8 @@
          class="mask"></div>
     <div class="artists-wrapper"
          #artistsWrapper>
-      <app-recently-played-artist-tile *ngFor="let artist of artists"
-                                       [artist]="artist"></app-recently-played-artist-tile>
+      <app-artist-tile *ngFor="let artist of artists"
+                       [artist]="artist"></app-artist-tile>
     </div>
   </div>
 </div>

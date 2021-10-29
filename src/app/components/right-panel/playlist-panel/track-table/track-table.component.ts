@@ -13,7 +13,7 @@ import { PlaylistService } from '../../../../services/playlist-service/playlist.
 })
 export class TrackTableComponent implements OnInit, OnChanges {
 
-  @Input() tracks: PlaylistItem[];
+  @Input() tracks = [];
   @Input() loading: boolean;
   @Input() forceLoading: boolean;
   @Input() playlist: Playlist;
@@ -24,13 +24,13 @@ export class TrackTableComponent implements OnInit, OnChanges {
   spinnerColor = ColorsEnum.ORANGE;
   sortType = SortType;
   sort = SortType.NONE;
-  asc: boolean;
+  asc = true;
 
-  constructor(private _playlistService: PlaylistService) { }
+  constructor(protected playlistService: PlaylistService) { }
 
   ngOnInit(): void {
-    this._playlistService.hasNextLoaded().subscribe(this.sortTracks.bind(this));
-    this._playlistService.hasPlaylistChanged().subscribe(() => {
+    this.playlistService.hasNextLoaded().subscribe(this.sortTracks.bind(this));
+    this.playlistService.hasPlaylistChanged().subscribe(() => {
       this.sort = SortType.NONE;
       this.asc = true;
     });
@@ -58,7 +58,7 @@ export class TrackTableComponent implements OnInit, OnChanges {
     this.sorted.emit();
   }
 
-  private sortTracks(): void {
+  protected sortTracks(): void {
     switch (this.sort) {
       case SortType.INDEX:
         this.tracks.sort((first: PlaylistItem, second: PlaylistItem) => this.sortByIndex(first, second));
@@ -125,7 +125,7 @@ export class TrackTableComponent implements OnInit, OnChanges {
     return this.compare(firstCompareKey, secondCompareKey);
   }
 
-  private compare<T>(firstCompareKey: T, secondCompareKey: T): number {
+  protected compare<T>(firstCompareKey: T, secondCompareKey: T): number {
     if (this.asc) {
       if (firstCompareKey > secondCompareKey) {
         return 1;

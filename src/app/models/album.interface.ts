@@ -1,5 +1,6 @@
 import { Artist } from './artist.interface';
 import { Image } from './image.interface';
+import { PlaylistTracks } from './playlist-tracks.interface';
 
 export interface Album {
   artists: Artist[];

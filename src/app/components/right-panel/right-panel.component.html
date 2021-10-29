@@ -3,12 +3,19 @@
      (hover)="onHover($event)"
      [class.hover]="hover">
   <app-search-bar></app-search-bar>
-  <div [ngSwitch]="activeLinkTile?.contentType"
+  <div [ngSwitch]="activeLinkConfig?.contentType"
        class="panel"
        #container>
     <app-home-panel *ngSwitchCase="contentTypeEnum.home"></app-home-panel>
     <app-playlist-panel *ngSwitchCase="contentTypeEnum.playlist"
-                        [playlist]="activeLinkTile.playlist"
+                        [playlist]="activeLinkConfig.playlist"
                         [container]="container"></app-playlist-panel>
+    <app-followed-panel *ngSwitchCase="contentTypeEnum.followed"
+                        [playlist]="activeLinkConfig.playlist"
+                        [container]="container"></app-followed-panel>
+    <app-album-panel *ngSwitchCase="contentTypeEnum.album"
+                        [album]="activeLinkConfig.album"
+                        [container]="container"></app-album-panel>
   </div>
 </div>
+-

@@ -16,6 +16,7 @@ import { PlaylistTracks } from '../../models/playlist-tracks.interface';
 import { Playlist } from '../../models/playlist.interface';
 import { PlaylistItem } from '../../models/playlist-item.interface';
 import { Profile } from '../../models/profile.interface';
+import { Album } from '../../models/album.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -94,6 +95,10 @@ export class SpotifyService {
 
   set deviceId(value: string) {
     this._deviceId = value;
+  }
+
+  getCurrentProfile(): Profile {
+    return this._profile;
   }
 
   hasPlayerUpdated(): Observable<Player> {
@@ -339,7 +344,21 @@ export class SpotifyService {
   }
 
   getTracks(playlistId: string, next?: string): Observable<any> {
-    const url = next != null ? `${ next }&market=PL` : `https://api.spotify.com/v1/playlists/${ playlistId }/tracks?market=PL`;
+    const url = next != null ? `${ next }&market=from_token` : `https://api.spotify.com/v1/playlists/${ playlistId }/tracks?market=from_token&limit=50&offset=0`;
+    const options = this.getOptions();
+
+    return this._http.get<PlaylistTracks>(url, options);
+  }
+
+  getFollowedTracks(next?: string): Observable<any> {
+    const url = next != null ? `${ next }&market=from_token` : `https://api.spotify.com/v1/me/tracks?market=from_token&limit=50&offset=0`;
+    const options = this.getOptions();
+
+    return this._http.get<PlaylistTracks>(url, options);
+  }
+
+  getAlbumTracks(id: string, next?: string): Observable<any> {
+    const url = next != null ? `${ next }&market=from_token` : `https://api.spotify.com/v1/albums/${ id }?market=from_token&limit=50&offset=0`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
@@ -347,6 +366,14 @@ export class SpotifyService {
 
   checkIfTrackAreFollowed(items: PlaylistItem[]): Observable<any> {
     const ids = items.map((item: PlaylistItem) => item.track.id);
+    const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ ids.join(',') }`;
+    const options = this.getOptions();
+
+    return this._http.get<PlaylistTracks>(url, options);
+  }
+
+  checkIfTrackItemAreFollowed(items: Item[]): Observable<any> {
+    const ids = items.map((item: Item) => item.id);
     const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ ids.join(',') }`;
     const options = this.getOptions();
 
@@ -361,6 +388,29 @@ export class SpotifyService {
       offset : {
         position : offset ?? 0
       }
+    };
+
+    return this._http.put(url, payload, options);
+  }
+
+  playAlbum(album: Album, offset?: number): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player/play';
+    const options = this.getOptions();
+    const payload = {
+      context_uri : album.uri,
+      offset : {
+        position : offset ?? 0
+      }
+    };
+
+    return this._http.put(url, payload, options);
+  }
+
+  playFollowed(playlist: Playlist): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player/play';
+    const options = this.getOptions();
+    const payload = {
+      context_uri : playlist.uri
     };
 
     return this._http.put(url, payload, options);

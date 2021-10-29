@@ -40,12 +40,13 @@
 
       .title {
         color: $playlistTitle;
-        font-size: 3rem;
+        font-size: 2vw;
         padding: 10px;
         display: inline-block;
-        line-height: 3rem;
+        line-height: 2vw;
         overflow: hidden;
         text-overflow: ellipsis;
+        display: -webkit-box;
       }
 
       .total {
