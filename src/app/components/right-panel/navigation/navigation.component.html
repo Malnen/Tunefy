@@ -1,0 +1,16 @@
+<div class="content">
+  <div class="buttons">
+    <div class="button-wrapper">
+      <button [class.disabled]="!hasPrevious"
+              (click)="previous()">
+        <mat-icon>navigate_before</mat-icon>
+      </button>
+    </div>
+    <div class="button-wrapper">
+      <button [class.disabled]="!hasNext"
+              (click)="next()">
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

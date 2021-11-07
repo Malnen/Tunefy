@@ -1,0 +1,92 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+  user-select: none;
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+
+    .button-wrapper {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        margin: 10px 5px 0 5px;
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 25px;
+        border-radius: 50px;
+        border: none;
+        outline: none;
+        background: $navigationBackground;
+        transition: width 0.1s, height 0.1s;
+        @include mat-elevation(4);
+
+        mat-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 25px;
+          height: 25px;
+          margin-left: 1px;
+          line-height: 25px;
+          font-size: 25px;
+          color: $navigationColor;
+          transition: width 0.1s, height 0.1s, margin-left 0.1s, font-size 0.1s, line-height 0.1s;
+        }
+
+        &.disabled {
+          pointer-events: none;
+          background: $navigationDisabledBackground;
+
+          mat-icon {
+            color: $navigationDisabledColor;
+          }
+
+        }
+
+        &:hover {
+          width: 44px;
+          height: 44px;
+
+          mat-icon {
+            font-weight: bold;
+            color: white;
+            width: 27px;
+            height: 27px;
+            line-height: 27px;
+            font-size: 27px;
+          }
+
+        }
+
+        &:active {
+          width: 36px;
+          height: 36px;
+
+          mat-icon {
+            width: 23px;
+            height: 23px;
+            margin-left: 1px;
+            line-height: 23px;
+            font-size: 23px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

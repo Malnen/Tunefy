@@ -1,0 +1,104 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+
+  .top {
+    display: flex;
+
+    .image {
+      color: white;
+      max-width: 500px;
+      max-height: 500px;
+      min-width: 500px;
+      min-height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: $playlistImageBackground;
+      @include mat-elevation(6);
+      margin: 10px;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+
+      mat-icon {
+        width: 250px;
+        height: 250px;
+        font-size: 250px;
+        color: $playlistImageColor;
+      }
+
+    }
+
+    .text {
+      padding-top: 20px;
+      color: $artistName;
+
+      .name {
+        font-size: 2rem;
+      }
+
+      .genres {
+        padding-top: 20px;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: $genres;
+
+        .genre {
+          padding: 10px 0 0 10px;
+          font-size: 1.2rem;
+          text-transform: capitalize;
+          font-weight: normal;
+        }
+
+      }
+
+      .followers {
+        color: $followers;
+        font-size: 1rem;
+        padding: 5px 10px;
+
+        .total {
+          color: $total;
+          font-size: 1.3rem;
+        }
+
+      }
+
+    }
+
+  }
+
+  .albums-container {
+
+    .loading-albums {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  }
+
+  .top-tracks, .related-artists, .albums-container {
+    padding: 20px 0 0 10px;
+    color: $artistName;
+    font-size: 1.75rem;
+    clear: both;
+
+    .artists, .albums {
+      padding-top: 20px;
+
+      app-artist-tile, app-album-tile {
+        font-size: 1rem;
+        float: left;
+      }
+
+    }
+
+  }
+
+}

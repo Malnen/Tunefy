@@ -1,0 +1,55 @@
+<div class="content">
+  #container
+  <div class="top">
+    <div class="image">
+      <img *ngIf="hasImage"
+           src="{{image?.url}}"
+           (error)="onImageError()">
+      <mat-icon *ngIf="!hasImage">perm_identity</mat-icon>
+    </div>
+    <div class="text">
+      <div class="name">
+        {{artist.name}}
+      </div>
+      <div class="genres">
+        Gatunki Muzyczne:
+        <div *ngFor="let genre of artist.genres"
+             class="genre">
+          {{genre}}
+        </div>
+      </div>
+      <div class="followers">
+        Obserwujący: <span class="total">{{artist.followers.total}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="top-tracks">
+    Popularne Utwory:
+    <app-artist-top-tracks-table [loading]="loading"
+                                 [topTracks]="topTracks"
+                                 [container]="container"></app-artist-top-tracks-table>
+  </div>
+  <div *ngIf="albums?.items.length > 0"
+       class="albums-container">
+    Albumy:
+    <div *ngIf="loadingAlbums"
+         class="loading-albums">
+      <mat-spinner appSpinner
+                   [diameter]="60"
+                   [customColor]="spinnerColor"></mat-spinner>
+    </div>
+    <div *ngIf="!loadingAlbums"
+         class="albums">
+      <app-album-tile *ngFor="let album of albums.items"
+                      [album]="album"></app-album-tile>
+    </div>
+  </div>
+  <div *ngIf="relatedArtists?.artists.length > 0"
+       class="related-artists">
+    Powiązani artyści:
+    <div class="artists">
+      <app-artist-tile *ngFor="let artist of relatedArtists?.artists"
+                       [artist]="artist"></app-artist-tile>
+    </div>
+  </div>
+</div>

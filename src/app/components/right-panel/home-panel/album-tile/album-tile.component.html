@@ -1,0 +1,18 @@
+<div class="content"
+     appHover
+     matRipple
+     (click)="onClick()"
+     (contextmenu)="onContextMenu($event)"
+     (hover)="onHover($event)">
+  <div class="top">
+    <div class="text">
+      {{album.name}}
+    </div>
+  </div>
+  <mat-icon *ngIf="!hasImage"></mat-icon>
+  <div *ngIf="hasImage"
+       class="image">
+    <img src="{{image.url}}"
+         (error)="onImageError()">
+  </div>
+</div>
