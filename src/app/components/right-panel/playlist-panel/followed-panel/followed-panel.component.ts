@@ -10,8 +10,7 @@ import { Player } from '../../../../models/player.interface';
 @Component({
   selector : 'app-followed-panel',
   templateUrl : '../playlist-panel.component.html',
-  styleUrls : [ '../playlist-panel.component.scss' ],
-  providers : [ PlaylistService ]
+  styleUrls : [ '../playlist-panel.component.scss' ]
 })
 export class FollowedPanelComponent extends PlaylistPanelComponent implements OnInit {
 

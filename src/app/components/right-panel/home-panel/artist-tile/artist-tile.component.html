@@ -1,6 +1,7 @@
 <div class="content"
      appHover
      matRipple
+     (click)="onClick()"
      (contextmenu)="onContextMenu($event)"
      (hover)="onHover($event)">
   <div class="top">
@@ -11,7 +12,7 @@
   <mat-icon *ngIf="!hasImage"></mat-icon>
   <div *ngIf="hasImage"
        class="image">
-    <img src="{{image.url}}"
+    <img src="{{image?.url}}"
          (error)="onImageError()">
   </div>
 </div>

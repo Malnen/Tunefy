@@ -12,8 +12,7 @@ import { Player } from '../../../../models/player.interface';
 @Component({
   selector : 'app-album-panel',
   templateUrl : './album-panel.component.html',
-  styleUrls : [ './album-panel.component.scss' ],
-  providers : [ PlaylistService ]
+  styleUrls : [ './album-panel.component.scss' ]
 })
 export class AlbumPanelComponent extends PlaylistPanelComponent implements OnInit {
 
@@ -130,6 +129,5 @@ export class AlbumPanelComponent extends PlaylistPanelComponent implements OnIni
   protected getPlayObservable(): Observable<any> {
     return this.spotifyService.playAlbum(this.album);
   }
-
 
 }

@@ -52,4 +52,27 @@
                        [artist]="artist"></app-artist-tile>
     </div>
   </div>
+  <div class="albums"
+       [style.maxHeight]="albumsHeight+'px'">
+    <div class="top">
+      <div class="label">
+        Ostatnio słuchane albumy
+      </div>
+      <div *ngIf="showMoreAlbumsButton"
+           class="show-more"
+           (click)="onShowMoreAlbumsClick()">Pokaż więcej
+        <div class="arrow">
+          <mat-icon [class.open]="openAlbums">expand_more</mat-icon>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div *ngIf="!openAlbums && showMoreAlbumsButton"
+         class="mask"></div>
+    <div class="albums-wrapper"
+         #albumsWrapper>
+      <app-album-tile *ngFor="let album of albums"
+                      [album]="album"></app-album-tile>
+    </div>
+  </div>
 </div>

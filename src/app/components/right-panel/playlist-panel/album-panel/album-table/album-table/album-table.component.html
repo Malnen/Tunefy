@@ -54,9 +54,9 @@
     <div *ngIf="!forceLoading"
          class="cells">
       <app-album-track-cell *ngFor="let track of tracks;let i = index"
-                      [item]="track"
-                      [index]="i"
-                      [album]="album"></app-album-track-cell>
+                            [item]="track"
+                            [index]="i"
+                            [album]="album"></app-album-track-cell>
     </div>
     <div *ngIf="isEmpty && !loading"
          class="empty">

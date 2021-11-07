@@ -53,6 +53,11 @@ import { FollowedPanelComponent } from './app/components/right-panel/playlist-pa
 import { AlbumPanelComponent } from './app/components/right-panel/playlist-panel/album-panel/album-panel.component';
 import { AlbumTableComponent } from './app/components/right-panel/playlist-panel/album-panel/album-table/album-table/album-table.component';
 import { AlbumTrackCellComponent } from './app/components/right-panel/playlist-panel/album-panel/album-table/album-table/album-track-cell/album-track-cell/album-track-cell.component';
+import { ArtistPanelComponent } from './app/components/right-panel/artist-panel/artist-panel.component';
+import { ArtistTopTracksTableComponent } from './app/components/right-panel/artist-panel/artist-top-tracks-table/artist-top-tracks-table.component';
+import { ArtistTopTrackCellComponent } from './app/components/right-panel/artist-panel/artist-top-tracks-table/artist-top-track-cell/artist-top-track-cell.component';
+import { AlbumTileComponent } from './app/components/right-panel/home-panel/album-tile/album-tile.component';
+import { NavigationComponent } from './app/components/right-panel/navigation/navigation.component';
 
 @NgModule({
   declarations : [
@@ -96,7 +101,12 @@ import { AlbumTrackCellComponent } from './app/components/right-panel/playlist-p
     FollowedPanelComponent,
     AlbumPanelComponent,
     AlbumTableComponent,
-    AlbumTrackCellComponent
+    AlbumTrackCellComponent,
+    ArtistPanelComponent,
+    ArtistTopTracksTableComponent,
+    ArtistTopTrackCellComponent,
+    AlbumTileComponent,
+    NavigationComponent
   ],
   imports : [
     BrowserModule,

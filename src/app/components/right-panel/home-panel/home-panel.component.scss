@@ -76,11 +76,11 @@
     z-index: 2;
   }
 
-  .artists {
+  .artists, .albums {
     margin-top: 50px;
   }
 
-  .tracks, .artists {
+  .tracks, .artists, .albums {
     position: relative;
     transition: max-height 0.2s;
 
@@ -100,10 +100,10 @@
       z-index: 1;
     }
 
-    .tracks-wrapper, .artists-wrapper {
+    .tracks-wrapper, .artists-wrapper, .albums-wrapper {
       background: $background;
 
-      app-track-tile, app-artist-tile {
+      app-track-tile, app-artist-tile, app-album-tile {
         vertical-align: top;
         display: inline-block;
         background: $background;

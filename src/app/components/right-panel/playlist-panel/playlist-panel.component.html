@@ -1,4 +1,5 @@
-<div class="content">
+<div class="content"
+     #container>
   <div class="top">
     <div class="image">
       <img *ngIf="hasImage"
@@ -36,6 +37,7 @@
   <app-track-table [tracks]="tracksToRender"
                    [loading]="loading"
                    [forceLoading]="forceLoading"
+                   [container]="container"
                    [playlist]="playlist"
                    (sorted)="onSorted()"></app-track-table>
 </div>

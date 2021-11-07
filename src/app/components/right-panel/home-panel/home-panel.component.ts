@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { RecentlyPlayed } from '../../../models/recently-played.interface';
 import { Player } from '../../../models/player.interface';
 import { ColorsEnum } from '../../../enums/colors.enum';
 import { Artist } from '../../../models/artist.interface';
 import { Artists } from '../../../models/artists.interface';
-import { LinkTileService } from '../../../services/link-tile/link-tile.service';
-import { RecentlyPlayedItem } from '../../../models/recently-played-item.interface';
+import { Album } from '../../../models/album.interface';
 
 @Component({
   selector : 'app-home-panel',
@@ -17,17 +16,22 @@ export class HomePanelComponent implements OnInit {
 
   @ViewChild('tracksWrapper') tracksWrapper: ElementRef;
   @ViewChild('artistsWrapper') artistsWrapper: ElementRef;
+  @ViewChild('albumsWrapper') albumsWrapper: ElementRef;
 
   recentlyPlayed: RecentlyPlayed;
   openTracks: boolean;
   openArtists: boolean;
+  openAlbums: boolean;
   showMoreTracksButton: boolean;
   showMoreArtistsButton: boolean;
+  showMoreAlbumsButton: boolean;
   tracksHeight: number;
   artistsHeight: number;
+  albumsHeight: number;
   loading = true;
   spinnerColor = ColorsEnum.ORANGE;
   artists: Artist[];
+  albums: Album[];
 
   private readonly DEFAULT_HEIGHT = 550;
 
@@ -38,6 +42,7 @@ export class HomePanelComponent implements OnInit {
   ngOnInit(): void {
     this.tracksHeight = this.DEFAULT_HEIGHT;
     this.artistsHeight = this.DEFAULT_HEIGHT;
+    this.albumsHeight = this.DEFAULT_HEIGHT;
 
     this.updateRecentlyPlayed();
     this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
@@ -66,16 +71,27 @@ export class HomePanelComponent implements OnInit {
     }
   }
 
+  onShowMoreAlbumsClick(): void {
+    this.openAlbums = !this.openAlbums;
+    if (this.openAlbums) {
+      this.albumsHeight = this.albumsWrapper.nativeElement.offsetHeight * 10;
+    } else {
+      this.albumsHeight = 600;
+    }
+  }
+
   private updateRecentlyPlayed(): void {
     this._spotifyService.getRecentlyPlayed().subscribe((recentlyPlayed: RecentlyPlayed) => {
       this.recentlyPlayed = this.filterRecentlyPlayed(recentlyPlayed);
       this.setArtists();
+      this.setAlbums();
       this.loading = false;
       setTimeout(() => {
         const tracksHeight = this.tracksWrapper?.nativeElement.offsetHeight;
         const artistsHeight = this.artistsWrapper?.nativeElement.offsetHeight;
         this.showMoreTracksButton = tracksHeight > this.DEFAULT_HEIGHT;
         this.showMoreArtistsButton = artistsHeight > this.DEFAULT_HEIGHT;
+        this.showMoreAlbumsButton = this.albumsHeight > this.DEFAULT_HEIGHT - 100;
       }, 0);
     });
   }
@@ -101,6 +117,15 @@ export class HomePanelComponent implements OnInit {
       this.artists = result.artists;
       this.loading = false;
     });
+  }
+
+  private setAlbums(): void {
+    const albums = new Map();
+    for (const recentlyPlayed of this.recentlyPlayed.items) {
+      albums.set(recentlyPlayed.track.album.id, recentlyPlayed.track.album);
+    }
+
+    this.albums = Array.from(albums.values());
   }
 
 }

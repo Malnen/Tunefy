@@ -17,6 +17,7 @@ export class TrackTableComponent implements OnInit, OnChanges {
   @Input() loading: boolean;
   @Input() forceLoading: boolean;
   @Input() playlist: Playlist;
+  @Input() container: HTMLElement;
 
   @Output() sorted = new EventEmitter<void>();
 

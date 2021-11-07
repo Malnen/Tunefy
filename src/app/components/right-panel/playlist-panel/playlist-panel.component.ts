@@ -8,14 +8,11 @@ import { Context } from '../../../models/context.interface';
 import { PlaylistItem } from '../../../models/playlist-item.interface';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 import { Observable } from 'rxjs';
-import { Album } from '../../../models/album.interface';
-import { AlbumResponse } from '../../../models/album-response.interface';
 
 @Component({
   selector : 'app-playlist-panel',
   templateUrl : './playlist-panel.component.html',
-  styleUrls : [ './playlist-panel.component.scss' ],
-  providers : [ PlaylistService ]
+  styleUrls : [ './playlist-panel.component.scss' ]
 })
 export class PlaylistPanelComponent implements OnInit, OnChanges {
 

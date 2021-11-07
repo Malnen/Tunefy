@@ -3,6 +3,9 @@ import { BaseComponent } from '../../../base-component/base.component';
 import { Image } from '../../../../models/image.interface';
 import { Artist } from '../../../../models/artist.interface';
 import { ContextMenuService } from '../../../../services/context-menu/context-menu.service';
+import { ContentType } from '../../../../enums/content-type.enum';
+import { SpotifyService } from '../../../../services/spotify/spotify.service';
+import { LinkTileService } from '../../../../services/link-tile/link-tile.service';
 
 @Component({
   selector : 'app-artist-tile',
@@ -16,7 +19,9 @@ export class ArtistTileComponent extends BaseComponent implements OnInit {
   image: Image;
   hasImage = true;
 
-  constructor(contextMenuService: ContextMenuService) {
+  constructor(contextMenuService: ContextMenuService,
+              private _spotifyService: SpotifyService,
+              private _linkTileService: LinkTileService) {
     super(contextMenuService);
   }
 
@@ -26,6 +31,14 @@ export class ArtistTileComponent extends BaseComponent implements OnInit {
 
   onImageError(): void {
     this.hasImage = false;
+  }
+
+  onClick(): void {
+    const config = {
+      contentType : ContentType.artist,
+      artist : this.artist
+    };
+    this._linkTileService.updateLinkTile(config);
   }
 
 }

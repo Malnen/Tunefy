@@ -17,6 +17,8 @@ import { Playlist } from '../../models/playlist.interface';
 import { PlaylistItem } from '../../models/playlist-item.interface';
 import { Profile } from '../../models/profile.interface';
 import { Album } from '../../models/album.interface';
+import { ArtistTopTracks } from '../../models/artist-top-tracks.interface';
+import { ArtistsAlbumsResponse } from '../../models/artists-albums-response.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -406,6 +408,19 @@ export class SpotifyService {
     return this._http.put(url, payload, options);
   }
 
+  playArtistTopTracks(uris: string[], offset?: number): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player/play';
+    const options = this.getOptions();
+    const payload = {
+      uris,
+      offset : {
+        position : offset ?? 0
+      }
+    };
+
+    return this._http.put(url, payload, options);
+  }
+
   playFollowed(playlist: Playlist): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
@@ -432,6 +447,27 @@ export class SpotifyService {
     const options = this.getOptions();
 
     return this._http.delete(url, options);
+  }
+
+  getRelatedArtists(id: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/artists/${ id }/related-artists`;
+    const options = this.getOptions();
+
+    return this._http.get<Artists>(url, options);
+  }
+
+  getArtistTopTracks(id: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/artists/${ id }/top-tracks?market=from_token`;
+    const options = this.getOptions();
+
+    return this._http.get<ArtistTopTracks>(url, options);
+  }
+
+  getArtistAlbums(id: string, next?: string): Observable<any> {
+    const url = next ?? `https://api.spotify.com/v1/artists/${ id }/albums?market=from_token&include_groups=album`;
+    const options = this.getOptions();
+
+    return this._http.get<ArtistsAlbumsResponse>(url, options);
   }
 
   private initializeTokenRefresher(): void {

@@ -5,5 +5,6 @@ export enum SortType {
   ARTIST,
   ADDED_DATE,
   DURATION,
+  ALBUM,
   NONE
 }

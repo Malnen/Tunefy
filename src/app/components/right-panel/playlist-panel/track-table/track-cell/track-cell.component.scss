@@ -2,6 +2,7 @@
 @import 'node_modules/@angular/material/theming';
 
 .content {
+  user-select: none;
   width: 100%;
   height: 50px;
   color: $playlistHeader;
@@ -129,6 +130,7 @@
 
     .duration {
       width: 12.5%;
+      font-size: 1.05rem;
       justify-content: center;
     }
 

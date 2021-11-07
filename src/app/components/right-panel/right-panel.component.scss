@@ -7,7 +7,14 @@
   flex-flow: column;
   width: 100%;
 
+  .navigation {
+    z-index: 100;
+    position: absolute;
+  }
+
   app-search-bar {
+    z-index: 99;
+    justify-self: center;
     height: 15%;
     width: 100%;
   }
@@ -27,9 +34,9 @@
   }
 
   ::-webkit-scrollbar {
-     width: 6px;
-     background: none;
-   }
+    width: 6px;
+    background: none;
+  }
 
   ::-webkit-scrollbar-thumb {
     background: none;

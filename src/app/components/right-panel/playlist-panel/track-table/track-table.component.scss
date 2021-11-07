@@ -2,6 +2,7 @@
 @import 'node_modules/@angular/material/theming';
 
 .content {
+  user-select: none;
   width: 100%;
   height: 100%;
 
@@ -28,7 +29,7 @@
           transform: rotate(180deg);
         }
 
-        &.arrow{
+        &.arrow {
           color: $lightOrange;
         }
 
@@ -78,6 +79,10 @@
         justify-content: center;
       }
 
+    }
+
+    .cells {
+      padding-bottom: 10px;
     }
 
     .loading {
