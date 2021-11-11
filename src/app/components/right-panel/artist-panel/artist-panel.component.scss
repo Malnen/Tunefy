@@ -91,6 +91,9 @@
 
     .artists, .albums {
       padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
 
       app-artist-tile, app-album-tile {
         font-size: 1rem;

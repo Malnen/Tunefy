@@ -102,10 +102,12 @@
 
     .tracks-wrapper, .artists-wrapper, .albums-wrapper {
       background: $background;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
 
       app-track-tile, app-artist-tile, app-album-tile {
         vertical-align: top;
-        display: inline-block;
         background: $background;
       }
 
