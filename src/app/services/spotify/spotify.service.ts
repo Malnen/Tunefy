@@ -123,11 +123,18 @@ export class SpotifyService {
 
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
-    const redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
+    let redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
+    console.log(redirectUri);
+    redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
+    console.log(redirectUri);
+    redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
+    console.log(redirectUri);
+    redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
+    console.log(redirectUri);
     const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + redirectUri + '&scope=' + scopes;
     console.log(redirectUri);
-    window.open(url, '_self');
+    // window.open(url, '_self');
   }
 
   refreshTokens(): void {
