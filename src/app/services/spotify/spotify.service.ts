@@ -65,7 +65,6 @@ export class SpotifyService {
               private _router: Router,
               private _scriptsLoader: ScriptLoaderService) {
     this._redirectUri = window.location.href + 'callback/';
-    console.log(this._redirectUri);
     this.initializeTokenRefresher();
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
@@ -127,6 +126,7 @@ export class SpotifyService {
     const redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
     const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + redirectUri + '&scope=' + scopes;
+    console.log(redirectUri);
     window.open(url, '_self');
   }
 
