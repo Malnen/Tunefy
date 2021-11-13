@@ -25,7 +25,6 @@ export class SpotifyService {
 
   private readonly clientId: string = 'f65acf8953b54bd0b83627545be8ece4'; // '6a6b154241b04bc1bd0f4656b98d8aa4';
   private readonly clientSecret: string = '0cba5ea640b241b294596f215bbe9e15'; // 'e21ffa9272b14229896cf7003b46f8ae';
-  private readonly redirectUri: string = 'http://localhost:4200/callback/';
   private readonly scopes: string[] = [
     'ugc-image-upload',
     'user-read-recently-played',
@@ -57,9 +56,11 @@ export class SpotifyService {
   private _waitTimer: any;
   private _profile: Profile;
   private _profileSubject = new Subject<Profile>();
+  private _redirectUri: string;
 
   constructor(private _http: HttpClient,
               private _router: Router) {
+    this._redirectUri = window.location.href + 'callback/';
     this.initializeTokenRefresher();
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
@@ -117,7 +118,7 @@ export class SpotifyService {
 
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
-    const redirectUri = this.redirectUri.replace('/', '%2F').replace(':', '%3A');
+    const redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
     const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + redirectUri + '&scope=' + scopes;
     window.open(url, '_self');
@@ -141,7 +142,7 @@ export class SpotifyService {
     });
     const isRefreshTokenPresent = this.refreshToken !== '' && this.refreshToken != null;
     const payload = new HttpParams()
-      .append('redirect_uri', this.redirectUri)
+      .append('redirect_uri', this._redirectUri)
       .append('client_id', this.clientId)
       .append('client_secret', this.clientSecret)
       .append('grant_type',
