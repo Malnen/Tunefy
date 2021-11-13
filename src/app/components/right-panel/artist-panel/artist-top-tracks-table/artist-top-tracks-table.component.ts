@@ -32,7 +32,11 @@ export class ArtistTopTracksTableComponent extends TrackTableComponent implement
 
   play(index: number): void {
     const uris = this.getUris();
-    this._spotifyService.playArtistTopTracks(uris, index).subscribe();
+    this._spotifyService.playFromUris(uris, index).subscribe();
+  }
+
+  resume(): void {
+    this._spotifyService.play().subscribe();
   }
 
   protected sortTracks(): void {

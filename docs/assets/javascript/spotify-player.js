@@ -9,6 +9,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     // Error handling
     player.addListener('initialization_error', ({message}) => {
+        const event = new Event('playerFailed');
+        window.dispatchEvent(event);
         console.error(message);
     });
     player.addListener('authentication_error', ({message}) => {

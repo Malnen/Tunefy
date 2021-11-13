@@ -15,4 +15,8 @@
   <div class="label"
        [class.hover]="hover"
        [class.active]="isActive">{{label}}</div>
+  <div *ngIf="isCurrent"
+       class="speaker">
+    <mat-icon>volume_up</mat-icon>
+  </div>
 </div>

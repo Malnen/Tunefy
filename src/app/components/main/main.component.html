@@ -1,3 +1,9 @@
 <div class="content">
-<app-panel-wrapper></app-panel-wrapper>
+  <div *ngIf="!playerInitialized"
+       class="loading">
+    <mat-spinner appSpinner
+                 [diameter]="150"
+                 [customColor]="spinnerColor"></mat-spinner>
+  </div>
+  <app-panel-wrapper *ngIf="playerInitialized"></app-panel-wrapper>
 </div>

@@ -9,7 +9,8 @@ export class HoverDirective {
 
   private _hover: boolean;
 
-  constructor() { }
+  constructor() {
+  }
 
   @HostListener('mouseover') mouseover(): void {
     this._hover = true;

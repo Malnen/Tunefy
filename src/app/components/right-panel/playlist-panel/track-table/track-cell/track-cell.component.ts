@@ -8,6 +8,7 @@ import { BaseComponent } from '../../../../base-component/base.component';
 import { SpotifyService } from '../../../../../services/spotify/spotify.service';
 import { Playlist } from '../../../../../models/playlist.interface';
 import { ContextMenuService } from '../../../../../services/context-menu/context-menu.service';
+import { Player } from '../../../../../models/player.interface';
 
 @Component({
   selector : 'app-track-cell',
@@ -26,6 +27,8 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   addedAt: string;
   image: Image;
   hasImage = true;
+  isCurrent = false;
+  isPlaying = false;
 
   constructor(contextMenuService: ContextMenuService,
               protected spotifyService: SpotifyService) {
@@ -38,6 +41,10 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
     this.setDuration();
     this.setAddedAt();
     this.setImage();
+    this.spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
+      this.isCurrent = player?.item?.id === this.track.id;
+      this.isPlaying = player?.is_playing;
+    });
   }
 
   onImageError(): void {
@@ -45,7 +52,19 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   }
 
   play(): void {
-    this.spotifyService.playPlaylist(this.playlist, this.playlistItem.index).subscribe();
+    if (this.isCurrent) {
+      this.spotifyService.play().subscribe();
+    } else {
+      if (this.playlist.uri != null) {
+        this.spotifyService.playPlaylist(this.playlist, this.playlistItem.index).subscribe();
+      } else {
+        this.spotifyService.playFromLastFollowedUris(this.playlistItem.index).subscribe();
+      }
+    }
+  }
+
+  pause(): void {
+    this.spotifyService.pause().subscribe();
   }
 
   protected setTrack(): void {

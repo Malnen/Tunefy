@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { PlaylistTracks } from '../../../../models/playlist-tracks.interface';
 import { Profile } from '../../../../models/profile.interface';
 import { Player } from '../../../../models/player.interface';
+import { PlaylistItem } from '../../../../models/playlist-item.interface';
 
 @Component({
   selector : 'app-followed-panel',
@@ -15,6 +16,7 @@ import { Player } from '../../../../models/player.interface';
 export class FollowedPanelComponent extends PlaylistPanelComponent implements OnInit {
 
   private _profile: Profile;
+  private _uris: string[];
 
   constructor(spotifyService: SpotifyService,
               playlistService: PlaylistService) {
@@ -25,6 +27,13 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
     this._profile = this.spotifyService.getCurrentProfile();
     this.setPlaylist();
     super.ngOnInit();
+  }
+
+  playRandom(): void {
+    this.spotifyService.setShuffleState(true).subscribe(() => {
+      const offset = Math.floor(Math.random() * (this.playlistTracks.items.length + 1));
+      this.spotifyService.playFromUris(this._uris, offset).subscribe();
+    });
   }
 
   protected getLoadTracksObservable(): Observable<PlaylistTracks> {
@@ -47,6 +56,23 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
     });
   }
 
+  protected loadTracks(): void {
+    this.getLoadTracksObservable().subscribe((playlistTracks: PlaylistTracks) => {
+      this.checkMarkets(playlistTracks);
+      this.playlistTracks = playlistTracks;
+      this.playlist.tracks.total = playlistTracks.total;
+      this.loading = false;
+      this.checkFollows();
+      this.filter();
+      this.loadAll();
+    });
+  }
+
+  protected afterLoad(): void {
+    this._uris = this.getUris();
+    this.spotifyService.updateLastFollowedUris(this._uris);
+  }
+
   private setPlaylist(): void {
     this.playlist = {
       name : 'Polubione utwory',
@@ -54,7 +80,7 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
         total : 0,
         href : ''
       },
-      uri : `spotify:user:${ this._profile.id }:collection`,
+      uri : null,
       id : '',
       href : '',
       images : []
@@ -67,6 +93,10 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
     for (const item of items) {
       item.track.followed = true;
     }
+  }
+
+  protected getUris(): string[] {
+    return this.playlistTracks.items.map((track: PlaylistItem) => track.track.uri);
   }
 
 }

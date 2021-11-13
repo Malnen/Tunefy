@@ -24,6 +24,15 @@
       color: $playlistCellDisabled;
     }
 
+    &.current {
+      background: $playlistCellCurrent;
+
+      .title{
+        color: $orange;
+      }
+
+    }
+
     &.hover {
       background: $playlistCellHoverBackground;
       color: $playlistCellHover;
@@ -50,7 +59,7 @@
       width: 7.5%;
     }
 
-    .play-button {
+    .play-button, .pause-button {
       text-align: center;
       font-size: 0.85rem;
       height: 50px;

@@ -4,15 +4,21 @@
   <div class="divider"></div>
   <div class="wrapper"
        [class.hover]="hover"
+       [class.current]="isCurrent"
        [class.disabled]="track.disabled">
-    <div *ngIf="!hover || track.disabled"
+    <div *ngIf="(!hover || track.disabled) && (!isCurrent || !isPlaying)"
          class="number">
       {{index + 1}}
     </div>
-    <div *ngIf="hover && !track.disabled"
+    <div *ngIf="hover && !track.disabled && (!isCurrent || !isPlaying)"
          class="play-button"
          (click)="play()">
       <mat-icon>play_arrow</mat-icon>
+    </div>
+    <div *ngIf="isCurrent  && isPlaying"
+         class="pause-button"
+         (click)="pause()">
+      <mat-icon>pause</mat-icon>
     </div>
     <div class="follow">
       <mat-icon *ngIf="track.followed">bookmark</mat-icon>

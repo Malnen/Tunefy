@@ -5,6 +5,7 @@ import { TokenResponse } from '../../models/token-response.interface';
 import { ScriptLoaderService } from '../../services/script-loader/script-loader.service';
 import { PlayerInitialized } from '../../models/player-initialized.interface';
 import { Player } from '../../models/player.interface';
+import { ColorsEnum } from '../../enums/colors.enum';
 
 @Component({
   selector : 'app-main',
@@ -12,6 +13,9 @@ import { Player } from '../../models/player.interface';
   styleUrls : [ './main.component.scss' ]
 })
 export class MainComponent implements OnInit {
+
+  playerInitialized = true;
+  spinnerColor = ColorsEnum.ORANGE;
 
   constructor(private _router: Router,
               private _spotifyService: SpotifyService,
@@ -27,7 +31,7 @@ export class MainComponent implements OnInit {
   }
 
   private checkRefreshToken(): void {
-    if (this._spotifyService.refreshToken == null) {
+    if (this._spotifyService.refreshToken == null || this._spotifyService.refreshToken === '') {
       this._router.navigate([ './' ]);
     }
   }
@@ -41,6 +45,10 @@ export class MainComponent implements OnInit {
           });
         }
       });
+      this.playerInitialized = true;
+    });
+    window.addEventListener('playerFailed', (event: PlayerInitialized) => {
+      this.playerInitialized = true;
     });
   }
 

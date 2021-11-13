@@ -3,5 +3,6 @@ export enum ContentType {
   playlist,
   album,
   artist,
-  followed
+  followed,
+  local
 }

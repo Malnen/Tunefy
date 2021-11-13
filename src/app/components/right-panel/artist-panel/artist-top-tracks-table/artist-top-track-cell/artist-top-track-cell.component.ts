@@ -6,15 +6,16 @@ import { SpotifyService } from '../../../../../services/spotify/spotify.service'
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-artist-top-track-cell',
-  templateUrl: './artist-top-track-cell.component.html',
-  styleUrls: ['./artist-top-track-cell.component.scss']
+  selector : 'app-artist-top-track-cell',
+  templateUrl : './artist-top-track-cell.component.html',
+  styleUrls : [ './artist-top-track-cell.component.scss' ]
 })
 export class ArtistTopTrackCellComponent extends TrackCellComponent implements OnInit {
 
   @Input() item: Item;
 
   @Output() playTrack = new EventEmitter<number>();
+  @Output() resume = new EventEmitter<void>();
 
   constructor(contextMenuService: ContextMenuService,
               spotifyService: SpotifyService) {
@@ -26,7 +27,11 @@ export class ArtistTopTrackCellComponent extends TrackCellComponent implements O
   }
 
   play(): void {
-    this.playTrack.emit(this.track.index);
+    if (this.isCurrent) {
+      this.resume.emit();
+    } else {
+      this.playTrack.emit(this.track.index);
+    }
   }
 
   protected setTrack(): void {

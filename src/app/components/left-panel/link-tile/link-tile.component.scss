@@ -5,6 +5,7 @@
   color: $linkTileColor;
   padding: 10px;
   display: flex;
+  align-items: center;
   border-radius: 7px;
   width: 100%;
   min-height: 50px;
@@ -63,6 +64,13 @@
       color: $linkTileColorHover;
     }
 
+  }
+
+  .speaker{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
   }
 
   &.hover {

@@ -19,6 +19,7 @@ import { Profile } from '../../models/profile.interface';
 import { Album } from '../../models/album.interface';
 import { ArtistTopTracks } from '../../models/artist-top-tracks.interface';
 import { ArtistsAlbumsResponse } from '../../models/artists-albums-response.interface';
+import { ScriptLoaderService } from '../script-loader/script-loader.service';
 
 @Injectable()
 export class SpotifyService {
@@ -57,12 +58,16 @@ export class SpotifyService {
   private _waitTimer: any;
   private _profile: Profile;
   private _profileSubject = new Subject<Profile>();
+  private _lastFollowedUris = [];
+  private _player: Player;
 
   constructor(private _http: HttpClient,
-              private _router: Router) {
+              private _router: Router,
+              private _scriptsLoader: ScriptLoaderService) {
     this.initializeTokenRefresher();
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
+    this.hasPlayerUpdated().subscribe((player: Player) => this._player = player);
   }
 
   get accessToken(): string {
@@ -206,9 +211,18 @@ export class SpotifyService {
   }
 
   logout(): void {
+    if (this._player.device.id === this.deviceId) {
+      this.pause();
+    }
     this.accessToken = '';
     this.refreshToken = '';
+    this._scriptsLoader.removeScripts();
     this._router.navigate([ './' ]);
+    window.location.reload();
+  }
+
+  updateLastFollowedUris(uris: string[]): void {
+    this._lastFollowedUris = uris;
   }
 
   setAsCurrentDevice(id?: string): Observable<any> {
@@ -408,13 +422,38 @@ export class SpotifyService {
     return this._http.put(url, payload, options);
   }
 
-  playArtistTopTracks(uris: string[], offset?: number): Observable<any> {
+  playFromUris(uris: string[], offset?: number): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
     const payload = {
       uris,
       offset : {
         position : offset ?? 0
+      }
+    };
+
+    return this._http.put(url, payload, options);
+  }
+
+  playFromLastFollowedUris(index: number): Observable<any> {
+    const url = 'https://api.spotify.com/v1/me/player/play';
+    const options = this.getOptions();
+    const size = 400;
+    let uris;
+    let position;
+    if (index < size / 2) {
+      position = index;
+      uris = this._lastFollowedUris.slice(0, size);
+    } else {
+      const start = index - size / 2;
+      const end = start + size;
+      position = size / 2;
+      uris = this._lastFollowedUris.slice(start, end);
+    }
+    const payload = {
+      uris,
+      offset : {
+        position
       }
     };
 

@@ -37,6 +37,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   private _scrollPosition: number;
   private _timer: any;
   private _loadAll: boolean;
+  private _listUsedNext = [];
 
   constructor(protected spotifyService: SpotifyService,
               protected playlistService: PlaylistService) { }
@@ -187,6 +188,15 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     }
   }
 
+  protected loadAll(): void {
+    this._loadAll = true;
+    this.loadNext();
+  }
+
+  protected afterLoad(): void {
+
+  }
+
   private onScroll(event: Event): void {
     const target = event.target as HTMLElement;
     this._scrollPosition = target ? target.scrollTop / (target.scrollHeight - target.clientHeight) : 0;
@@ -199,6 +209,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     this.disabledItemsCount = 0;
     this.loading = true;
     this.playlistTracks = null;
+    this._listUsedNext = [];
     this.scrollToTop();
     this.loadImage();
     this.loadTracks();
@@ -216,7 +227,12 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   }
 
   private loadNext(): void {
-    if (this.playlistTracks?.next != null) {
+    const next = this.playlistTracks?.next;
+    if (next != null) {
+      if (this._listUsedNext.includes(next)) {
+        return;
+      }
+      this._listUsedNext.push(next);
       this.loading = true;
       this.getLoadNextObservable().subscribe((playlistTracks: PlaylistTracks) => {
         const length = this.playlistTracks.items.length;
@@ -226,21 +242,17 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
         this.loading = false;
         setTimeout(() => {
           if (this._scrollPosition > 0.8 || this._loadAll) {
-            setTimeout(this.loadNext.bind(this), 100);
+            setTimeout(this.loadNext.bind(this), 500);
           }
         }, 0);
         this.checkFollows(playlistTracks, length);
         this.filter();
+        this.afterLoad();
       });
     } else {
       this.playlistService.updateNextLoaded();
       this.forceLoading = false;
     }
-  }
-
-  private loadAll(): void {
-    this._loadAll = true;
-    this.loadNext();
   }
 
 }

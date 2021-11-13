@@ -10,11 +10,13 @@
       <app-link-tile #home
                      [activeLinkConfig]="{contentType: contentType.home}"
                      [label]="'Home'"
-                     [icon]="'home'"></app-link-tile>
+                     [icon]="'home'"
+      ></app-link-tile>
       <app-link-tile [label]="'Polubione utwory'"
                      [activeLinkConfig]="{contentType: contentType.followed}"
                      [icon]="'bookmark'"></app-link-tile>
       <app-link-tile [label]="'Pliki lokalne'"
+                     [activeLinkConfig]="{contentType: contentType.local}"
                      [icon]="'library_music'"></app-link-tile>
     </div>
   </div>

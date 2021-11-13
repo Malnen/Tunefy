@@ -26,7 +26,11 @@ export class AlbumTrackCellComponent extends TrackCellComponent implements OnIni
   }
 
   play(): void {
-    this.spotifyService.playAlbum(this.album, this.item.index).subscribe();
+    if (this.isCurrent) {
+      this.spotifyService.play().subscribe();
+    } else {
+      this.spotifyService.playAlbum(this.album, this.item.index).subscribe();
+    }
   }
 
   protected setTrack(): void {
