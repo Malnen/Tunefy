@@ -126,7 +126,10 @@ export class SpotifyService {
     const redirectUri = encodeURIComponent(this._redirectUri);
     const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + redirectUri + '&scope=' + scopes;
-    window.open(url, '_self');
+    console.log(url);
+    console.log(redirectUri);
+    console.log(this._redirectUri);
+    // window.open(url, '_self');
   }
 
   refreshTokens(): void {
@@ -137,7 +140,6 @@ export class SpotifyService {
       if (data.access_token) {
         this.accessToken = data.access_token;
       }
-
     });
   }
 
