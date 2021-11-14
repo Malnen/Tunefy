@@ -511,15 +511,11 @@ export class SpotifyService {
 
   private setRedirectUri(): void {
     const origin = window.location.origin;
-    const path = window.location.pathname.split('/');
-    let callback;
-    if (path.length > 2) {
-      callback = path[ 1 ] + '/callback/';
+    if (origin.includes('localhost')) {
+      this._redirectUri = origin + '/callback';
     } else {
-      callback = 'callback/';
+      this._redirectUri = origin + '/Tunefy/callback';
     }
-
-    this._redirectUri = origin + '/' + callback;
   }
 
   private initializeTokenRefresher(): void {
