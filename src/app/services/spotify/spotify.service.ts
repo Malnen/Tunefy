@@ -24,8 +24,8 @@ import { ScriptLoaderService } from '../script-loader/script-loader.service';
 @Injectable()
 export class SpotifyService {
 
-  private readonly clientId: string = 'f65acf8953b54bd0b83627545be8ece4'; // '6a6b154241b04bc1bd0f4656b98d8aa4';
-  private readonly clientSecret: string = '0cba5ea640b241b294596f215bbe9e15'; // 'e21ffa9272b14229896cf7003b46f8ae';
+  private readonly clientId: string = '6a6b154241b04bc1bd0f4656b98d8aa4'; // 'f65acf8953b54bd0b83627545be8ece4';
+  private readonly clientSecret: string = 'e21ffa9272b14229896cf7003b46f8ae'; // '0cba5ea640b241b294596f215bbe9e15';
   private readonly scopes: string[] = [
     'ugc-image-upload',
     'user-read-recently-played',
@@ -123,11 +123,8 @@ export class SpotifyService {
 
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
-    const redirectUri = this._redirectUri.replace('/', '%2F').replace(':', '%3A');
-    const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
-      + redirectUri + '&scope=' + scopes;
-    console.log(redirectUri);
-    window.open(url, '_self');
+    window.location.href = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
+      + this._redirectUri + '&scope=' + scopes;
   }
 
   refreshTokens(): void {
@@ -138,7 +135,6 @@ export class SpotifyService {
       if (data.access_token) {
         this.accessToken = data.access_token;
       }
-
     });
   }
 
@@ -213,7 +209,7 @@ export class SpotifyService {
   }
 
   logout(): void {
-    if (this._player.device.id === this.deviceId) {
+    if (this._player?.device.id === this.deviceId) {
       this.pause();
     }
     this.accessToken = '';
@@ -509,6 +505,15 @@ export class SpotifyService {
     const options = this.getOptions();
 
     return this._http.get<ArtistsAlbumsResponse>(url, options);
+  }
+
+  private setRedirectUri(): void {
+    const origin = window.location.origin;
+    if (origin.includes('localhost')) {
+      this._redirectUri = origin + '/callback/';
+    } else {
+      this._redirectUri = origin + '/Tunefy/callback/';
+    }
   }
 
   private initializeTokenRefresher(): void {
