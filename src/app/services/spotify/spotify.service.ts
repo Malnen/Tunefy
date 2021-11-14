@@ -512,9 +512,9 @@ export class SpotifyService {
   private setRedirectUri(): void {
     const origin = window.location.origin;
     if (origin.includes('localhost')) {
-      this._redirectUri = origin + '/callback';
+      this._redirectUri = origin + '/callback/';
     } else {
-      this._redirectUri = origin + '/Tunefy/callback';
+      this._redirectUri = origin + '/Tunefy/callback/';
     }
   }
 
