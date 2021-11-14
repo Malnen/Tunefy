@@ -24,8 +24,8 @@ import { ScriptLoaderService } from '../script-loader/script-loader.service';
 @Injectable()
 export class SpotifyService {
 
-  private readonly clientId: string = 'f65acf8953b54bd0b83627545be8ece4'; // '6a6b154241b04bc1bd0f4656b98d8aa4';
-  private readonly clientSecret: string = '0cba5ea640b241b294596f215bbe9e15'; // 'e21ffa9272b14229896cf7003b46f8ae';
+  private readonly clientId: string = '6a6b154241b04bc1bd0f4656b98d8aa4'; // 'f65acf8953b54bd0b83627545be8ece4';
+  private readonly clientSecret: string = 'e21ffa9272b14229896cf7003b46f8ae'; // '0cba5ea640b241b294596f215bbe9e15';
   private readonly scopes: string[] = [
     'ugc-image-upload',
     'user-read-recently-played',
@@ -66,8 +66,6 @@ export class SpotifyService {
               private _scriptsLoader: ScriptLoaderService) {
     this.setRedirectUri();
     this.initializeTokenRefresher();
-    console.log(window.location);
-    console.log(this._redirectUri);
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
     this.hasPlayerUpdated().subscribe((player: Player) => this._player = player);
