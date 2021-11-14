@@ -66,7 +66,6 @@ export class SpotifyService {
               private _scriptsLoader: ScriptLoaderService) {
     this._redirectUri = window.location.href + 'callback/';
     this.initializeTokenRefresher();
-    console.log(window.location);
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
     this.hasPlayerUpdated().subscribe((player: Player) => this._player = player);
@@ -124,14 +123,8 @@ export class SpotifyService {
 
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
-    const redirectUri = this._redirectUri
-      .replace(/\//g, '%2F')
-      .replace(/:/g, '%3A')
-      .replace(/\./g, '%2E');
-    const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
-      + 'https%3A%2F%2Fmalnen.github.io%2FTunefy%2Fcallback%2F' + '&scope=' + scopes;
-    console.log(redirectUri);
-    window.open(url, '_self');
+    window.location.href = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
+      + this._redirectUri + '&scope=' + scopes;
   }
 
   refreshTokens(): void {
