@@ -64,7 +64,7 @@ export class SpotifyService {
   constructor(private _http: HttpClient,
               private _router: Router,
               private _scriptsLoader: ScriptLoaderService) {
-    this._redirectUri = window.location.protocol + '//' + window.location.host + window.location.pathname + '/callback/';
+    this._redirectUri = window.location.protocol + '//' + window.location.host + window.location.pathname + 'callback/';
     this.initializeTokenRefresher();
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
