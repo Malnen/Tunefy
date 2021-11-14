@@ -211,7 +211,7 @@ export class SpotifyService {
   }
 
   logout(): void {
-    if (this._player.device.id === this.deviceId) {
+    if (this._player?.device.id === this.deviceId) {
       this.pause();
     }
     this.accessToken = '';
