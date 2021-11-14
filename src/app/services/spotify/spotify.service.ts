@@ -64,8 +64,10 @@ export class SpotifyService {
   constructor(private _http: HttpClient,
               private _router: Router,
               private _scriptsLoader: ScriptLoaderService) {
-    this._redirectUri = window.location.href + 'callback/';
+    this.setRedirectUri();
     this.initializeTokenRefresher();
+    console.log(window.location);
+    console.log(this._redirectUri);
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
     this.hasPlayerUpdated().subscribe((player: Player) => this._player = player);
@@ -505,6 +507,19 @@ export class SpotifyService {
     const options = this.getOptions();
 
     return this._http.get<ArtistsAlbumsResponse>(url, options);
+  }
+
+  private setRedirectUri(): void {
+    const origin = window.location.origin;
+    const path = window.location.pathname.split('/');
+    let callback;
+    if (path.length > 2) {
+      callback = path[ 1 ] + '/callback/';
+    } else {
+      callback = 'callback/';
+    }
+
+    this._redirectUri = origin + '/' + callback;
   }
 
   private initializeTokenRefresher(): void {
