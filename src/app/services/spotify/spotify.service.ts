@@ -64,7 +64,7 @@ export class SpotifyService {
   constructor(private _http: HttpClient,
               private _router: Router,
               private _scriptsLoader: ScriptLoaderService) {
-    this._redirectUri = window.location.href + 'callback/';
+    this._redirectUri = window.location.protocol + '//' + window.location.host + '/callback/';
     this.initializeTokenRefresher();
     setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
@@ -123,13 +123,13 @@ export class SpotifyService {
 
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
-    const redirectUri = encodeURIComponent(this._redirectUri);
+    const redirectUri = this._redirectUri
+      .replace(/\//g, '%2F')
+      .replace(/:/g, '%3A');
     const url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + redirectUri + '&scope=' + scopes;
-    console.log(url);
     console.log(redirectUri);
-    console.log(this._redirectUri);
-    // window.open(url, '_self');
+    window.open(url, '_self');
   }
 
   refreshTokens(): void {
@@ -140,6 +140,7 @@ export class SpotifyService {
       if (data.access_token) {
         this.accessToken = data.access_token;
       }
+
     });
   }
 
