@@ -126,7 +126,7 @@ export class SpotifyService {
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
     window.location.href = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
-      + encodeURIComponent(this._redirectUri) + '&scope=' + scopes;
+      + this._redirectUri + '&scope=' + scopes;
   }
 
   refreshTokens(): void {
