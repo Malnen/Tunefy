@@ -38,11 +38,8 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
   }
 
   onUnfollowed(track: Item): void {
-    const toRemove = this.playlistTracks.items.find(value => value.track === track);
-    const index = this.playlistTracks.items.indexOf(toRemove);
-    if (index > -1) {
-      this.playlistTracks.items.splice(index, 1);
-    }
+    this.removeFromTracks(track);
+    this.removeFromTracksToRender(track);
   }
 
   protected getLoadTracksObservable(): Observable<PlaylistTracks> {
@@ -106,6 +103,22 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
 
   protected getUris(): string[] {
     return this.playlistTracks.items.map((track: PlaylistItem) => track.track.uri);
+  }
+
+  private removeFromTracksToRender(track: Item): void {
+    const toRemove = this.playlistTracks.items.find(value => value.track === track);
+    const index = this.playlistTracks.items.indexOf(toRemove);
+    if (index > -1) {
+      this.playlistTracks.items.splice(index, 1);
+    }
+  }
+
+  private removeFromTracks(track: Item): void {
+    const toRemove = this.tracksToRender.find(value => value.track === track);
+    const index = this.tracksToRender.indexOf(toRemove);
+    if (index > -1) {
+      this.tracksToRender.splice(index, 1);
+    }
   }
 
 }
