@@ -6,13 +6,15 @@
              src="{{image?.url}}">
       </div>
       <div class="text">
-        <div class="name">
+        <div class="name"
+             (click)="onNameClick()">
           {{currentItem?.name}}
         </div>
         <div *ngFor="let artist of artists;let i = index"
              class="artists">
           <div *ngIf="i<3"
-               class="artist">
+               class="artist"
+               (click)="onArtistClick(artist)">
             {{artist.name}}
           </div>
         </div>

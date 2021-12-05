@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../../../../../models/item.interface';
 import { Artist } from '../../../../../models/artist.interface';
 import { PlaylistItem } from '../../../../../models/playlist-item.interface';
@@ -20,6 +20,8 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   @Input() playlistItem: PlaylistItem;
   @Input() index: number;
   @Input() playlist: Playlist;
+
+  @Output() unfollowed = new EventEmitter<Item>();
 
   artists: string;
   track: Item;
@@ -65,6 +67,17 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
 
   pause(): void {
     this.spotifyService.pause().subscribe();
+  }
+
+  onFollowClick(): void {
+    if (this.track.followed) {
+      this.track.followed = false;
+      this.spotifyService.unFollowTrack(this.track.id).subscribe();
+      this.unfollowed.emit(this.track);
+    } else {
+      this.track.followed = true;
+      this.spotifyService.followTrack(this.track.id).subscribe();
+    }
   }
 
   protected setTrack(): void {

@@ -5,6 +5,7 @@ import { Playlist } from '../../../../models/playlist.interface';
 import { SortType } from '../../../../enums/sort-type.enum';
 import * as moment from 'moment';
 import { PlaylistService } from '../../../../services/playlist-service/playlist.service';
+import { Item } from '../../../../models/item.interface';
 
 @Component({
   selector : 'app-track-table',
@@ -20,6 +21,7 @@ export class TrackTableComponent implements OnInit, OnChanges {
   @Input() container: HTMLElement;
 
   @Output() sorted = new EventEmitter<void>();
+  @Output() unfollowed = new EventEmitter<Item>();
 
   isEmpty: boolean;
   spinnerColor = ColorsEnum.ORANGE;
@@ -57,6 +59,10 @@ export class TrackTableComponent implements OnInit, OnChanges {
     }
     this.sortTracks();
     this.sorted.emit();
+  }
+
+  onUnfollowed(track: Item): void {
+    this.unfollowed.emit(track);
   }
 
   protected sortTracks(): void {

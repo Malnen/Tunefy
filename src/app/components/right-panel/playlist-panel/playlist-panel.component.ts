@@ -8,6 +8,7 @@ import { Context } from '../../../models/context.interface';
 import { PlaylistItem } from '../../../models/playlist-item.interface';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 import { Observable } from 'rxjs';
+import { Item } from '../../../models/item.interface';
 
 @Component({
   selector : 'app-playlist-panel',
@@ -93,6 +94,8 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     this.forceLoading = true;
     this.loadAll();
   }
+
+  onUnfollowed(track: Item): void {}
 
   protected setContext(): void {
     this.context = { uri : this.playlist.uri };
