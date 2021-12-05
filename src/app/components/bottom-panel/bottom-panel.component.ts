@@ -7,6 +7,9 @@ import { Item } from '../../models/item.interface';
 import { Image } from '../../models/image.interface';
 import { Artist } from '../../models/artist.interface';
 import { PopUpContentType } from '../../enums/pop-up-content-type.enum';
+import { LinkTileService } from '../../services/link-tile/link-tile.service';
+import { ContentType } from '../../enums/content-type.enum';
+import { Artists } from '../../models/artists.interface';
 
 @Component({
   selector : 'app-bottom-panel',
@@ -32,7 +35,8 @@ export class BottomPanelComponent implements OnInit {
   private _ignoreVolumeState: boolean;
   private _lastVolumePercentage = 100;
 
-  constructor(private _spotifyService: SpotifyService) {
+  constructor(private _spotifyService: SpotifyService,
+              private _linkTileService: LinkTileService) {
   }
 
   ngOnInit(): void {
@@ -110,6 +114,29 @@ export class BottomPanelComponent implements OnInit {
     this.setVolumeIcon();
     this._timer = setTimeout(() => this._ignoreVolumeState = false, 2000);
     this._spotifyService.setVolume(volume).subscribe();
+  }
+
+  onNameClick(): void {
+    const album = this.currentItem.album;
+    if (album) {
+      const config = {
+        contentType : ContentType.album,
+        album
+      };
+      this._linkTileService.updateLinkTile(config);
+    }
+  }
+
+  onArtistClick(artist: Artist): void {
+    if (artist) {
+      this._spotifyService.getArtists([ artist.id ]).subscribe((artists: Artists) => {
+        const config = {
+          contentType : ContentType.artist,
+          artist : artists.artists[ 0 ]
+        };
+        this._linkTileService.updateLinkTile(config);
+      });
+    }
   }
 
   private getNextState(): any {

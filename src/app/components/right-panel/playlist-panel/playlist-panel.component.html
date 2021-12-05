@@ -39,5 +39,6 @@
                    [forceLoading]="forceLoading"
                    [container]="container"
                    [playlist]="playlist"
-                   (sorted)="onSorted()"></app-track-table>
+                   (sorted)="onSorted()"
+                   (unfollowed)="onUnfollowed($event)"></app-track-table>
 </div>

@@ -7,6 +7,7 @@ import { PlaylistTracks } from '../../../../models/playlist-tracks.interface';
 import { Profile } from '../../../../models/profile.interface';
 import { Player } from '../../../../models/player.interface';
 import { PlaylistItem } from '../../../../models/playlist-item.interface';
+import { Item } from '../../../../models/item.interface';
 
 @Component({
   selector : 'app-followed-panel',
@@ -34,6 +35,14 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
       const offset = Math.floor(Math.random() * (this.playlistTracks.items.length + 1));
       this.spotifyService.playFromUris(this._uris, offset).subscribe();
     });
+  }
+
+  onUnfollowed(track: Item): void {
+    const toRemove = this.playlistTracks.items.find(value => value.track === track);
+    const index = this.playlistTracks.items.indexOf(toRemove);
+    if (index > -1) {
+      this.playlistTracks.items.splice(index, 1);
+    }
   }
 
   protected getLoadTracksObservable(): Observable<PlaylistTracks> {

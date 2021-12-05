@@ -32,7 +32,6 @@
     </div>
     <app-chart *ngIf="recentlyPlayed && !loading"
                [recentlyPlayed]="recentlyPlayed"
-               [contentType]="contentType"
-               (refresh)="refresh($event)"></app-chart>
+               [contentType]="contentType"></app-chart>
   </div>
 </div>

@@ -370,13 +370,8 @@ export class SpotifyService {
     return this._http.get<Playlists>(url, options);
   }
 
-  getRecentlyPlayed(range?: DateRange): Observable<any> {
-    let url = `https://api.spotify.com/v1/me/player/recently-played?limit=50`;
-    if (range != null) {
-      url += range.start != null ? '&after=' + range.start : '';
-      url += range.end != null ? '&before=' + range.end : '';
-    }
-
+  getRecentlyPlayed(next?: string): Observable<any> {
+    const url = next ?? `https://api.spotify.com/v1/me/player/recently-played?limit=50`;
     const options = this.getOptions();
 
     return this._http.get<RecentlyPlayed>(url, options);
@@ -437,6 +432,20 @@ export class SpotifyService {
     };
 
     return this._http.put(url, payload, options);
+  }
+
+  followTrack(id: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/tracks?ids=${ id }`;
+    const options = this.getOptions();
+
+    return this._http.put(url, null, options);
+  }
+
+  unFollowTrack(id: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/me/tracks?ids=${ id }`;
+    const options = this.getOptions();
+
+    return this._http.delete(url, options);
   }
 
   playAlbum(album: Album, offset?: number): Observable<any> {

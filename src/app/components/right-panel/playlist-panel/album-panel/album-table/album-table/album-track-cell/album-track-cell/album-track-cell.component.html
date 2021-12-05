@@ -20,7 +20,8 @@
          (click)="pause()">
       <mat-icon>pause</mat-icon>
     </div>
-    <div class="follow">
+    <div class="follow"
+         (click)="onFollowClick()">
       <mat-icon *ngIf="track.followed">bookmark</mat-icon>
       <mat-icon *ngIf="!track.followed">bookmark_border</mat-icon>
     </div>

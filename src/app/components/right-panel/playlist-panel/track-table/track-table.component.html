@@ -56,7 +56,8 @@
       <app-track-cell *ngFor="let track of tracks;let i = index"
                       [playlistItem]="track"
                       [index]="i"
-                      [playlist]="playlist"></app-track-cell>
+                      [playlist]="playlist"
+                      (unfollowed)="onUnfollowed($event)"></app-track-cell>
     </div>
     <div *ngIf="isEmpty && !loading"
          class="empty">

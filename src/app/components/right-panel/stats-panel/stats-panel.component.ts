@@ -4,7 +4,6 @@ import { Switch } from '../../../models/switch.interface';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { RecentlyPlayed } from '../../../models/recently-played.interface';
 import { ColorsEnum } from '../../../enums/colors.enum';
-import { DateRange } from '../../../models/date-range.interface';
 
 @Component({
   selector : 'app-stats-panel',
@@ -35,12 +34,8 @@ export class StatsPanelComponent implements OnInit {
     this.contentType = switcher.contentType;
   }
 
-  refresh(range: DateRange): void {
-    this.updateRecentlyPlayed(range);
-  }
-
-  private updateRecentlyPlayed(range?: DateRange): void {
-    this._spotifyService.getRecentlyPlayed(range).subscribe((recentlyPlayed: RecentlyPlayed) => {
+  private updateRecentlyPlayed(): void {
+    this._spotifyService.getRecentlyPlayed().subscribe((recentlyPlayed: RecentlyPlayed) => {
       if (this._firstCall) {
         this._spotifyService.hasRecentlyPlayedUpdate().subscribe((updatedRecentlyPlayed: RecentlyPlayed) => {
           this.recentlyPlayed = updatedRecentlyPlayed;

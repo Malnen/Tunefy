@@ -51,7 +51,6 @@
 
       .text {
         max-width: 230px;
-        min-width: 230px;
 
         .name {
           padding: 10px;
@@ -90,6 +89,15 @@
 
         }
 
+      }
+
+      .follow {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 7.5%;
+        color: $playlistHeader;
+        padding: 10px;
       }
 
     }
