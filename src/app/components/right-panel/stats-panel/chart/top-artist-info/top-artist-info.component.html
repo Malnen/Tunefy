@@ -1,0 +1,15 @@
+<div class="content">
+  <div *ngIf="artist"
+          class="top-label">
+    Najczęściej słuchany artysta: <span>{{' ' + artist.name}}</span>
+  </div>
+  <div *ngIf="hasImage"
+       class="image">
+    <img src="{{image?.url}}"
+         (error)="onImageError()">
+  </div>
+  <div *ngIf="artist"
+       class="bottom-label">
+    Obserwujący: <span>{{' ' + artist.followers?.total}}</span>
+  </div>
+</div>

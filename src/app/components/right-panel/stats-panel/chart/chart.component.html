@@ -1,0 +1,46 @@
+<div class="content">
+  <div class="wrapper">
+    <div [ngSwitch]="contentType"
+         class="info">
+      <app-top-artist-info *ngSwitchCase="contentTypeEnum.artist"
+                           [artist]="topArtist"></app-top-artist-info>
+      <app-top-album-info *ngSwitchCase="contentTypeEnum.album"
+                          [album]="topAlbum"></app-top-album-info>
+      <app-top-genres-info *ngSwitchCase="contentTypeEnum.genres"
+                           [genres]="genres"></app-top-genres-info>
+    </div>
+    <div class="right"
+         (mouseleave)="onBarLeave()">
+      <div class="top">
+        <!-- <mat-form-field>
+           <mat-label>Wybierz okres</mat-label>
+           <mat-date-range-input [rangePicker]="picker">
+             <input matStartDate placeholder="Data od"
+                    (dateChange)="onStartDateChange($event)">
+             <input matEndDate placeholder="Data do"
+                    (dateChange)="onEndDateChange($event)">
+           </mat-date-range-input>
+           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+           <mat-date-range-picker #picker
+           (closed)="onClose()"></mat-date-range-picker>
+         </mat-form-field> !-->
+      </div>
+      <div class="bottom">
+        <div class="chart">
+          <app-chart-bar *ngFor="let bar of bars"
+                         [config]="bar"
+                         [style.width]="bar.width+'%'"
+                         (mousemove)="onBarHover(bar, $event)"
+                         (click)="onBarClick()">
+          </app-chart-bar>
+          <div *ngIf="hover"
+               class="hint"
+               [style.left]="hintPosition.x+'px'"
+               [style.top]="hintPosition.y+'px'">
+            <app-chart-hint [config]="hoveredBar"></app-chart-hint>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

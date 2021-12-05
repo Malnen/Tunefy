@@ -1,0 +1,30 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+  width: 100%;
+  height: 100%;
+
+  .label {
+    font-size: 1.75rem;
+    color: white;
+    line-height: 2rem;
+    display: flex;
+    flex-flow: wrap;
+  }
+
+  .genre {
+    display: flex;
+    font-size: 1.25rem;
+    color: white;
+    line-height: 2rem;
+    margin-top: 0.5rem;
+
+    span {
+      color: $orange;
+      font-size: 1.65rem;
+      text-transform: capitalize;
+    }
+  }
+
+}

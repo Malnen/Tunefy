@@ -1,0 +1,20 @@
+<div class="content">
+  <div *ngIf="album"
+       class="top-label">
+    Najczęściej słuchany album: <span>{{' ' + album.name}}</span>
+  </div>
+  <div *ngIf="hasImage"
+       class="image">
+    <img src="{{image?.url}}"
+         (error)="onImageError()">
+  </div>
+  <div *ngIf="album"
+       class="bottom-label">
+    <div class="release-date">
+      Data wydania: <span>{{' ' + album.release_date}}</span>
+    </div>
+    <div class="total">
+      Ilość utworów: <span>{{' ' + album.total_tracks}}</span>
+    </div>
+  </div>
+</div>

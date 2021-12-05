@@ -1,0 +1,46 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+:host {
+  height: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 95%;
+  padding: 5%;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+
+  .back {
+    position: absolute;
+    width: 90%;
+    height: 100%;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .bar-wrapper {
+    text-align: center;
+    width: 100%;
+    z-index: 1;
+
+    &:hover {
+      font-weight: bold;
+
+      .bar {
+        background: $orange;
+      }
+
+    }
+  }
+
+  .bar {
+    height: 100%;
+    border-radius: 4px;
+    background: $charBar;
+    transition: height 0.2s, height 0.2s, background 0.2s;
+    width: 100%;
+  }
+}

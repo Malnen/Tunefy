@@ -1,0 +1,38 @@
+<div class="content">
+  <div class="top">
+    <div class="switches">
+      <div *ngFor="let switcher of switches;let i = index"
+           class="wrapper">
+        <div class="switch"
+             [class.is-current]="switcher.contentType == contentType"
+             (click)="switch(switcher)">
+          <div class="text">
+            <div class="name">
+              {{switcher.name}}
+            </div>
+          </div>
+          <div class="footer"
+               [style.background]="switcher.contentType == contentType ? '#FF8000' : '#444444'"
+               [style.width]="switcher.contentType == contentType ? '50%' : '0'"></div>
+        </div>
+        <div *ngIf="i<switches.length -1"
+             class="divider"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div *ngIf="loading"
+         class="loading">
+      <mat-spinner appSpinner
+                   [diameter]="150"
+                   [customColor]="spinnerColor"></mat-spinner>
+    </div>
+    <div *ngIf="!recentlyPlayed && recentlyPlayed?.items.length > 0 && !loading"
+         class="placeholder">Brak Danych
+    </div>
+    <app-chart *ngIf="recentlyPlayed && !loading"
+               [recentlyPlayed]="recentlyPlayed"
+               [contentType]="contentType"
+               (refresh)="refresh($event)"></app-chart>
+  </div>
+</div>
