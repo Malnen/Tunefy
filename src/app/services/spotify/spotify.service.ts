@@ -137,8 +137,15 @@ export class SpotifyService {
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
     this.formatRedirectUri();
-    window.location.href = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
-      + this._redirectUri + '&scope=' + scopes + '&show_dialog=true';
+    let url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
+      + this._redirectUri + '&scope=' + scopes;
+    const showDialog = localStorage.getItem('showDialog');
+    if (showDialog == null || showDialog === 'true') {
+      url += '&show_dialog=true';
+      localStorage.setItem('showDialog', 'false');
+    }
+
+    window.location.href = url;
   }
 
   refreshTokens(): void {
@@ -231,6 +238,7 @@ export class SpotifyService {
     this.refreshToken = '';
     this._scriptsLoader.removeScripts();
     this._router.navigate([ './' ]);
+    localStorage.setItem('showDialog', 'true');
     if (withReload) {
       window.location.reload();
     }
