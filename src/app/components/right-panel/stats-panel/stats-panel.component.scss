@@ -1,0 +1,91 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+  user-select: none;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  .top {
+    min-width: 100%;
+    height: 10%;
+
+    .switches {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      color: white;
+      display: flex;
+
+      .wrapper {
+        display: flex;
+        width: 100%;
+
+        .switch {
+          font-size: 20px;
+          flex-grow: 1;
+          padding: 10px;
+          border-radius: 10px;
+          transition: background 0.2s;
+
+          &.is-current {
+            background: $switchActiveColor;
+          }
+
+          .text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .footer {
+            width: 0;
+            height: 4px;
+            top: 10px;
+            background: $switchBorderColor;
+            margin: 10px 25% 0 25%;
+            transition: background 0.2s, width 0.2s;
+          }
+
+        }
+
+        .divider {
+          margin: 4px;
+          width: 3px;
+          height: 75%;
+          justify-self: center;
+          align-self: center;
+          background: $switchBorderColor;
+        }
+
+      }
+
+    }
+
+  }
+
+  .bottom {
+    height: 90%;
+    width: 100%;
+    color: white;
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding: 30px 0 30px 0;
+    }
+
+    .placeholder {
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 40px;
+    }
+
+  }
+
+}

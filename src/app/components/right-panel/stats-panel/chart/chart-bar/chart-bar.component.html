@@ -1,0 +1,15 @@
+<div class="content"
+     appHover
+     (hover)="onHover($event)">
+  <div class="back"
+       [style.background]="hover?'#2f2f2f':'none'"></div>
+  <div class="bar-wrapper"
+       [style.height]="config.height+'%'">
+    <div class="count">
+      {{config.size}}
+    </div>
+    <div class="bar">
+
+    </div>
+  </div>
+</div>

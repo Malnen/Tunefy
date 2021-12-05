@@ -1,0 +1,60 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+@import 'src/assets/styles/date-picker-styles.scss';
+
+.content {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+
+  .wrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+
+    .info {
+      max-height: 100%;
+      width: 25%;
+    }
+
+    .right {
+      width: 75%;
+      height: 100%;
+      padding: 15px;
+
+      .top {
+        height: 10%;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .bottom {
+        height: 90%;
+        width: 100%;
+
+        .chart {
+          height: 100%;
+          width: 100%;
+          display: flex;
+
+          .hint {
+            pointer-events: none;
+            position: absolute;
+            z-index: 100;
+            width: 300px;
+            min-height: 100px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

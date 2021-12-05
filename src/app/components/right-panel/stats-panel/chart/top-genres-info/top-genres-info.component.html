@@ -1,0 +1,9 @@
+<div class="content">
+  <div class="label">
+    Najczęściej słuchane gatunki:
+  </div>
+  <div *ngFor="let genre of reducedGenres; let i = index"
+       class="genre">
+    {{i + 1}}. <span>{{' ' + genre}}</span>
+  </div>
+</div>

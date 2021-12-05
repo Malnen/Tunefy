@@ -1,0 +1,25 @@
+<div class="content">
+  <div class="top">
+    <div *ngIf="config.image"
+         class="image">
+      <img src="{{config.image?.url}}">
+    </div>
+    <div class="caption">
+      {{config.caption}}
+    </div>
+  </div>
+  <div *ngIf="config.genreArtists"
+       class="artists">
+    <div class="label">
+      Artyści:
+    </div>
+    <div *ngFor="let artist of config.genreArtists;let i = index"
+         class="artist">
+      {{i + 1}}. <span>{{' ' + artist.name}}</span>
+    </div>
+  </div>
+  <div *ngIf="config.navigable"
+       class="navigable-label">
+    {{config.navigationLabel}}
+  </div>
+</div>

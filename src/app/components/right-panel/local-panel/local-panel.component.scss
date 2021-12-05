@@ -1,0 +1,81 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.content {
+  width: 100%;
+  user-select: none;
+
+  .top {
+    display: flex;
+    width: 100%;
+
+    .add-source {
+      width: 160px;
+      height: 56px;
+
+      button {
+        width: 140px;
+
+        &:hover {
+          height: 46px;
+          width: 144px;
+        }
+
+        &:active {
+          height: 42px;
+          width: 138px;
+        }
+
+      }
+
+    }
+
+    .show-sources {
+      width: 56px;
+      height: 56px;
+
+      button {
+        width: 42px;
+
+        &:hover {
+          height: 44px;
+          width: 44px;
+        }
+
+        &:active {
+          height: 42px;
+          width: 40px;
+        }
+
+      }
+
+    }
+
+    .add-source, .show-sources {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-self: flex-end;
+
+      button {
+        outline: none;
+        border: none;
+        background: $navigationBackground;
+        color: white;
+        @include mat-elevation(4);
+        padding: 12px;
+        font-size: 20px;
+        border-radius: 20px;
+        transition: font-weight 0.1s, height 0.2s, width 0.2s;
+
+        &:hover {
+          font-weight: 500;
+        }
+
+      }
+
+    }
+
+  }
+
+}
