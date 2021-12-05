@@ -20,6 +20,7 @@ import { Album } from '../../models/album.interface';
 import { ArtistTopTracks } from '../../models/artist-top-tracks.interface';
 import { ArtistsAlbumsResponse } from '../../models/artists-albums-response.interface';
 import { ScriptLoaderService } from '../script-loader/script-loader.service';
+import { DateRange } from '../../models/date-range.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -60,6 +61,7 @@ export class SpotifyService {
   private _lastFollowedUris = [];
   private _player: Player;
   private _redirectUri: string;
+  private _recentlyPlayed = new Subject<RecentlyPlayed>();
 
   constructor(private _http: HttpClient,
               private _router: Router,
@@ -121,8 +123,17 @@ export class SpotifyService {
     this._profileSubject.next(profile);
   }
 
+  hasRecentlyPlayedUpdate(): Observable<RecentlyPlayed> {
+    return this._recentlyPlayed.asObservable();
+  }
+
+  updateRecentlyPlayed(recentlyPlayed: RecentlyPlayed): void {
+    this._recentlyPlayed.next(recentlyPlayed);
+  }
+
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
+    this.formatRedirectUri();
     window.location.href = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + this._redirectUri + '&scope=' + scopes;
   }
@@ -143,6 +154,7 @@ export class SpotifyService {
       'Content-Type' : 'application/x-www-form-urlencoded'
     });
     const isRefreshTokenPresent = this.refreshToken !== '' && this.refreshToken != null;
+    this.formatRedirectUri();
     const payload = new HttpParams()
       .append('redirect_uri', this._redirectUri)
       .append('client_id', this.clientId)
@@ -293,7 +305,7 @@ export class SpotifyService {
       return;
     }
 
-    if (!(this.accessToken || this.refreshToken)) {
+    if (!(this.accessToken && this.refreshToken)) {
       return;
     }
 
@@ -343,8 +355,13 @@ export class SpotifyService {
     return this._http.get<Playlists>(url, options);
   }
 
-  getRecentlyPlayed(): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/recently-played?limit=50`;
+  getRecentlyPlayed(range?: DateRange): Observable<any> {
+    let url = `https://api.spotify.com/v1/me/player/recently-played?limit=50`;
+    if (range != null) {
+      url += range.start != null ? '&after=' + range.start : '';
+      url += range.end != null ? '&before=' + range.end : '';
+    }
+
     const options = this.getOptions();
 
     return this._http.get<RecentlyPlayed>(url, options);
@@ -505,6 +522,19 @@ export class SpotifyService {
     const options = this.getOptions();
 
     return this._http.get<ArtistsAlbumsResponse>(url, options);
+  }
+
+  private formatRedirectUri(): void {
+    this._redirectUri = this._redirectUri.replace('main', '');
+    const index = this._redirectUri.indexOf('?');
+    if (index > -1) {
+      const toRemove = this._redirectUri.substring(index);
+      this._redirectUri = this._redirectUri.replace(toRemove, '');
+    }
+    
+    if (!this._redirectUri.endsWith('/')) {
+      this._redirectUri = this._redirectUri + '/';
+    }
   }
 
   private setRedirectUri(): void {

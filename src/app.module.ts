@@ -11,7 +11,7 @@ import { ErrorPageComponent } from './app/components/login/error-page/error-page
 import { GlobalHttpInterceptor } from './app/services/global-http-interceptor/global-http-interceptor';
 import { SpotifyService } from './app/services/spotify/spotify.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerDirective } from './app/directives/spinner.directive';
 import { PanelWrapperComponent } from './app/components/panel-wrapper/panel-wrapper.component';
@@ -58,6 +58,18 @@ import { ArtistTopTracksTableComponent } from './app/components/right-panel/arti
 import { ArtistTopTrackCellComponent } from './app/components/right-panel/artist-panel/artist-top-tracks-table/artist-top-track-cell/artist-top-track-cell.component';
 import { AlbumTileComponent } from './app/components/right-panel/home-panel/album-tile/album-tile.component';
 import { NavigationComponent } from './app/components/right-panel/navigation/navigation.component';
+import { LocalPanelComponent } from './app/components/right-panel/local-panel/local-panel.component';
+import { AddLocalSourceDialogComponent } from './app/components/dialogs/add-local-source-dialog/add-local-source-dialog.component';
+import { StatsPanelComponent } from './app/components/right-panel/stats-panel/stats-panel.component';
+import { ChartComponent } from './app/components/right-panel/stats-panel/chart/chart.component';
+import { ChartBarComponent } from './app/components/right-panel/stats-panel/chart/chart-bar/chart-bar.component';
+import { TopArtistInfoComponent } from './app/components/right-panel/stats-panel/chart/top-artist-info/top-artist-info.component';
+import { TopAlbumInfoComponent } from './app/components/right-panel/stats-panel/chart/top-album-info/top-album-info.component';
+import { TopGenresInfoComponent } from './app/components/right-panel/stats-panel/chart/top-genres-info/top-genres-info.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ChartHintComponent } from './app/components/right-panel/stats-panel/chart/chart-hint/chart-hint.component';
+import { NonPremiumScreenComponent } from './app/components/login/non-premium-screen/non-premium-screen.component';
 
 @NgModule({
   declarations : [
@@ -106,7 +118,17 @@ import { NavigationComponent } from './app/components/right-panel/navigation/nav
     ArtistTopTracksTableComponent,
     ArtistTopTrackCellComponent,
     AlbumTileComponent,
-    NavigationComponent
+    NavigationComponent,
+    LocalPanelComponent,
+    AddLocalSourceDialogComponent,
+    StatsPanelComponent,
+    ChartComponent,
+    ChartBarComponent,
+    TopArtistInfoComponent,
+    TopAlbumInfoComponent,
+    TopGenresInfoComponent,
+    ChartHintComponent,
+    NonPremiumScreenComponent
   ],
   imports : [
     BrowserModule,
@@ -119,7 +141,10 @@ import { NavigationComponent } from './app/components/right-panel/navigation/nav
     NgbModule,
     MatDialogModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule
   ],
   providers : [
     {
@@ -127,7 +152,8 @@ import { NavigationComponent } from './app/components/right-panel/navigation/nav
       useClass : GlobalHttpInterceptor,
       multi : true
     },
-    SpotifyService
+    SpotifyService,
+    MatDatepickerModule
   ],
   bootstrap : [ AppComponent ]
 })

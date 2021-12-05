@@ -4,5 +4,7 @@ export enum ContentType {
   album,
   artist,
   followed,
-  local
+  local,
+  stats,
+  genres
 }

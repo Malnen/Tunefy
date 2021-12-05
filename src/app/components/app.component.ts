@@ -6,6 +6,7 @@ import { DialogService } from '../services/dialog/dialog.service';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { Option } from '../models/option.interface';
 import { ContextMenuService } from '../services/context-menu/context-menu.service';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector : 'app-root',
@@ -29,7 +30,9 @@ export class AppComponent implements OnInit {
 
   constructor(iconRegistry: MatIconRegistry,
               private _resolver: ComponentFactoryResolver,
-              private _contextMenuSerivce: ContextMenuService) {
+              private _contextMenuSerivce: ContextMenuService,
+              private dateAdapter: DateAdapter<Date>) {
+    this.dateAdapter.setLocale('pl');
     iconRegistry.registerFontClassAlias('devices', 'icon-tunefy-devices');
     iconRegistry.registerFontClassAlias('lyrics', 'icon-tunefy-lyrics');
   }

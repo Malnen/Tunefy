@@ -86,6 +86,7 @@ export class HomePanelComponent implements OnInit {
       this.setArtists();
       this.setAlbums();
       this.loading = false;
+      this._spotifyService.updateRecentlyPlayed(recentlyPlayed);
       setTimeout(() => {
         const tracksHeight = this.tracksWrapper?.nativeElement.offsetHeight;
         const artistsHeight = this.artistsWrapper?.nativeElement.offsetHeight;

@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subject } from 'rxjs';
 import { Playlist } from '../../models/playlist.interface';
 import { DeletePlaylistDialogComponent } from '../../components/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
+import { AddLocalSourceDialogComponent } from '../../components/dialogs/add-local-source-dialog/add-local-source-dialog.component';
 
 @Injectable({
   providedIn : 'root'
@@ -31,6 +32,18 @@ export class DialogService {
     dialogRef.afterClosed().subscribe((action: HTMLInputElement) => {
       if (action) {
         this.createPlaylist(action);
+      }
+    });
+  }
+
+  openAddLocalSourceDialog(callback: () => {}): void {
+    const dialogRef = this._dialog.open(AddLocalSourceDialogComponent, {
+      panelClass : 'add-local-source-dialog',
+      scrollStrategy : new NoopScrollStrategy()
+    });
+    dialogRef.afterClosed().subscribe((action: HTMLInputElement) => {
+      if (action) {
+        callback();
       }
     });
   }
