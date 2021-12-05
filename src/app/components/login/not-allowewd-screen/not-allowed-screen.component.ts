@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 
 @Component({
-  selector: 'app-non-premium-screen',
-  templateUrl: './non-premium-screen.component.html',
-  styleUrls: ['./non-premium-screen.component.scss']
+  selector : 'app-not-allowewd-screen',
+  templateUrl : './not-allowed-screen.component.html',
+  styleUrls : [ './not-allowed-screen.component.scss' ]
 })
-export class NonPremiumScreenComponent implements OnInit {
+export class NotAllowedScreenComponent implements OnInit {
 
   constructor(private _spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
+    this._spotifyService.userAllowed = false;
   }
 
   logout(): void {

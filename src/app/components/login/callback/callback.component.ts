@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SpotifyService} from '../../../services/spotify/spotify.service';
-import {TokenResponse} from '../../../models/token-response.interface';
-import {ColorsEnum} from '../../../enums/colors.enum';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SpotifyService } from '../../../services/spotify/spotify.service';
+import { TokenResponse } from '../../../models/token-response.interface';
+import { ColorsEnum } from '../../../enums/colors.enum';
+import { Profile } from '../../../models/profile.interface';
 
 @Component({
-  selector: 'app-callback',
-  templateUrl: './callback.component.html',
-  styleUrls: ['./callback.component.scss']
+  selector : 'app-callback',
+  templateUrl : './callback.component.html',
+  styleUrls : [ './callback.component.scss' ]
 })
 export class CallbackComponent implements OnInit {
 
@@ -22,7 +23,7 @@ export class CallbackComponent implements OnInit {
     const error = this._route.snapshot.queryParamMap.get('error');
 
     if (error != null && error !== '') {
-      this._router.navigate(['./error']);
+      this._router.navigate([ './error' ]);
     } else {
       this._spotifyService.accessToken = this._route.snapshot.queryParamMap.get('code');
       this._spotifyService.spotifyRefreshToken().subscribe((data: TokenResponse) => {
@@ -33,7 +34,13 @@ export class CallbackComponent implements OnInit {
           this._spotifyService.accessToken = data.access_token;
         }
 
-        this._router.navigate(['./main']);
+        this._spotifyService.getProfile().subscribe((profile: Profile) => {
+          if (profile.product === 'premium') {
+            this._router.navigate([ './main' ]);
+          } else {
+            this._router.navigate([ './nonPremium' ]);
+          }
+        });
       });
     }
 

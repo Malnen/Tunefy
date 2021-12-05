@@ -70,6 +70,7 @@ import { NonPremiumScreenComponent } from './app/components/login/non-premium-sc
 import { ChartHintComponent } from './app/components/right-panel/stats-panel/chart/chart-hint/chart-hint.component';
 import { TopAlbumInfoComponent } from './app/components/right-panel/stats-panel/chart/top-album-info/top-album-info.component';
 import { ChartComponent } from './app/components/right-panel/stats-panel/chart/chart.component';
+import { NotAllowedScreenComponent } from './app/components/login/not-allowewd-screen/not-allowed-screen.component';
 
 @NgModule({
   declarations : [
@@ -128,7 +129,8 @@ import { ChartComponent } from './app/components/right-panel/stats-panel/chart/c
     TopAlbumInfoComponent,
     TopGenresInfoComponent,
     ChartHintComponent,
-    NonPremiumScreenComponent
+    NonPremiumScreenComponent,
+    NotAllowedScreenComponent
   ],
   imports : [
     BrowserModule,
