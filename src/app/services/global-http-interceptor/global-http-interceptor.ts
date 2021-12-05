@@ -41,6 +41,14 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
               }
 
               break;
+            case 403:
+              if (error.error === 'User not registered in the Developer Dashboard') {
+                this._spotifyService.wait();
+                this._spotifyService.userNotAllowed();
+                return throwError(error.message);
+              }
+
+              break;
           }
 
           return throwError(error.message);

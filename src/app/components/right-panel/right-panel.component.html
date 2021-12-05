@@ -17,12 +17,12 @@
                         [playlist]="activeLinkConfig.playlist"
                         [container]="container"></app-followed-panel>
     <app-album-panel *ngSwitchCase="contentTypeEnum.album"
-                        [album]="activeLinkConfig.album"
-                        [container]="container"></app-album-panel>
+                     [album]="activeLinkConfig.album"
+                     [container]="container"></app-album-panel>
     <app-artist-panel *ngSwitchCase="contentTypeEnum.artist"
                       [artist]="activeLinkConfig.artist"
                       [container]="container"></app-artist-panel>
     <app-stats-panel *ngSwitchCase="contentTypeEnum.stats"
-                      [container]="container"></app-stats-panel>
+                     [container]="container"></app-stats-panel>
   </div>
 </div>

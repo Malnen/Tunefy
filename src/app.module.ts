@@ -61,15 +61,16 @@ import { NavigationComponent } from './app/components/right-panel/navigation/nav
 import { LocalPanelComponent } from './app/components/right-panel/local-panel/local-panel.component';
 import { AddLocalSourceDialogComponent } from './app/components/dialogs/add-local-source-dialog/add-local-source-dialog.component';
 import { StatsPanelComponent } from './app/components/right-panel/stats-panel/stats-panel.component';
-import { ChartComponent } from './app/components/right-panel/stats-panel/chart/chart.component';
 import { ChartBarComponent } from './app/components/right-panel/stats-panel/chart/chart-bar/chart-bar.component';
 import { TopArtistInfoComponent } from './app/components/right-panel/stats-panel/chart/top-artist-info/top-artist-info.component';
-import { TopAlbumInfoComponent } from './app/components/right-panel/stats-panel/chart/top-album-info/top-album-info.component';
 import { TopGenresInfoComponent } from './app/components/right-panel/stats-panel/chart/top-genres-info/top-genres-info.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ChartHintComponent } from './app/components/right-panel/stats-panel/chart/chart-hint/chart-hint.component';
 import { NonPremiumScreenComponent } from './app/components/login/non-premium-screen/non-premium-screen.component';
+import { ChartHintComponent } from './app/components/right-panel/stats-panel/chart/chart-hint/chart-hint.component';
+import { TopAlbumInfoComponent } from './app/components/right-panel/stats-panel/chart/top-album-info/top-album-info.component';
+import { ChartComponent } from './app/components/right-panel/stats-panel/chart/chart.component';
+import { NotAllowedScreenComponent } from './app/components/login/not-allowewd-screen/not-allowed-screen.component';
 
 @NgModule({
   declarations : [
@@ -128,7 +129,8 @@ import { NonPremiumScreenComponent } from './app/components/login/non-premium-sc
     TopAlbumInfoComponent,
     TopGenresInfoComponent,
     ChartHintComponent,
-    NonPremiumScreenComponent
+    NonPremiumScreenComponent,
+    NotAllowedScreenComponent
   ],
   imports : [
     BrowserModule,

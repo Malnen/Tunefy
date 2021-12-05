@@ -25,6 +25,8 @@ import { DateRange } from '../../models/date-range.interface';
 @Injectable()
 export class SpotifyService {
 
+  userAllowed = true;
+
   private readonly clientId: string = '6a6b154241b04bc1bd0f4656b98d8aa4'; // 'f65acf8953b54bd0b83627545be8ece4';
   private readonly clientSecret: string = 'e21ffa9272b14229896cf7003b46f8ae'; // '0cba5ea640b241b294596f215bbe9e15';
   private readonly scopes: string[] = [
@@ -56,6 +58,7 @@ export class SpotifyService {
   private _playerSubject = new BehaviorSubject<Player>(null);
   private _wait = false;
   private _waitTimer: any;
+  private _playerTimer: any;
   private _profile: Profile;
   private _profileSubject = new Subject<Profile>();
   private _lastFollowedUris = [];
@@ -68,7 +71,7 @@ export class SpotifyService {
               private _scriptsLoader: ScriptLoaderService) {
     this._redirectUri = window.location.href + 'callback/';
     this.initializeTokenRefresher();
-    setInterval(() => this.refreshPlayer(), 500);
+    this._playerTimer = setInterval(() => this.refreshPlayer(), 500);
     this.hasProfileUpdate().subscribe((profile: Profile) => this._profile = profile);
     this.hasPlayerUpdated().subscribe((player: Player) => this._player = player);
   }
@@ -134,8 +137,15 @@ export class SpotifyService {
   spotifyAuth(): void {
     const scopes = this.scopes.join('%20');
     this.formatRedirectUri();
-    window.location.href = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
+    let url = 'https://accounts.spotify.com/authorize?client_id=' + this.clientId + '&response_type=code&redirect_uri='
       + this._redirectUri + '&scope=' + scopes;
+    const showDialog = localStorage.getItem('showDialog');
+    if (showDialog == null || showDialog === 'true') {
+      url += '&show_dialog=true';
+      localStorage.setItem('showDialog', 'false');
+    }
+
+    window.location.href = url;
   }
 
   refreshTokens(): void {
@@ -220,7 +230,7 @@ export class SpotifyService {
     return this._http.post(url, null, options);
   }
 
-  logout(): void {
+  logout(withReload = true): void {
     if (this._player?.device.id === this.deviceId) {
       this.pause();
     }
@@ -228,7 +238,10 @@ export class SpotifyService {
     this.refreshToken = '';
     this._scriptsLoader.removeScripts();
     this._router.navigate([ './' ]);
-    window.location.reload();
+    localStorage.setItem('showDialog', 'true');
+    if (withReload) {
+      window.location.reload();
+    }
   }
 
   updateLastFollowedUris(uris: string[]): void {
@@ -301,24 +314,19 @@ export class SpotifyService {
   }
 
   refreshPlayer(): void {
-    if (this._wait) {
-      return;
-    }
-
-    if (!(this.accessToken && this.refreshToken)) {
-      return;
-    }
-
-    this.getPlayer().subscribe((player: Player) => {
-      if (player == null) {
-        if (this.deviceId != null) {
-          this.setAsCurrentDevice().subscribe((data: any) => {
-          });
+    const canUpdate = !(this._wait || !this.userAllowed || !(this.accessToken && this.refreshToken));
+    if (canUpdate) {
+      this.getPlayer().subscribe((player: Player) => {
+        if (player == null) {
+          if (this.deviceId != null) {
+            this.setAsCurrentDevice().subscribe((data: any) => {
+            });
+          }
+        } else {
+          this._playerSubject.next(player);
         }
-      } else {
-        this._playerSubject.next(player);
-      }
-    });
+      });
+    }
   }
 
   search(query: string): Observable<any> {
@@ -332,6 +340,13 @@ export class SpotifyService {
     this._wait = true;
     clearTimeout(this._waitTimer);
     this._waitTimer = setTimeout(() => this._wait = false, 15000);
+  }
+
+  userNotAllowed(): void {
+    this._wait = true;
+    clearTimeout(this._waitTimer);
+    this.userAllowed = false;
+    this._router.navigate([ './userNotAllowed' ]);
   }
 
   addTrackToQueue(track: Item): Observable<any> {
@@ -526,12 +541,14 @@ export class SpotifyService {
 
   private formatRedirectUri(): void {
     this._redirectUri = this._redirectUri.replace('main', '');
+    this._redirectUri = this._redirectUri.replace('userNotAllowed', '');
+    this._redirectUri = this._redirectUri.replace('nonPremium', '');
     const index = this._redirectUri.indexOf('?');
     if (index > -1) {
       const toRemove = this._redirectUri.substring(index);
       this._redirectUri = this._redirectUri.replace(toRemove, '');
     }
-    
+
     if (!this._redirectUri.endsWith('/')) {
       this._redirectUri = this._redirectUri + '/';
     }
