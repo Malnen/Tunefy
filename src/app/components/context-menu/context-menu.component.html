@@ -1,5 +1,6 @@
 <div class="mask"
-     (click)="onMaskClick()"></div>
+     (click)="onMaskClick()"
+     (contextmenu)="onMaskContextClick($event)"></div>
 <div *ngIf="initialized"
      #menu
      appHover
@@ -8,7 +9,13 @@
      [style.top]="top+'px'"
      [style.left]="left+'px'"
      (hover)="onHover($event)">
-  <app-option *ngFor="let option of options"
-              [option]="option"
-              (clicked)="onMaskClick()"></app-option>
+  <div *ngFor="let option of options"
+       class="option">
+    <app-option
+            [option]="option"
+            [event]="event"
+            (clicked)="onMaskClick()"></app-option>
+    <div *ngIf="option.showDivider"
+         class="divider"></div>
+  </div>
 </div>

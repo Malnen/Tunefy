@@ -1,4 +1,7 @@
 export interface Option {
   label: string;
-  action: () => void;
+  action?: () => void;
+  expandable?: boolean;
+  subOptions: Option[];
+  showDivider?: boolean;
 }

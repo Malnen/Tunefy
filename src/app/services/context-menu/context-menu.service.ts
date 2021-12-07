@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Option } from '../../models/option.interface';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class ContextMenuService {
   private _lastOptions: Option[];
   private _options = new Subject<Option[]>();
   private _close = new Subject<void>();
+  private _width = new BehaviorSubject<number>(0);
 
   constructor() { }
 
@@ -32,6 +33,16 @@ export class ContextMenuService {
 
   refresh(): void {
     this._options.next(this._lastOptions);
+  }
+
+  updateWidth(width: number): void {
+    if (this._width.value < width) {
+      this._width.next(width);
+    }
+  }
+
+  hasWidthUpdated(): Observable<number> {
+    return this._width.asObservable();
   }
 
 }

@@ -1,4 +1,23 @@
 <div class="content"
-     (click)="onClick()">
+     (click)="onClick()"
+     (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()">
   <div class="label">{{option.label}}</div>
+  <div *ngIf="option.expandable"
+       class="arrow">
+    <mat-icon>arrow_right</mat-icon>
+  </div>
+  <div *ngIf="showSubMenu"
+       class="sub-menu"
+       #subMenu
+       [style.left]="left+'px'"
+       [style.top]="top+'px'">
+    <div *ngFor="let option of option.subOptions"
+         class="sub-option"
+         (click)="onSubOptionClick(option)">
+      <div class="label">
+        {{option.label}}
+      </div>
+    </div>
+  </div>
 </div>

@@ -33,4 +33,15 @@ export class ContextMenuComponent extends HoverableComponent implements OnInit {
     this._contextMenuService.closeContextMenu();
   }
 
+  onMaskContextClick(event: MouseEvent): void {
+    this._contextMenuService.closeContextMenu();
+    const contextMenuEvent = new MouseEvent('contextmenu', {
+      bubbles : true,
+      clientX : event.clientX,
+      clientY : event.clientY
+    });
+    const element = document.elementsFromPoint(event.x, event.y)[ 1 ] as HTMLElement;
+    element.dispatchEvent(contextMenuEvent);
+  }
+
 }
