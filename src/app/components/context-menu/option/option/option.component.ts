@@ -14,11 +14,14 @@ export class OptionComponent implements OnInit, AfterViewInit {
 
   @Input() option: Option;
   @Input() event: CustomMouseEvent;
+  @Input() flipVertically: boolean;
+  @Input() flipHorizontally: boolean;
 
   @Output() clicked = new EventEmitter<void>();
 
   left: number;
   top: number;
+  height: number;
   showSubMenu = false;
 
   constructor(private _elementRef: ElementRef,
@@ -27,12 +30,17 @@ export class OptionComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this._contextMenuService.hasWidthUpdated().subscribe((width: number) => {
-      this.left = width;
+      if (this.flipVertically) {
+        this.left = -width;
+      } else {
+        this.left = width;
+      }
     });
   }
 
   ngAfterViewInit(): void {
     const width = this._elementRef.nativeElement.getBoundingClientRect().width;
+    this.height = this._elementRef.nativeElement.getBoundingClientRect().height;
     this._contextMenuService.updateWidth(width);
     this.top = this._elementRef.nativeElement.getBoundingClientRect().top - this.event.clientY;
     this.cdr.detectChanges();

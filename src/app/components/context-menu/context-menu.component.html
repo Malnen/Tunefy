@@ -14,6 +14,8 @@
     <app-option
             [option]="option"
             [event]="event"
+            [flipVertically]="flipVertically"
+            [flipHorizontally]="flipHorizontally"
             (clicked)="onMaskClick()"></app-option>
     <div *ngIf="option.showDivider"
          class="divider"></div>

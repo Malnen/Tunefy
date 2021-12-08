@@ -8,9 +8,9 @@ import { LinkTileService } from '../../../../services/link-tile/link-tile.servic
 import { ContentType } from '../../../../enums/content-type.enum';
 
 @Component({
-  selector: 'app-album-tile',
-  templateUrl: './album-tile.component.html',
-  styleUrls: ['./album-tile.component.scss']
+  selector : 'app-album-tile',
+  templateUrl : './album-tile.component.html',
+  styleUrls : [ './album-tile.component.scss' ]
 })
 export class AlbumTileComponent extends BaseComponent implements OnInit {
 
@@ -27,6 +27,21 @@ export class AlbumTileComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.image = this.album.images[ 0 ];
+    this.options = [
+      {
+        label : 'Odtwarzaj',
+        action : this.playAlbum.bind(this)
+      },
+      {
+        label : 'Odtwarzaj losowo',
+        action : this.playAlbumRandom.bind(this),
+        showDivider : true
+      },
+      {
+        label : 'Przejdź do albumu',
+        action : this.onClick.bind(this)
+      }
+    ];
   }
 
   onImageError(): void {
@@ -39,6 +54,15 @@ export class AlbumTileComponent extends BaseComponent implements OnInit {
       album : this.album
     };
     this._linkTileService.updateLinkTile(config);
+  }
+
+  private playAlbum(): void {
+    this._spotifyService.playAlbum(this.album).subscribe();
+  }
+
+  private playAlbumRandom(): void {
+    const offset = Math.floor(Math.random() * (this.album.total_tracks + 1));
+    this._spotifyService.playAlbum(this.album, offset).subscribe();
   }
 
 }

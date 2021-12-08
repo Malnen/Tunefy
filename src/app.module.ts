@@ -71,6 +71,7 @@ import { ChartHintComponent } from './app/components/right-panel/stats-panel/cha
 import { TopAlbumInfoComponent } from './app/components/right-panel/stats-panel/chart/top-album-info/top-album-info.component';
 import { ChartComponent } from './app/components/right-panel/stats-panel/chart/chart.component';
 import { NotAllowedScreenComponent } from './app/components/login/not-allowewd-screen/not-allowed-screen.component';
+import { SubMenuComponent } from './app/components/context-menu/sub-menu/sub-menu.component';
 
 @NgModule({
   declarations : [
@@ -130,7 +131,8 @@ import { NotAllowedScreenComponent } from './app/components/login/not-allowewd-s
     TopGenresInfoComponent,
     ChartHintComponent,
     NonPremiumScreenComponent,
-    NotAllowedScreenComponent
+    NotAllowedScreenComponent,
+    SubMenuComponent
   ],
   imports : [
     BrowserModule,

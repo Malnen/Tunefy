@@ -6,6 +6,7 @@
   cursor: pointer;
   transition: background 0.2s;
   display: flex;
+  position: relative;
 
   .label {
     color: $contextMenuText;
@@ -19,6 +20,11 @@
     height: 1rem;
     font-size: 1rem;
 
+    &.left {
+      margin-left: -10px;
+      margin-right: 10px;
+    }
+
     mat-icon {
       line-height: 1.25rem;
       width: 100%;
@@ -28,50 +34,6 @@
 
   &:hover {
     background: $contextMenuHover;
-  }
-
-  .sub-menu {
-    width: 100%;
-    position: absolute;
-    background: $contextMenu;
-    max-height: 300px;
-    overflow: overlay;
-    border-radius: 6px;
-    @include mat-elevation(4);
-    @include mat-elevation-transition();
-
-    &.hover {
-      @include mat-elevation(6);
-    }
-
-    .sub-option {
-      width: 100%;
-      padding: 15px;
-      cursor: pointer;
-      transition: background 0.2s;
-
-      .label {
-        color: $contextMenuText;
-        font-size: 1rem;
-      }
-
-      &:hover {
-        background: $contextMenuHover;
-      }
-
-    }
-
-  }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-    background: none;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: $scroll;
-    border-radius: 15px;
-    transition: background 0.2s;
   }
 
 }

@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { Playlist } from '../../models/playlist.interface';
 import { DeletePlaylistDialogComponent } from '../../components/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 import { AddLocalSourceDialogComponent } from '../../components/dialogs/add-local-source-dialog/add-local-source-dialog.component';
+import { SnackBarService } from '../snack-bar-service/snack-bar.service';
 
 @Injectable({
   providedIn : 'root'
@@ -18,7 +19,7 @@ export class DialogService {
 
   constructor(private _dialog: MatDialog,
               private _spotifyService: SpotifyService,
-              private _snackBar: MatSnackBar) { }
+              private _snackBarService: SnackBarService) { }
 
   hasPlaylistsUpdated(): Observable<void> {
     return this._playlistsUpdated.asObservable();
@@ -64,17 +65,17 @@ export class DialogService {
     this._spotifyService.creatPlaylist(input.value)
       .subscribe(
         () => {
-          this._snackBar.open('Playlista została utworzona', '', { duration : 2000 });
+          this._snackBarService.showSnackBar('Playlista została utworzona');
           this._playlistsUpdated.next();
         },
-        () => this._snackBar.open('Nie utworzono playlisty', '', { duration : 2000 }));
+        () => this._snackBarService.showSnackBar('Nie utworzono playlisty'));
   }
 
   private deletePlaylist(id: string): void {
     this._spotifyService.deletePlaylist(id)
       .subscribe(
         () => {
-          this._snackBar.open('Playlista została usunięta', '', { duration : 2000 });
+          this._snackBarService.showSnackBar('Playlista została usunięta');
           this._playlistsUpdated.next();
         });
   }

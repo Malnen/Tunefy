@@ -11,6 +11,7 @@ export class ContextMenuService {
   private _options = new Subject<Option[]>();
   private _close = new Subject<void>();
   private _width = new BehaviorSubject<number>(0);
+  private _height = new BehaviorSubject<number>(0);
 
   constructor() { }
 
@@ -41,8 +42,18 @@ export class ContextMenuService {
     }
   }
 
+  updateHeight(height: number): void {
+    if (this._height.value < height) {
+      this._height.next(height);
+    }
+  }
+
   hasWidthUpdated(): Observable<number> {
     return this._width.asObservable();
+  }
+
+  hasHeightUpdated(): Observable<number> {
+    return this._height.asObservable();
   }
 
 }

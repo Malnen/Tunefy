@@ -12,6 +12,8 @@ import { Artist } from '../../../../models/artist.interface';
 import { Artists } from '../../../../models/artists.interface';
 import { PlaylistService } from '../../../../services/playlist-service/playlist.service';
 import { Playlists } from '../../../../models/playlists.interface';
+import { Playlist } from '../../../../models/playlist.interface';
+import { SnackBarService } from '../../../../services/snack-bar-service/snack-bar.service';
 
 @Component({
   selector : 'app-track-tile',
@@ -30,7 +32,8 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
   constructor(contextMenuService: ContextMenuService,
               private _spotifyService: SpotifyService,
               private _linkTileService: LinkTileService,
-              private _playlistService: PlaylistService) {
+              private _playlistService: PlaylistService,
+              private _snackBarService: SnackBarService) {
     super(contextMenuService);
   }
 
@@ -97,7 +100,9 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
   }
 
   private addToQueue(): void {
-    this._spotifyService.addTrackToQueue(this.recentlyPlayed.track).subscribe();
+    this._spotifyService.addTrackToQueue(this.recentlyPlayed.track).subscribe(() => {
+      this._snackBarService.showSnackBar('Utwór został dodany do kolejki');
+    });
   }
 
   private navigateToAlbum(): void {
@@ -128,12 +133,20 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
       for (const playlist of this.playlists?.items) {
         options.push({
           label : playlist.name,
-          action : () => {}
+          action : () => this.addTrackToPlaylist(playlist)
         });
       }
     }
 
     return options;
+  }
+
+  private addTrackToPlaylist(playlist: Playlist): void {
+    this._spotifyService.addTracksToPlaylist(playlist.id, [ this.recentlyPlayed.track.uri ]).subscribe(() => {
+      this._snackBarService.showSnackBar(`Utwór został dodany do playlisty: ${ playlist.name }`);
+    }, (error => {
+      this._snackBarService.showSnackBar('Nie udało się dodać utworu do playlisty');
+    }));
   }
 
   private navigateToArtist(artist: Artist): void {
