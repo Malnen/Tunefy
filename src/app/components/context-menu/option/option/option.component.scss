@@ -1,13 +1,35 @@
 @import "src/colors";
+@import 'node_modules/@angular/material/theming';
 
 .content {
   padding: 15px;
   cursor: pointer;
   transition: background 0.2s;
+  display: flex;
+  position: relative;
 
   .label {
     color: $contextMenuText;
     font-size: 1rem;
+  }
+
+  .arrow {
+    width: 10%;
+    max-height: 100%;
+    color: $contextMenuText;
+    height: 1rem;
+    font-size: 1rem;
+
+    &.left {
+      margin-left: -10px;
+      margin-right: 10px;
+    }
+
+    mat-icon {
+      line-height: 1.25rem;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &:hover {

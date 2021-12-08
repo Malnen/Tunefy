@@ -1,4 +1,22 @@
 <div class="content"
-     (click)="onClick()">
+     (click)="onClick()"
+     (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()">
+  <div *ngIf="option.expandable && flipVertically"
+       class="arrow left">
+    <mat-icon>arrow_left</mat-icon>
+  </div>
   <div class="label">{{option.label}}</div>
+  <div *ngIf="option.expandable && !flipVertically"
+       class="arrow">
+    <mat-icon>arrow_right</mat-icon>
+  </div>
+  <app-sub-menu *ngIf="showSubMenu"
+                class="sub-menu"
+                #subMenu
+                [left]="left"
+                [subOptions]="option.subOptions"
+                [height]="height"
+                (subOptionClicked)="onSubOptionClick($event)">
+  </app-sub-menu>
 </div>

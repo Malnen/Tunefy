@@ -31,7 +31,7 @@ export class ChartComponent implements OnInit, OnChanges {
   contentTypeEnum = ContentType;
   topArtist: Artist;
   topAlbum: Album;
-  genres: string[];
+  genres: Map<string, number>;
   hoveredBar: BarConfig;
   hintPosition: Position;
   hover = false;
@@ -121,7 +121,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
   private setArtists(): void {
     const artists = new Map<string, { obj: Artist, count: number }>();
-    const ids = [];
+    let ids = [];
     for (const item of this.recentlyPlayed.items) {
       for (const artist of item.track.artists) {
         const name = artist.name;
@@ -137,16 +137,25 @@ export class ChartComponent implements OnInit, OnChanges {
       }
     }
 
+    ids = ids.slice(0, 50);
     this._spotifyService.getArtists(ids).subscribe((response: Artists) => {
-      this.topArtist = response.artists[ 0 ];
       for (const artist of response.artists) {
         const bar = this.bars.find(value => value.caption === artist.name);
         bar.image = artist.images[ 0 ];
         bar.artist = artist;
       }
     });
+
     this.fillBars(artists);
-    const topArtist = Array.from(artists.values()).find(value => value.count === this._max).obj;
+    let topArtist;
+    let max = 0;
+    for (const artist of Array.from(artists.values())) {
+      if (topArtist == null || max < artist.count) {
+        topArtist = artist.obj;
+        max = artist.count;
+      }
+    }
+
     this._spotifyService.getArtists([ topArtist.id ]).subscribe((response: Artists) => {
       this.topArtist = response.artists[ 0 ];
       for (const artist of artists.values()) {
@@ -172,7 +181,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   private setGenres(): void {
-    const ids = [];
+    let ids = [];
     for (const item of this.recentlyPlayed.items) {
       for (const artist of item.track.artists) {
         if (!ids.includes(artist.id)) {
@@ -181,6 +190,7 @@ export class ChartComponent implements OnInit, OnChanges {
       }
     }
 
+    ids = ids.slice(0, 50);
     this._spotifyService.getArtists(ids).subscribe((artists: Artists) => {
       const genres = new Map<string, number>();
       for (const artist of artists.artists) {
@@ -197,7 +207,7 @@ export class ChartComponent implements OnInit, OnChanges {
       }
 
       this.fillBarsWithGenres(genres, artists);
-      this.genres = Array.from(genres.keys());
+      this.genres = genres;
     });
   }
 

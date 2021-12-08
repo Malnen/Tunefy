@@ -7,7 +7,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 })
 export class TopGenresInfoComponent implements OnChanges {
 
-  @Input() genres: string[];
+  @Input() genres: Map<string, number>;
 
   reducedGenres: string[];
 
@@ -19,9 +19,11 @@ export class TopGenresInfoComponent implements OnChanges {
 
   private reduceGenres(): void {
     this.reducedGenres = [];
-    if (this.genres) {
-      for (const genre of this.genres) {
-        this.reducedGenres.push(genre);
+    let genres = JSON.parse(JSON.stringify(Array.from(this.genres?.entries())));
+    genres = genres?.sort((x, y) => y[ 1 ] - x [ 1 ]);
+    if (genres) {
+      for (const genre of genres) {
+        this.reducedGenres.push(genre[ 0 ]);
         if (this.reducedGenres.length > 4) {
           break;
         }

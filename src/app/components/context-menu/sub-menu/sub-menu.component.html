@@ -1,0 +1,12 @@
+<div class="sub-menu"
+     #subMenu
+     [style.left]="left+'px'"
+     [style.top]="top+'px'">
+  <div *ngFor="let option of subOptions"
+       class="sub-option"
+       (click)="onSubOptionClick(option)">
+    <div class="label">
+      {{option.label}}
+    </div>
+  </div>
+</div>

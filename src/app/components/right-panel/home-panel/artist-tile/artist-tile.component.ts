@@ -27,6 +27,12 @@ export class ArtistTileComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.image = this.artist.images[ 0 ];
+    this.options = [
+      {
+        label : 'Przejdź do artysty',
+        action : this.onClick.bind(this)
+      }
+    ];
   }
 
   onImageError(): void {

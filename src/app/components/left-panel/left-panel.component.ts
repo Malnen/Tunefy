@@ -4,6 +4,7 @@ import { SpotifyService } from '../../services/spotify/spotify.service';
 import { LinkTileComponent } from './link-tile/link-tile.component';
 import { ContentType } from '../../enums/content-type.enum';
 import { DialogService } from '../../services/dialog/dialog.service';
+import { PlaylistService } from '../../services/playlist-service/playlist.service';
 
 @Component({
   selector : 'app-left-panel',
@@ -21,7 +22,8 @@ export class LeftPanelComponent implements OnInit, AfterViewInit {
   contentType = ContentType;
 
   constructor(private _dialog: DialogService,
-              private _spotifyService: SpotifyService) { }
+              private _spotifyService: SpotifyService,
+              private _playlistService: PlaylistService) { }
 
   ngOnInit(): void {
     this.loadPlaylists();
@@ -52,6 +54,7 @@ export class LeftPanelComponent implements OnInit, AfterViewInit {
         this.playlists = null;
       }
       this.playlists = playlists;
+      this._playlistService.updatePlaylists(this.playlists);
       this.getNextPlaylists();
     });
   }

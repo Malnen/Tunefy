@@ -461,6 +461,14 @@ export class SpotifyService {
     return this._http.put(url, payload, options);
   }
 
+  addTracksToPlaylist(id: string, uris: string[]): Observable<any> {
+    const urisString = uris.join('%2C').replace(/:/g, '%3A');
+    const url = `https://api.spotify.com/v1/playlists/${ id }/tracks?uris=${ urisString }`;
+    const options = this.getOptions();
+
+    return this._http.post(url, null, options);
+  }
+
   playFromUris(uris: string[], offset?: number): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();

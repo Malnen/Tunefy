@@ -7,13 +7,19 @@
   min-width: 100px;
   max-width: 300px;
   background: $contextMenu;
-  overflow: hidden;
   border-radius: 6px;
   @include mat-elevation(4);
   @include mat-elevation-transition();
 
   &.hover {
     @include mat-elevation(6);
+  }
+
+  .divider{
+    background: $contextMenuDivider;
+    height: 2px;
+    width: 90%;
+    margin: auto;
   }
 
 }
