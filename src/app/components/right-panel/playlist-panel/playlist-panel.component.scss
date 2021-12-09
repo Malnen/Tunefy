@@ -49,6 +49,14 @@
         display: -webkit-box;
       }
 
+      .description {
+        padding: 0 10px;
+        font-size: 1vw;
+        line-height: 1vw;
+        margin-bottom: 10px;
+        color: $playlistTotal;
+      }
+
       .total {
         padding: 0 10px;
         font-size: 1rem;
@@ -133,6 +141,53 @@
               &:active {
                 height: 35px;
                 width: 190px;
+              }
+
+            }
+
+          }
+
+        }
+
+        .details {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 50px;
+          width: 75px;
+
+          button {
+            border: none;
+            outline: none;
+            background: white;
+            border-radius: 40px;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px 0 0;
+            transition: height 0.1s, width 0.1s;
+            @include mat-elevation(6);
+
+            mat-icon {
+              height: 40px;
+              width: 40px;
+              line-height: 40px;
+              transition: color 0.1s;
+            }
+
+            &:hover {
+              height: 45px;
+              width: 45px;
+
+              mat-icon {
+                color: $orange;
+              }
+
+              &:active {
+                height: 35px;
+                width: 35px;
               }
 
             }

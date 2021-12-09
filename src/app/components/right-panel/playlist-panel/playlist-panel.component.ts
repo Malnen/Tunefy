@@ -10,6 +10,7 @@ import { PlaylistService } from '../../../services/playlist-service/playlist.ser
 import { Observable } from 'rxjs';
 import { Item } from '../../../models/item.interface';
 import { Playlists } from '../../../models/playlists.interface';
+import { DialogService } from '../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-playlist-panel',
@@ -43,7 +44,8 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   private _listUsedNext = [];
 
   constructor(protected spotifyService: SpotifyService,
-              protected playlistService: PlaylistService) { }
+              protected playlistService: PlaylistService,
+              private _dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.setContext();
@@ -83,6 +85,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     });
   }
 
+
   onInputChange(): void {
     clearTimeout(this._timer);
     this._timer = setTimeout(() => {
@@ -106,6 +109,10 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   }
 
   onUnfollowed(track: Item): void {}
+
+  onDetailsClick(): void {
+    this._dialogService.openEditPlaylistDialog(this.playlist);
+  }
 
   protected setContext(): void {
     this.context = { uri : this.playlist.uri };

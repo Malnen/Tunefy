@@ -8,6 +8,7 @@ import { Profile } from '../../../../models/profile.interface';
 import { Player } from '../../../../models/player.interface';
 import { PlaylistItem } from '../../../../models/playlist-item.interface';
 import { Item } from '../../../../models/item.interface';
+import { DialogService } from '../../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-followed-panel',
@@ -20,8 +21,9 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
   private _uris: string[];
 
   constructor(spotifyService: SpotifyService,
-              playlistService: PlaylistService) {
-    super(spotifyService, playlistService);
+              playlistService: PlaylistService,
+              dialogService: DialogService) {
+    super(spotifyService, playlistService, dialogService);
   }
 
   ngOnInit(): void {

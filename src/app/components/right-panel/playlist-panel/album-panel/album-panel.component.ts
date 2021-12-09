@@ -8,6 +8,7 @@ import { PlaylistTracks } from '../../../../models/playlist-tracks.interface';
 import { AlbumResponse } from '../../../../models/album-response.interface';
 import { Item } from '../../../../models/item.interface';
 import { Player } from '../../../../models/player.interface';
+import { DialogService } from '../../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-album-panel',
@@ -21,8 +22,9 @@ export class AlbumPanelComponent extends PlaylistPanelComponent implements OnIni
   albumTracks: AlbumResponse;
 
   constructor(spotifyService: SpotifyService,
-              playlistService: PlaylistService) {
-    super(spotifyService, playlistService);
+              playlistService: PlaylistService,
+              dialogService: DialogService) {
+    super(spotifyService, playlistService, dialogService);
   }
 
   ngOnInit(): void {

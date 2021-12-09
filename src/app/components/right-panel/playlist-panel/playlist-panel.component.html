@@ -10,6 +10,10 @@
       <div class="title">
         {{playlist.name}}
       </div>
+      <div *ngIf="playlist.description"
+           class="description">
+        {{playlist.description}}
+      </div>
       <div class="total">
         Ilość urtowrów: {{playlist.tracks?.total}}
       </div>
@@ -22,6 +26,10 @@
         </div>
         <div class="play-random">
           <button (click)="playRandom()">Odtwarzaj losowo</button>
+        </div>
+        <div *ngIf="playlist.type==='playlist'"
+             class="details">
+          <button (click)="onDetailsClick()">...</button>
         </div>
       </div>
     </div>

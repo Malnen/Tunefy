@@ -21,6 +21,7 @@ import { ArtistTopTracks } from '../../models/artist-top-tracks.interface';
 import { ArtistsAlbumsResponse } from '../../models/artists-albums-response.interface';
 import { ScriptLoaderService } from '../script-loader/script-loader.service';
 import { DateRange } from '../../models/date-range.interface';
+import { PlaylistData } from '../../models/playlist-data.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -534,15 +535,27 @@ export class SpotifyService {
     return this._http.put(url, payload, options);
   }
 
-  creatPlaylist(name: string): Observable<any> {
+  creatPlaylist(data: PlaylistData): Observable<any> {
     const url = `	https://api.spotify.com/v1/users/${ this._profile.id }/playlists`;
     const options = this.getOptions();
     const payload = {
-      name,
+      name : data.name,
+      description : data.description,
       public : true
     };
 
     return this._http.post(url, payload, options);
+  }
+
+  editPlaylist(data: PlaylistData, playlist: Playlist): Observable<any> {
+    const url = `https://api.spotify.com/v1/playlists/${ playlist.id }`;
+    const options = this.getOptions();
+    const payload = {
+      name : data.name,
+      description : data.description
+    };
+
+    return this._http.put(url, payload, options);
   }
 
   deletePlaylist(id: string): Observable<any> {
