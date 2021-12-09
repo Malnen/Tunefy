@@ -1,4 +1,5 @@
 import { Image } from './image.interface';
+import { Owner } from './owner.interface';
 
 export interface Playlist {
   id: string;
@@ -10,4 +11,5 @@ export interface Playlist {
     total: number;
     href: string;
   };
+  owner: Owner;
 }

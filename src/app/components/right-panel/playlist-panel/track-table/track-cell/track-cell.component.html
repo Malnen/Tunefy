@@ -1,6 +1,7 @@
 <div class="content"
      appHover
-     (hover)="onHover($event)">
+     (hover)="onHover($event)"
+     (contextmenu)="onContextMenu($event)">
   <div class="divider"></div>
   <div class="wrapper"
        [class.hover]="hover"

@@ -89,7 +89,14 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
       uri : null,
       id : '',
       href : '',
-      images : []
+      images : [],
+      owner : {
+        id : '',
+        href : '',
+        uri : 'followed',
+        display_name : '',
+        type : ''
+      }
     };
   }
 

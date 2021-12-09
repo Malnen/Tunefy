@@ -62,11 +62,30 @@ export class LinkTileComponent extends BaseComponent implements OnInit, AfterVie
     if (this.activeLinkConfig?.playlist) {
       this.options = [
         {
+          label : 'Odtwarzaj',
+          action : this.play.bind(this)
+        },
+        {
+          label : 'Odtwarzaj losowo',
+          action : this.playRandom.bind(this),
+          showDivider : true
+        },
+        {
           label : 'Usuń',
           action : this.deletePlaylist.bind(this)
         }
       ];
     }
+  }
+
+  private play(): void {
+    this._spotifyService.playPlaylist(this.activeLinkConfig.playlist).subscribe();
+    this._spotifyService.setShuffleState(false).subscribe();
+  }
+
+  private playRandom(): void {
+    const offset = Math.floor(Math.random() * (this.activeLinkConfig.playlist.tracks.total + 1));
+    this._spotifyService.playPlaylist(this.activeLinkConfig.playlist, offset).subscribe();
   }
 
   private deletePlaylist(): void {

@@ -15,6 +15,7 @@ export class ProfileBarComponent implements OnInit {
   showContent: boolean;
   showMask: boolean;
   spinnerColor = ColorsEnum.ORANGE;
+  url: string;
 
   private _timer: any;
 
@@ -24,6 +25,7 @@ export class ProfileBarComponent implements OnInit {
     this._spotifyService.hasProfileUpdate().subscribe((profile: Profile) => this.profile = profile);
     this._spotifyService.getProfile().subscribe((profile: Profile) => {
       this._spotifyService.updateProfile(profile);
+      this.setUrl();
     });
   }
 
@@ -41,6 +43,18 @@ export class ProfileBarComponent implements OnInit {
   logout(): void {
     this.showMask = true;
     setTimeout(() => this._spotifyService.logout(), 100);
+  }
+
+  private setUrl(): void {
+    const hasProfile = this.profile != null;
+    const hasImages = hasProfile ? this.profile?.images.length > 0 : false;
+    const url = hasImages ? this.profile?.images[ 0 ].url : '';
+    const hasUrl = url != null && url !== '';
+    if (hasUrl) {
+      this.url = this.profile?.images[ 0 ].url;
+    } else {
+      this.url = './assets/images/profile.png';
+    }
   }
 
 }

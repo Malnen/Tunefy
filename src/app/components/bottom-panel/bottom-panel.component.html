@@ -1,7 +1,8 @@
 <div class="container">
   <div class="left-side">
     <div class="item-container">
-      <div class="image">
+      <div class="image"
+           (contextmenu)="onContextMenu($event)">
         <img *ngIf="image"
              src="{{image?.url}}">
       </div>

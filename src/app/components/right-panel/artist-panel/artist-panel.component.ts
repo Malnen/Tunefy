@@ -6,6 +6,8 @@ import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { ArtistTopTracks } from '../../../models/artist-top-tracks.interface';
 import { ArtistsAlbumsResponse } from '../../../models/artists-albums-response.interface';
 import { ColorsEnum } from '../../../enums/colors.enum';
+import { Playlists } from '../../../models/playlists.interface';
+import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 
 @Component({
   selector : 'app-artist-panel',
@@ -25,8 +27,10 @@ export class ArtistPanelComponent implements OnInit, OnChanges {
   loading: boolean;
   loadingAlbums: boolean;
   spinnerColor = ColorsEnum.ORANGE;
+  playlists: Playlists;
 
-  constructor(private _spotifyService: SpotifyService) { }
+  constructor(private _spotifyService: SpotifyService,
+              private _playlistService: PlaylistService) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -34,6 +38,9 @@ export class ArtistPanelComponent implements OnInit, OnChanges {
     this.loadRelatedArtists();
     this.loadTopTracks();
     this.loadAlbums();
+    this._playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
+      this.playlists = playlists;
+    });
   }
 
   ngOnChanges(): void {

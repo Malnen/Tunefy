@@ -57,6 +57,8 @@
                       [playlistItem]="track"
                       [index]="i"
                       [playlist]="playlist"
+                      [playlists]="playlists"
+                      (refresh)="onRefresh()"
                       (unfollowed)="onUnfollowed($event)"></app-track-cell>
     </div>
     <div *ngIf="isEmpty && !loading"

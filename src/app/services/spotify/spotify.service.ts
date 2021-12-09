@@ -469,6 +469,23 @@ export class SpotifyService {
     return this._http.post(url, null, options);
   }
 
+  deleteTracksToPlaylist(id: string, uris: string[]): Observable<any> {
+    const urisArray = [];
+    for (const uri of uris) {
+      urisArray.push({
+        uri
+      });
+    }
+    const url = `https://api.spotify.com/v1/playlists/${ id }/tracks`;
+    const options = this.getOptionsWithBody(
+      {
+        tracks : urisArray
+      }
+    );
+
+    return this._http.delete(url, options);
+  }
+
   playFromUris(uris: string[], offset?: number): Observable<any> {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
@@ -592,6 +609,14 @@ export class SpotifyService {
       Authorization : `Bearer ${ this.accessToken }`
     });
     return { headers };
+  }
+
+  private getOptionsWithBody(body: any): any {
+    const headers = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      Authorization : `Bearer ${ this.accessToken }`
+    });
+    return { headers, body };
   }
 
 }

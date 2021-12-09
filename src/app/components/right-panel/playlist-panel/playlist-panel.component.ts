@@ -9,6 +9,7 @@ import { PlaylistItem } from '../../../models/playlist-item.interface';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 import { Observable } from 'rxjs';
 import { Item } from '../../../models/item.interface';
+import { Playlists } from '../../../models/playlists.interface';
 
 @Component({
   selector : 'app-playlist-panel',
@@ -33,6 +34,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   searchValue: string;
   tracksToRender = [];
   forceLoading: boolean;
+  playlists: Playlists;
 
   protected disabledItemsCount = 0;
   private _scrollPosition: number;
@@ -47,6 +49,9 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     this.setContext();
     this.loadPanel();
     this.container.addEventListener('scroll', this.onScroll.bind(this));
+    this.playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
+      this.playlists = playlists;
+    });
   }
 
   ngOnChanges(): void {
@@ -66,6 +71,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
         this.spotifyService.forcePlay().subscribe();
       } else {
         this.getPlayObservable().subscribe();
+        this.spotifyService.setShuffleState(false).subscribe();
       }
     }
   }
@@ -93,6 +99,10 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   onSorted(): void {
     this.forceLoading = true;
     this.loadAll();
+  }
+
+  onRefresh(): void {
+    this.ngOnChanges();
   }
 
   onUnfollowed(track: Item): void {}

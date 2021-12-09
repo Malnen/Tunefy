@@ -10,13 +10,20 @@ import { PopUpContentType } from '../../enums/pop-up-content-type.enum';
 import { LinkTileService } from '../../services/link-tile/link-tile.service';
 import { ContentType } from '../../enums/content-type.enum';
 import { Artists } from '../../models/artists.interface';
+import { BaseComponent } from '../base-component/base.component';
+import { ContextMenuService } from '../../services/context-menu/context-menu.service';
+import { Playlist } from '../../models/playlist.interface';
+import { Option } from '../../models/option.interface';
+import { SnackBarService } from '../../services/snack-bar-service/snack-bar.service';
+import { PlaylistService } from '../../services/playlist-service/playlist.service';
+import { Playlists } from '../../models/playlists.interface';
 
 @Component({
   selector : 'app-bottom-panel',
   templateUrl : './bottom-panel.component.html',
   styleUrls : [ './bottom-panel.component.scss' ]
 })
-export class BottomPanelComponent implements OnInit {
+export class BottomPanelComponent extends BaseComponent implements OnInit {
 
   player: Player;
   repeatState = RepeatState;
@@ -28,6 +35,7 @@ export class BottomPanelComponent implements OnInit {
   image: Image;
   artists: Artist[];
   popUpContentType = PopUpContentType;
+  playlists: Playlists;
 
   private _timer: any;
   private _ignoreNextRepeatState: boolean;
@@ -35,8 +43,12 @@ export class BottomPanelComponent implements OnInit {
   private _ignoreVolumeState: boolean;
   private _lastVolumePercentage = 100;
 
-  constructor(private _spotifyService: SpotifyService,
-              private _linkTileService: LinkTileService) {
+  constructor(contextMenuService: ContextMenuService,
+              private _spotifyService: SpotifyService,
+              private _linkTileService: LinkTileService,
+              private _snackBarService: SnackBarService,
+              private _playlistService: PlaylistService) {
+    super(contextMenuService);
   }
 
   ngOnInit(): void {
@@ -46,6 +58,10 @@ export class BottomPanelComponent implements OnInit {
       this.setShuffleState();
       this.setVolumeIcon();
       this.setItem();
+      this.setOptions();
+    });
+    this._playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
+      this.playlists = playlists;
     });
   }
 
@@ -137,6 +153,93 @@ export class BottomPanelComponent implements OnInit {
         this._linkTileService.updateLinkTile(config);
       });
     }
+  }
+
+  private setOptions(): void {
+    this.options = [
+      {
+        label : 'Dodaj do kolejki',
+        action : this.addToQueue.bind(this),
+        showDivider : true
+      },
+      {
+        label : 'Przejdź do albumu',
+        action : this.navigateToAlbum.bind(this)
+      },
+      {
+        label : 'Przejdź do artysty',
+        action : () => {},
+        expandable : true,
+        subOptions : this.getArtistSubOptions(),
+        showDivider : true
+      },
+      {
+        label : 'Dodaj do playlisty',
+        action : () => {},
+        expandable : true,
+        subOptions : this.getPlaylistsOptions()
+      }
+    ];
+  }
+
+  private addToQueue(): void {
+    this._spotifyService.addTrackToQueue(this.currentItem).subscribe(() => {
+      this._snackBarService.showSnackBar('Utwór został dodany do kolejki');
+    });
+  }
+
+  private navigateToAlbum(): void {
+    const config = {
+      contentType : ContentType.album,
+      album : this.currentItem.album
+    };
+    this._linkTileService.updateLinkTile(config);
+  }
+
+  private getArtistSubOptions(): Option[] {
+    const options = [];
+    if (this.currentItem) {
+      for (const artist of this.currentItem.artists) {
+        options.push({
+          label : artist.name,
+          action : () => this.navigateToArtist(artist)
+        });
+      }
+    }
+
+    return options;
+  }
+
+  private getPlaylistsOptions(): Option[] {
+    const options = [];
+    if (this.playlists) {
+      for (const playlist of this.playlists?.items) {
+        options.push({
+          label : playlist.name,
+          action : () => this.addTrackToPlaylist(playlist)
+        });
+      }
+    }
+
+    return options;
+  }
+
+  private addTrackToPlaylist(playlist: Playlist): void {
+    this._spotifyService.addTracksToPlaylist(playlist.id, [ this.currentItem.uri ]).subscribe(() => {
+      this._snackBarService.showSnackBar(`Utwór został dodany do playlisty: ${ playlist.name }`);
+    }, (error => {
+      this._snackBarService.showSnackBar('Nie udało się dodać utworu do playlisty');
+    }));
+  }
+
+  private navigateToArtist(artist: Artist): void {
+    this._spotifyService.getArtists([ artist.id ]).subscribe((artists: Artists) => {
+      const config = {
+        contentType : ContentType.artist,
+        artist : artists.artists[ 0 ]
+      };
+      this._linkTileService.updateLinkTile(config);
+    });
   }
 
   private getNextState(): any {
