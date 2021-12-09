@@ -9,6 +9,8 @@ import { Playlist } from '../../models/playlist.interface';
 import { DeletePlaylistDialogComponent } from '../../components/dialogs/delete-playlist-dialog/delete-playlist-dialog.component';
 import { AddLocalSourceDialogComponent } from '../../components/dialogs/add-local-source-dialog/add-local-source-dialog.component';
 import { SnackBarService } from '../snack-bar-service/snack-bar.service';
+import { PlaylistData } from '../../models/playlist-data.interface';
+import { EditPlaylistDialogComponent } from '../../components/dialogs/edit-playlist-dialog/edit-playlist-dialog.component';
 
 @Injectable({
   providedIn : 'root'
@@ -30,7 +32,7 @@ export class DialogService {
       panelClass : 'add-playlist-dialog',
       scrollStrategy : new NoopScrollStrategy()
     });
-    dialogRef.afterClosed().subscribe((action: HTMLInputElement) => {
+    dialogRef.afterClosed().subscribe((action: PlaylistData) => {
       if (action) {
         this.createPlaylist(action);
       }
@@ -61,14 +63,42 @@ export class DialogService {
     });
   }
 
-  private createPlaylist(input: HTMLInputElement): void {
-    this._spotifyService.creatPlaylist(input.value)
+  openEditPlaylistDialog(playlist: Playlist): void {
+    const dialogRef = this._dialog.open(EditPlaylistDialogComponent, {
+      panelClass : 'edit-playlist-dialog',
+      scrollStrategy : new NoopScrollStrategy()
+    });
+    dialogRef.componentInstance.data = {
+      name : playlist.name,
+      description : playlist.description
+    };
+    dialogRef.afterClosed().subscribe((action: PlaylistData) => {
+      if (action) {
+        this.editPlaylist(action, playlist);
+      }
+    });
+  }
+
+  private createPlaylist(data: PlaylistData): void {
+    this._spotifyService.creatPlaylist(data)
       .subscribe(
         () => {
           this._snackBarService.showSnackBar('Playlista została utworzona');
           this._playlistsUpdated.next();
         },
         () => this._snackBarService.showSnackBar('Nie utworzono playlisty'));
+  }
+
+  private editPlaylist(data: PlaylistData, playlist: Playlist): void {
+    this._spotifyService.editPlaylist(data, playlist)
+      .subscribe(
+        () => {
+          this._snackBarService.showSnackBar('Playlista została zmodyfikowana');
+          this._playlistsUpdated.next();
+          playlist.name = data.name;
+          playlist.description = data.description;
+        },
+        () => this._snackBarService.showSnackBar('Nie udało się zmodyfikować playlisty'));
   }
 
   private deletePlaylist(id: string): void {

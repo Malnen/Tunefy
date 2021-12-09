@@ -1,4 +1,5 @@
 import { Image } from './image.interface';
+import { Owner } from './owner.interface';
 
 export interface Playlist {
   id: string;
@@ -6,8 +7,12 @@ export interface Playlist {
   name: string;
   images: Image[];
   uri: string;
+  type?: string;
+  public?: boolean;
+  description?: string;
   tracks: {
     total: number;
     href: string;
   };
+  owner: Owner;
 }

@@ -9,6 +9,8 @@ import { PlaylistItem } from '../../../models/playlist-item.interface';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
 import { Observable } from 'rxjs';
 import { Item } from '../../../models/item.interface';
+import { Playlists } from '../../../models/playlists.interface';
+import { DialogService } from '../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-playlist-panel',
@@ -33,6 +35,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   searchValue: string;
   tracksToRender = [];
   forceLoading: boolean;
+  playlists: Playlists;
 
   protected disabledItemsCount = 0;
   private _scrollPosition: number;
@@ -41,12 +44,16 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   private _listUsedNext = [];
 
   constructor(protected spotifyService: SpotifyService,
-              protected playlistService: PlaylistService) { }
+              protected playlistService: PlaylistService,
+              private _dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.setContext();
     this.loadPanel();
     this.container.addEventListener('scroll', this.onScroll.bind(this));
+    this.playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
+      this.playlists = playlists;
+    });
   }
 
   ngOnChanges(): void {
@@ -66,6 +73,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
         this.spotifyService.forcePlay().subscribe();
       } else {
         this.getPlayObservable().subscribe();
+        this.spotifyService.setShuffleState(false).subscribe();
       }
     }
   }
@@ -76,6 +84,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
       this.spotifyService.playPlaylist(this.playlist, offset).subscribe();
     });
   }
+
 
   onInputChange(): void {
     clearTimeout(this._timer);
@@ -95,7 +104,15 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     this.loadAll();
   }
 
+  onRefresh(): void {
+    this.ngOnChanges();
+  }
+
   onUnfollowed(track: Item): void {}
+
+  onDetailsClick(): void {
+    this._dialogService.openEditPlaylistDialog(this.playlist);
+  }
 
   protected setContext(): void {
     this.context = { uri : this.playlist.uri };

@@ -27,7 +27,8 @@
     Popularne Utwory:
     <app-artist-top-tracks-table [loading]="loading"
                                  [topTracks]="topTracks"
-                                 [container]="container"></app-artist-top-tracks-table>
+                                 [container]="container"
+                                 [playlists]="playlists"></app-artist-top-tracks-table>
   </div>
   <div *ngIf="albums?.items.length > 0"
        class="albums-container">

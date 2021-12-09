@@ -1,0 +1,58 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.edit-playlist-dialog {
+
+  mat-dialog-container {
+    background: $dialogBackground;
+    color: $dialogColor;
+
+    .content {
+      font-size: 1rem;
+      line-height: 2rem;
+      overflow: visible;
+
+      input {
+        color: $dialogColor;
+        min-width: 40vw;
+        background: $dialogInputBackground;
+        @include mat-elevation(6);
+        outline: none;
+        border: 1px solid $dialogInputBorder;
+        border-radius: 4px;
+        margin-top: 1rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        padding: 0.25rem;
+      }
+
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        font-weight: 500;
+        outline: none;
+        border: none;
+        background: $dialogButton;
+        @include mat-elevation(4);
+        padding: 0.5rem 1rem;
+        margin-left: 1rem;
+        border-radius: 6px;
+        @include mat-elevation-transition();
+        color: $dialogColor;
+
+        &:hover {
+          @include mat-elevation(8);
+          color: $orange;
+        }
+
+      }
+
+    }
+
+  }
+
+}

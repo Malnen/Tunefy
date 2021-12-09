@@ -1,16 +1,17 @@
 <div class="content"
      appHover
-     (hover)="onHover($event)">
+     (hover)="onHover($event)"
+     (contextmenu)="onContextMenu($event)">
   <div class="divider"></div>
   <div class="wrapper"
        [class.hover]="hover"
        [class.current]="isCurrent"
-       [class.disabled]="track.disabled">
-    <div *ngIf="(!hover || track.disabled) && (!isCurrent || !isPlaying)"
+       [class.disabled]="track?.disabled">
+    <div *ngIf="(!hover || track?.disabled) && (!isCurrent || !isPlaying)"
          class="number">
       {{index + 1}}
     </div>
-    <div *ngIf="hover && !track.disabled && (!isCurrent || !isPlaying)"
+    <div *ngIf="hover && !track?.disabled && (!isCurrent || !isPlaying)"
          class="play-button"
          (click)="play()">
       <mat-icon>play_arrow</mat-icon>
@@ -22,19 +23,19 @@
     </div>
     <div class="follow"
          (click)="onFollowClick()">
-      <mat-icon *ngIf="track.followed">bookmark</mat-icon>
-      <mat-icon *ngIf="!track.followed">bookmark_border</mat-icon>
+      <mat-icon *ngIf="track?.followed">bookmark</mat-icon>
+      <mat-icon *ngIf="!track?.followed">bookmark_border</mat-icon>
     </div>
     <div class="title">
       <div class="image">
         <img *ngIf="hasImage"
              [class.hover]="hover"
-             src="{{image.url}}"
+             src="{{image?.url}}"
              (error)="onImageError()">
       </div>
-      {{track.name}}
+      {{track?.name}}
     </div>
-    <div class="album">{{track.album.name}}</div>
+    <div class="album">{{track?.album.name}}</div>
     <div class="added">{{addedAt}}</div>
     <div class="duration">
       {{duration}}

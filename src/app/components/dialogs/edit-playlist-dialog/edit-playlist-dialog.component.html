@@ -5,17 +5,19 @@
     <input
         #name
         (change)="onNameChange()"
-        placeholder="Wpisz nazwę playlisty">
+        placeholder="Wpisz nazwę playlisty"
+        value="{{data.name}}">
   </div>
   <div>
     <input
         #description
         (change)="onDescriptionChange()"
-        placeholder="Opis">
+        placeholder="Opis"
+        value="{{data.description}}">
   </div>
 </div>
 <div mat-dialog-actions
      class="buttons">
-  <button matRipple [mat-dialog-close]="data">Utwórz</button>
+  <button matRipple [mat-dialog-close]="data">Zatwierdź</button>
   <button matRipple mat-dialog-close>Anuluj</button>
 </div>

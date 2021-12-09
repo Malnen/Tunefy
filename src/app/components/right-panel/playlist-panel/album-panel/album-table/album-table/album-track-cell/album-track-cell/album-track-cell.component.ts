@@ -5,6 +5,8 @@ import { SpotifyService } from '../../../../../../../../services/spotify/spotify
 import { Album } from '../../../../../../../../models/album.interface';
 import { Item } from '../../../../../../../../models/item.interface';
 import * as moment from 'moment';
+import { SnackBarService } from '../../../../../../../../services/snack-bar-service/snack-bar.service';
+import { LinkTileService } from '../../../../../../../../services/link-tile/link-tile.service';
 
 @Component({
   selector : 'app-album-track-cell',
@@ -17,8 +19,10 @@ export class AlbumTrackCellComponent extends TrackCellComponent implements OnIni
   @Input() item: Item;
 
   constructor(contextMenuService: ContextMenuService,
-              spotifyService: SpotifyService) {
-    super(contextMenuService, spotifyService);
+              spotifyService: SpotifyService,
+              snackBarService: SnackBarService,
+              linkTileService: LinkTileService) {
+    super(contextMenuService, spotifyService, snackBarService, linkTileService);
   }
 
   ngOnInit(): void {
