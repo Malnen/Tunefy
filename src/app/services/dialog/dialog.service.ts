@@ -95,6 +95,8 @@ export class DialogService {
         () => {
           this._snackBarService.showSnackBar('Playlista została zmodyfikowana');
           this._playlistsUpdated.next();
+          playlist.name = data.name;
+          playlist.description = data.description;
         },
         () => this._snackBarService.showSnackBar('Nie udało się zmodyfikować playlisty'));
   }
