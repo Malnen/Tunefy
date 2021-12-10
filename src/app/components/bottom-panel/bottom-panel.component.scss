@@ -6,8 +6,7 @@
   display: flex;
 
   .left-side {
-    min-width: 350px;
-    width: 30%;
+    width: 25%;
     padding-left: 10px;
     height: 125px;
     display: flex;
@@ -105,8 +104,7 @@
   }
 
   .middle {
-    min-width: 875px;
-    width: 55%;
+    width: 50%;
     height: 100%;
     user-select: none;
 
@@ -214,8 +212,7 @@
 
   .right-side {
     user-select: none;
-    min-width: 350px;
-    width: 30%;
+    width: 25%;
     height: 100px;
     display: flex;
     justify-content: flex-end;

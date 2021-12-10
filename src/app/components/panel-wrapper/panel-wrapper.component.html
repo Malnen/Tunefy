@@ -1,8 +1,5 @@
-<div class="container"
-     #container>
-  <div class="top"
-       (resize)="onResize()"
-       [style.height]="topHeight+'px'">
+<div class="content">
+  <div class="top">
     <div class="left-side"
          appResizable
          [resizableMinWidth]=300
@@ -13,8 +10,7 @@
       <app-right-panel></app-right-panel>
     </div>
   </div>
-  <div class="bottom"
-       [style.height]="bottomHeight+'px'">
+  <div class="bottom">
     <app-bottom-panel></app-bottom-panel>
   </div>
 </div>

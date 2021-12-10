@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Zmień okładkę playlisty</h1>
+<div mat-dialog-content
+     class="content">Wybierz plik
+  <input type="file" class="file-input"
+         [accept]="'image/*'"
+         (change)="onFileSelected($event)" #fileUpload>
+  <div class="file-upload">
+    {{fileName || "Nie wybrano pliku."}}
+    <button mat-mini-fab color="primary"
+            class="upload-btn"
+            (click)="fileUpload.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
+</div>
+<div mat-dialog-actions
+     class="buttons">
+  <button matRipple [mat-dialog-close]="data">Prześlij</button>
+  <button matRipple mat-dialog-close>Anuluj</button>
+</div>

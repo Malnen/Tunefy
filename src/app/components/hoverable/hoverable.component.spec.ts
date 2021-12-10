@@ -14,6 +14,7 @@ describe('HoverableComponent', () => {
   });
 
   beforeEach(() => {
+    // @ts-ignore
     fixture = TestBed.createComponent(HoverableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

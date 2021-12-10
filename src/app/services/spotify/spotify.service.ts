@@ -20,8 +20,8 @@ import { Album } from '../../models/album.interface';
 import { ArtistTopTracks } from '../../models/artist-top-tracks.interface';
 import { ArtistsAlbumsResponse } from '../../models/artists-albums-response.interface';
 import { ScriptLoaderService } from '../script-loader/script-loader.service';
-import { DateRange } from '../../models/date-range.interface';
 import { PlaylistData } from '../../models/playlist-data.interface';
+import { PlaylistCoverData } from '../../models/playlist-cover-data.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -556,6 +556,13 @@ export class SpotifyService {
     };
 
     return this._http.put(url, payload, options);
+  }
+
+  changePlaylistImage(data: PlaylistCoverData, base64: ArrayBuffer | string): Observable<any> {
+    const url = `https://api.spotify.com/v1/playlists/${ data.playlist.id }/images`;
+    const options = this.getOptions();
+
+    return this._http.put(url, base64.toString().substring(base64.toString().indexOf(',') + 1), options);
   }
 
   deletePlaylist(id: string): Observable<any> {

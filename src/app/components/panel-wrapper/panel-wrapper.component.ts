@@ -13,20 +13,11 @@ import { PlaylistService } from '../../services/playlist-service/playlist.servic
 })
 export class PanelWrapperComponent implements OnInit {
 
-  @ViewChild('container') container: HTMLElement;
-
-  topHeight: number;
-  bottomHeight = 125;
-
   constructor() {
   }
 
   ngOnInit(): void {
-    this.onResize();
   }
 
-  onResize(): void {
-    this.topHeight = window.innerHeight - this.bottomHeight - 1;
-  }
 
 }

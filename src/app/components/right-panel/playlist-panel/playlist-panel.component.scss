@@ -21,6 +21,44 @@
       background: $playlistImageBackground;
       @include mat-elevation(6);
       margin: 10px;
+      position: relative;
+
+      .change-image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: $playlistImageHoverBackground;
+
+        .icon {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          mat-icon {
+            margin-top: 25%;
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            width: 3rem;
+            height: 3rem;
+            line-height: 3rem;
+          }
+
+        }
+
+        .text {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.5rem;
+          line-height: 2rem;
+          text-align: center;
+          color: white;
+        }
+
+      }
 
       img {
         max-height: 100%;
