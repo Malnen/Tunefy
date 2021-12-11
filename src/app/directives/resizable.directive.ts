@@ -10,6 +10,7 @@ export class ResizableDirective implements OnInit {
   @Input() resizableGrabWidth = 16;
   @Input() resizableMinWidth = 10;
   @Input() resizableMaxWidth = 1920;
+  @Input() disabled = false;
 
   colors = ColorsEnum;
   dragging = false;
@@ -23,7 +24,7 @@ export class ResizableDirective implements OnInit {
     };
 
     const mouseMoveG = (event: MouseEvent) => {
-      if (!this.dragging) {
+      if (!this.dragging || this.disabled) {
         return;
       }
 
@@ -33,7 +34,7 @@ export class ResizableDirective implements OnInit {
     };
 
     const mouseUpG = (event: MouseEvent) => {
-      if (!this.dragging) {
+      if (!this.dragging || this.disabled) {
         return;
       }
 
@@ -44,7 +45,7 @@ export class ResizableDirective implements OnInit {
     };
 
     const mouseDown = (event: MouseEvent) => {
-      if (this.inDragRegion(event)) {
+      if (this.inDragRegion(event) && !this.disabled) {
         this.dragging = true;
         this.preventGlobalMouseEvents();
         event.stopPropagation();
@@ -54,7 +55,7 @@ export class ResizableDirective implements OnInit {
 
     const mouseMove = (event: MouseEvent) => {
       const isInDragRegion = this.inDragRegion(event);
-      if (isInDragRegion || this.dragging) {
+      if ((isInDragRegion || this.dragging) && !this.disabled) {
         _el.nativeElement.style.cursor = 'col-resize';
       } else {
         _el.nativeElement.style.cursor = 'default';
@@ -68,7 +69,7 @@ export class ResizableDirective implements OnInit {
     };
 
     const mouseLeave = () => {
-      if (!this.dragging) {
+      if (!this.dragging || this.disabled) {
         this.setBorderTransparent();
       }
     };

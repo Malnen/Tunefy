@@ -1,13 +1,22 @@
 @import 'node_modules/@angular/material/theming';
-@import "src/colors";
+@import 'src/colors';
+@import 'src/media';
 
-.container {
+.content {
   max-width: 100%;
   display: flex;
+  position: relative;
+  @include mat-elevation-transition();
+  @include mat-elevation(4);
+  background: $darkerBackground;
+  height: 125px;
+
+  &:hover {
+    @include mat-elevation(8);
+  }
 
   .left-side {
-    min-width: 350px;
-    width: 30%;
+    width: 25%;
     padding-left: 10px;
     height: 125px;
     display: flex;
@@ -105,10 +114,13 @@
   }
 
   .middle {
-    min-width: 875px;
-    width: 55%;
+    width: 50%;
     height: 100%;
     user-select: none;
+
+    @include mobile() {
+      width: 100%;
+    }
 
     .buttons {
       display: flex;
@@ -208,14 +220,19 @@
 
       }
 
+      .devices {
+        width: 50px;
+        margin-top: 2px;
+        transform: scale(0.75);
+      }
+
     }
 
   }
 
   .right-side {
     user-select: none;
-    min-width: 350px;
-    width: 30%;
+    width: 25%;
     height: 100px;
     display: flex;
     justify-content: flex-end;
@@ -226,7 +243,216 @@
     }
 
     .volume-container {
-      width: 270px;
+      width: 80%;
+      display: flex;
+      margin: 0 20px;
+      padding-top: 30px;
+
+      .volume {
+        color: $lighterBackground;
+        padding-top: 30px;
+        background: none;
+        border: none;
+        outline: none;
+        width: 35px;
+        height: 100%;
+        line-height: 35px;
+        font-size: 35px;
+
+        .mat-icon {
+          height: 35px;
+          width: 35px;
+          font-size: 35px;
+          transition: transform 0.1s;
+
+          &:hover {
+            color: white;
+            transform: scale(1.1);
+          }
+
+        }
+
+      }
+
+      .volume-bar {
+        width: 200px;
+        margin-top: 37px;
+        justify-content: center;
+      }
+
+    }
+
+  }
+
+}
+
+.drawer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: -1;
+  transition: margin 0.15s;
+  user-select: none;
+
+  &.opened {
+    margin-top: -400px;
+
+    .arrow {
+
+      .mat-icon {
+        transform: rotate(180deg);
+      }
+
+    }
+
+  }
+
+  &.has-image {
+
+    .content {
+      height: 400px;
+      top: -125px;
+    }
+
+    .arrow {
+      top: -140px;
+    }
+
+  }
+
+  .arrow {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 60px;
+    justify-self: center;
+    border-radius: 50%;
+    @include mat-elevation-transition();
+    @include mat-elevation(4);
+    background: $darkerBackground;
+
+    mat-icon {
+      color: white;
+      width: 100%;
+      text-align: center;
+      transition: transform 0.15s;
+    }
+
+    &:hover {
+      @include mat-elevation(8);
+    }
+
+  }
+
+  .content {
+    position: absolute;
+    height: 200px;
+    width: 300px;
+    top: 75px;
+    border-radius: 10px 10px 0 0;
+    @include mat-elevation-transition();
+    @include mat-elevation(4);
+    background: $darkerBackground;
+    padding: 20px;
+    display: block;
+
+    &:hover {
+      @include mat-elevation(8);
+    }
+
+    .image-container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      height: 200px;
+      align-items: center;
+
+      .image {
+        height: 100%;
+        width: 200px;
+        overflow: hidden;
+        user-select: none;
+        display: flex;
+        justify-content: center;
+
+        img {
+          max-height: 90%;
+          max-width: 90%;
+          min-height: 90%;
+          min-width: 90%;
+          transition: min-width 0.2s,
+          min-height 0.2s,
+          max-width 0.2s,
+          max-height 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+          @include mat-elevation(4);
+
+          &:hover {
+            max-height: 110%;
+            max-width: 110%;
+            min-height: 110%;
+            min-width: 110%;
+            @include mat-elevation(8);
+            transform: translate(-5%, -5%);
+          }
+
+        }
+
+      }
+
+    }
+
+    .text {
+      width: 100%;
+      text-align: center;
+
+      .name {
+        padding: 10px;
+        color: $evenLighterBackground;
+        font-size: 1.25rem;
+        max-height: 2rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:hover {
+          color: white;
+          font-size: 1.3rem;
+        }
+
+      }
+
+      .artists {
+        width: 100%;
+        padding-left: 10px;
+        color: $lighterBackground;
+        text-overflow: ellipsis;
+        font-size: 1rem;
+        max-height: 2rem;
+        overflow: hidden;
+        white-space: nowrap;
+        display: table;
+        text-align: center;
+
+        .artist {
+          text-align: center;
+
+          &:hover {
+            color: white;
+            font-size: 1.05rem;
+          }
+
+        }
+
+      }
+
+    }
+
+    .volume-container {
+      width: 80%;
       display: flex;
       margin: 0 20px;
       padding-top: 30px;

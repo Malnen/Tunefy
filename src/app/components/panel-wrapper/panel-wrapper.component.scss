@@ -1,16 +1,26 @@
 @import 'node_modules/@angular/material/theming';
 @import "src/colors";
+@import 'src/media';
 
-.container {
+.content {
   margin: 0;
   padding: 0;
   max-width: 100%;
+  height: 100%;
 
   .top {
     display: flex;
+    height: calc(100% - 125px);
 
     .left-side {
+      z-index: 1000;
       height: 100%;
+      width: 300px;
+
+      @include mobile() {
+        position: absolute;
+      }
+
     }
 
     .right-side {
@@ -21,16 +31,10 @@
   }
 
   .bottom {
+    width: 100%;
     z-index: 100;
+    height: 125px;
     position: relative;
-    @include mat-elevation-transition();
-    @include mat-elevation(4);
-    background: $darkerBackground;
-
-    &:hover {
-      @include mat-elevation(8);
-    }
-
   }
 
 }

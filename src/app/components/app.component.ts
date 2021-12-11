@@ -7,6 +7,7 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { Option } from '../models/option.interface';
 import { ContextMenuService } from '../services/context-menu/context-menu.service';
 import { DateAdapter } from '@angular/material/core';
+import { ResizeService } from '../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-root',
@@ -30,24 +31,34 @@ export class AppComponent implements OnInit {
 
   constructor(iconRegistry: MatIconRegistry,
               private _resolver: ComponentFactoryResolver,
-              private _contextMenuSerivce: ContextMenuService,
-              private dateAdapter: DateAdapter<Date>) {
-    this.dateAdapter.setLocale('pl');
+              private _contextMenuService: ContextMenuService,
+              private _dateAdapter: DateAdapter<Date>,
+              private _resizeService: ResizeService) {
+    this._dateAdapter.setLocale('pl');
     iconRegistry.registerFontClassAlias('devices', 'icon-tunefy-devices');
     iconRegistry.registerFontClassAlias('lyrics', 'icon-tunefy-lyrics');
   }
 
   ngOnInit(): void {
-    this._contextMenuSerivce.hasOptionsUpdated().subscribe((options: Option[]) => {
+    this._contextMenuService.hasOptionsUpdated().subscribe((options: Option[]) => {
       this._contextMenuOptions = options;
       this._hasOptionsUpdated = true;
     });
-    this._contextMenuSerivce.shouldCloseContextMenu().subscribe(this.destroyContextMenu.bind(this));
+    this.onResize();
+    this._contextMenuService.shouldCloseContextMenu().subscribe(this.destroyContextMenu.bind(this));
   }
 
   onContextMenu(event: MouseEvent): void {
     event.preventDefault();
     this.createComponent(event);
+  }
+
+  onResize(): void {
+    const size = {
+      width : window.innerWidth,
+      height : window.innerHeight
+    };
+    this._resizeService.updateSize(size);
   }
 
   private createComponent(event: MouseEvent): void {

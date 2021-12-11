@@ -11,13 +11,14 @@ import { Observable } from 'rxjs';
 import { Item } from '../../../models/item.interface';
 import { Playlists } from '../../../models/playlists.interface';
 import { DialogService } from '../../../services/dialog/dialog.service';
+import { HoverableComponent } from '../../hoverable/hoverable.component';
 
 @Component({
   selector : 'app-playlist-panel',
   templateUrl : './playlist-panel.component.html',
   styleUrls : [ './playlist-panel.component.scss' ]
 })
-export class PlaylistPanelComponent implements OnInit, OnChanges {
+export class PlaylistPanelComponent extends HoverableComponent implements OnInit, OnChanges {
 
   @ViewChild('searchInput') searchInput: ElementRef;
 
@@ -36,6 +37,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
   tracksToRender = [];
   forceLoading: boolean;
   playlists: Playlists;
+  isUserPlaylist = true;
 
   protected disabledItemsCount = 0;
   private _scrollPosition: number;
@@ -45,7 +47,9 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
 
   constructor(protected spotifyService: SpotifyService,
               protected playlistService: PlaylistService,
-              private _dialogService: DialogService) { }
+              private _dialogService: DialogService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.setContext();
@@ -53,6 +57,11 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     this.container.addEventListener('scroll', this.onScroll.bind(this));
     this.playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
       this.playlists = playlists;
+      const playlist = this.playlists.items.find(value => value.id === this.playlist.id);
+      if (playlist) {
+        this.playlist = playlist;
+        this.loadImage();
+      }
     });
   }
 
@@ -112,6 +121,10 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
 
   onDetailsClick(): void {
     this._dialogService.openEditPlaylistDialog(this.playlist);
+  }
+
+  onChangeImageClick(): void {
+    this._dialogService.openChangePlaylistImageDialog(this.playlist);
   }
 
   protected setContext(): void {
@@ -234,6 +247,7 @@ export class PlaylistPanelComponent implements OnInit, OnChanges {
     this.loadImage();
     this.loadTracks();
     this.listenToPlayer();
+    this.isUserPlaylist = this.playlist?.type === 'playlist' && this.playlist?.owner.uri !== 'spotify:user:spotify';
   }
 
   private scrollToTop(): void {

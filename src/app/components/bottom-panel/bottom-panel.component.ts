@@ -17,6 +17,8 @@ import { Option } from '../../models/option.interface';
 import { SnackBarService } from '../../services/snack-bar-service/snack-bar.service';
 import { PlaylistService } from '../../services/playlist-service/playlist.service';
 import { Playlists } from '../../models/playlists.interface';
+import { ResizeService } from '../../services/resize-service/resize.service';
+import { ScreenSize } from '../../models/screen-size.interface';
 
 @Component({
   selector : 'app-bottom-panel',
@@ -36,6 +38,7 @@ export class BottomPanelComponent extends BaseComponent implements OnInit {
   artists: Artist[];
   popUpContentType = PopUpContentType;
   playlists: Playlists;
+  drawerOpened = false;
 
   private _timer: any;
   private _ignoreNextRepeatState: boolean;
@@ -44,14 +47,16 @@ export class BottomPanelComponent extends BaseComponent implements OnInit {
   private _lastVolumePercentage = 100;
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               private _spotifyService: SpotifyService,
               private _linkTileService: LinkTileService,
               private _snackBarService: SnackBarService,
               private _playlistService: PlaylistService) {
-    super(contextMenuService);
+    super(contextMenuService, resizeService);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
       this.player = player;
       this.setRepeatState();
@@ -153,6 +158,10 @@ export class BottomPanelComponent extends BaseComponent implements OnInit {
         this._linkTileService.updateLinkTile(config);
       });
     }
+  }
+
+  onBottomDrawerClick(): void {
+    this.drawerOpened = !this.drawerOpened;
   }
 
   private setOptions(): void {

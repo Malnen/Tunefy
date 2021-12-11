@@ -74,6 +74,9 @@ import { NotAllowedScreenComponent } from './app/components/login/not-allowewd-s
 import { SubMenuComponent } from './app/components/context-menu/sub-menu/sub-menu.component';
 import { EditPlaylistDialogComponent } from './app/components/dialogs/edit-playlist-dialog/edit-playlist-dialog.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ChangePlaylistImageDialogComponent } from './app/components/dialogs/change-playlist-image-dialog/change-playlist-image-dialog.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ResizeService } from './app/services/resize-service/resize.service';
 
 @NgModule({
   declarations : [
@@ -135,7 +138,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     NonPremiumScreenComponent,
     NotAllowedScreenComponent,
     SubMenuComponent,
-    EditPlaylistDialogComponent
+    EditPlaylistDialogComponent,
+    ChangePlaylistImageDialogComponent
   ],
   imports : [
     BrowserModule,
@@ -152,7 +156,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressBarModule
   ],
   providers : [
     {
@@ -161,7 +166,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
       multi : true
     },
     SpotifyService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    ResizeService
   ],
   bootstrap : [ AppComponent ]
 })

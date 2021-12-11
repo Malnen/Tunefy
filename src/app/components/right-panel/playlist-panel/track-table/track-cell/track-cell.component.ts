@@ -15,6 +15,7 @@ import { LinkTileService } from '../../../../../services/link-tile/link-tile.ser
 import { Option } from '../../../../../models/option.interface';
 import { Artists } from '../../../../../models/artists.interface';
 import { Playlists } from '../../../../../models/playlists.interface';
+import { ResizeService } from '../../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-track-cell',
@@ -43,10 +44,11 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   private _isFollowedPlaylist = false;
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               protected spotifyService: SpotifyService,
               private _snackBarService: SnackBarService,
               private _linkTileService: LinkTileService) {
-    super(contextMenuService);
+    super(contextMenuService, resizeService);
   }
 
   ngOnInit(): void {

@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LinkTileService } from '../../services/link-tile/link-tile.service';
 import { PlaylistService } from '../../services/playlist-service/playlist.service';
+import { BaseComponent } from '../base-component/base.component';
+import { ContextMenuService } from '../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-panel-wrapper',
@@ -11,22 +14,16 @@ import { PlaylistService } from '../../services/playlist-service/playlist.servic
     PlaylistService
   ]
 })
-export class PanelWrapperComponent implements OnInit {
+export class PanelWrapperComponent extends BaseComponent implements OnInit {
 
-  @ViewChild('container') container: HTMLElement;
-
-  topHeight: number;
-  bottomHeight = 125;
-
-  constructor() {
+  constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService) {
+    super(contextMenuService, resizeService);
   }
 
   ngOnInit(): void {
-    this.onResize();
+    super.ngOnInit();
   }
 
-  onResize(): void {
-    this.topHeight = window.innerHeight - this.bottomHeight - 1;
-  }
 
 }

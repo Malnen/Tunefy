@@ -6,6 +6,7 @@ import { ContextMenuService } from '../../../../services/context-menu/context-me
 import { ContentType } from '../../../../enums/content-type.enum';
 import { SpotifyService } from '../../../../services/spotify/spotify.service';
 import { LinkTileService } from '../../../../services/link-tile/link-tile.service';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-artist-tile',
@@ -20,9 +21,10 @@ export class ArtistTileComponent extends BaseComponent implements OnInit {
   hasImage = true;
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               private _spotifyService: SpotifyService,
               private _linkTileService: LinkTileService) {
-    super(contextMenuService);
+    super(contextMenuService, resizeService);
   }
 
   ngOnInit(): void {

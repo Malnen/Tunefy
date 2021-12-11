@@ -4,6 +4,7 @@ import { SpotifyService } from '../../../../services/spotify/spotify.service';
 import { Player } from '../../../../models/player.interface';
 import { BaseComponent } from '../../../base-component/base.component';
 import { ContextMenuService } from '../../../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-track-result',
@@ -20,8 +21,9 @@ export class TrackResultComponent extends BaseComponent implements OnInit {
   isCurrentTrack: boolean;
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               private _spotifyService: SpotifyService) {
-    super(contextMenuService);
+    super(contextMenuService, resizeService);
     this.options = [
       {
         label : 'Dodaj do kolejki',

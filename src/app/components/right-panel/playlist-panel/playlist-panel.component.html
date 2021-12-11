@@ -1,10 +1,22 @@
 <div class="content"
      #container>
   <div class="top">
-    <div class="image">
+    <div class="image"
+         appHover
+         (hover)="onHover($event)">
       <img *ngIf="hasImage"
            src="{{image?.url}}">
       <mat-icon *ngIf="!hasImage">music_note</mat-icon>
+      <div *ngIf="hover && isUserPlaylist"
+           class="change-image"
+           (click)="onChangeImageClick()">
+        <div class="icon">
+          <mat-icon>wallpaper</mat-icon>
+        </div>
+        <div class="text">
+          Kliknij aby zmienić okładkę
+        </div>
+      </div>
     </div>
     <div class="text">
       <div class="title">
@@ -15,7 +27,7 @@
         {{playlist.description}}
       </div>
       <div class="total">
-        Ilość urtowrów: {{playlist.tracks?.total}}
+        Ilość utworów: {{playlist.tracks?.total}}
       </div>
       <div class="buttons">
         <div class="play">
@@ -27,7 +39,7 @@
         <div class="play-random">
           <button (click)="playRandom()">Odtwarzaj losowo</button>
         </div>
-        <div *ngIf="playlist.type==='playlist'"
+        <div *ngIf="isUserPlaylist"
              class="details">
           <button (click)="onDetailsClick()">...</button>
         </div>

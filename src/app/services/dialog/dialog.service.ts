@@ -11,6 +11,8 @@ import { AddLocalSourceDialogComponent } from '../../components/dialogs/add-loca
 import { SnackBarService } from '../snack-bar-service/snack-bar.service';
 import { PlaylistData } from '../../models/playlist-data.interface';
 import { EditPlaylistDialogComponent } from '../../components/dialogs/edit-playlist-dialog/edit-playlist-dialog.component';
+import { ChangePlaylistImageDialogComponent } from '../../components/dialogs/change-playlist-image-dialog/change-playlist-image-dialog.component';
+import { PlaylistCoverData } from '../../models/playlist-cover-data.interface';
 
 @Injectable({
   providedIn : 'root'
@@ -47,6 +49,19 @@ export class DialogService {
     dialogRef.afterClosed().subscribe((action: HTMLInputElement) => {
       if (action) {
         callback();
+      }
+    });
+  }
+
+  openChangePlaylistImageDialog(playlist: Playlist): void {
+    const dialogRef = this._dialog.open(ChangePlaylistImageDialogComponent, {
+      panelClass : 'change-playlist-image-dialog',
+      scrollStrategy : new NoopScrollStrategy()
+    });
+    dialogRef.componentInstance.playlist = playlist;
+    dialogRef.afterClosed().subscribe((data: PlaylistCoverData) => {
+      if (data) {
+        this.changePlaylistImage(data);
       }
     });
   }
@@ -99,6 +114,20 @@ export class DialogService {
           playlist.description = data.description;
         },
         () => this._snackBarService.showSnackBar('Nie udało się zmodyfikować playlisty'));
+  }
+
+  private changePlaylistImage(data: PlaylistCoverData): void {
+    const reader = new FileReader();
+    reader.readAsDataURL(data.image);
+    reader.onload = () => {
+      this._spotifyService.changePlaylistImage(data, reader.result)
+        .subscribe(
+          () => {
+            this._snackBarService.showSnackBar('Okładka została zmodyfikowana');
+            this._playlistsUpdated.next();
+          },
+          () => this._snackBarService.showSnackBar('Nie udało się zmienić okładki playlisty'));
+    };
   }
 
   private deletePlaylist(id: string): void {

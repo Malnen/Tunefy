@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container"
+     [class.opened]="opened">
   <div class="profile">
     <app-profile-bar></app-profile-bar>
   </div>
@@ -46,4 +47,9 @@
       </div>
     </div>
   </div>
+</div>
+<div class="drawer"
+     [class.opened]="opened"
+     (click)="onDrawerClick()">
+  <mat-icon>navigate_next</mat-icon>
 </div>
