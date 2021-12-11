@@ -16,6 +16,8 @@ import { ResizeService } from '../../services/resize-service/resize.service';
 })
 export class PanelWrapperComponent extends BaseComponent implements OnInit {
 
+  leftPanelOpened = false;
+
   constructor(contextMenuService: ContextMenuService,
               resizeService: ResizeService) {
     super(contextMenuService, resizeService);
@@ -25,5 +27,8 @@ export class PanelWrapperComponent extends BaseComponent implements OnInit {
     super.ngOnInit();
   }
 
+  onLeftPanelOpenEvent(event: boolean): void {
+    this.leftPanelOpened = event;
+  }
 
 }

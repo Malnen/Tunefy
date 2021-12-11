@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Playlists } from '../../models/playlists.interface';
 import { SpotifyService } from '../../services/spotify/spotify.service';
 import { LinkTileComponent } from './link-tile/link-tile.component';
@@ -17,6 +17,8 @@ import { ResizeService } from '../../services/resize-service/resize.service';
 export class LeftPanelComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   @ViewChild('home') home: LinkTileComponent;
+
+  @Output() openedEmitter = new EventEmitter<boolean>();
 
   topHover: boolean;
   bottomHover: boolean;
@@ -59,7 +61,7 @@ export class LeftPanelComponent extends BaseComponent implements OnInit, AfterVi
 
   onDrawerClick(): void {
     this.opened = !this.opened;
-    console.log(this.opened);
+    this.openedEmitter.emit(this.opened);
   }
 
   private loadPlaylists(): void {
