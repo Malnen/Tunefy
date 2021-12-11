@@ -7,6 +7,7 @@ import { Item } from '../../../../../../../../models/item.interface';
 import * as moment from 'moment';
 import { SnackBarService } from '../../../../../../../../services/snack-bar-service/snack-bar.service';
 import { LinkTileService } from '../../../../../../../../services/link-tile/link-tile.service';
+import { ResizeService } from '../../../../../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-album-track-cell',
@@ -21,8 +22,9 @@ export class AlbumTrackCellComponent extends TrackCellComponent implements OnIni
   constructor(contextMenuService: ContextMenuService,
               spotifyService: SpotifyService,
               snackBarService: SnackBarService,
+              resizeService: ResizeService,
               linkTileService: LinkTileService) {
-    super(contextMenuService, spotifyService, snackBarService, linkTileService);
+    super(contextMenuService, resizeService, spotifyService, snackBarService, linkTileService);
   }
 
   ngOnInit(): void {

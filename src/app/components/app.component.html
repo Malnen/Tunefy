@@ -1,5 +1,6 @@
 <div class="content"
      #content
-     (document:contextmenu)="onContextMenu($event)">
+     (document:contextmenu)="onContextMenu($event)"
+     (window:resize)="onResize()">
   <router-outlet></router-outlet>
 </div>

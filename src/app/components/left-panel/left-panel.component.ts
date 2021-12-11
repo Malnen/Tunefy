@@ -5,27 +5,36 @@ import { LinkTileComponent } from './link-tile/link-tile.component';
 import { ContentType } from '../../enums/content-type.enum';
 import { DialogService } from '../../services/dialog/dialog.service';
 import { PlaylistService } from '../../services/playlist-service/playlist.service';
+import { BaseComponent } from '../base-component/base.component';
+import { ContextMenuService } from '../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-left-panel',
   templateUrl : './left-panel.component.html',
   styleUrls : [ './left-panel.component.scss' ]
 })
-export class LeftPanelComponent implements OnInit, AfterViewInit {
+export class LeftPanelComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   @ViewChild('home') home: LinkTileComponent;
 
   topHover: boolean;
   bottomHover: boolean;
   playlists: Playlists;
+  opened = false;
 
   contentType = ContentType;
 
-  constructor(private _dialog: DialogService,
+  constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
+              private _dialog: DialogService,
               private _spotifyService: SpotifyService,
-              private _playlistService: PlaylistService) { }
+              private _playlistService: PlaylistService) {
+    super(contextMenuService, resizeService);
+  }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.loadPlaylists();
     this._dialog.hasPlaylistsUpdated().subscribe(() => {
       this.loadPlaylists();
@@ -46,6 +55,11 @@ export class LeftPanelComponent implements OnInit, AfterViewInit {
 
   addPlaylist(): void {
     this._dialog.openAddPlaylistDialog();
+  }
+
+  onDrawerClick(): void {
+    this.opened = !this.opened;
+    console.log(this.opened);
   }
 
   private loadPlaylists(): void {

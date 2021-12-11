@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { SnackBarService } from '../../../../../services/snack-bar-service/snack-bar.service';
 import { LinkTileService } from '../../../../../services/link-tile/link-tile.service';
 import { Option } from '../../../../../models/option.interface';
+import { ResizeService } from '../../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-artist-top-track-cell',
@@ -21,10 +22,11 @@ export class ArtistTopTrackCellComponent extends TrackCellComponent implements O
   @Output() resume = new EventEmitter<void>();
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               spotifyService: SpotifyService,
               snackBarService: SnackBarService,
               linkTileService: LinkTileService) {
-    super(contextMenuService, spotifyService, snackBarService, linkTileService);
+    super(contextMenuService, resizeService, spotifyService, snackBarService, linkTileService);
   }
 
   ngOnInit(): void {

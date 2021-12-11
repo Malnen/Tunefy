@@ -77,10 +77,13 @@ export class VolumeBarComponent implements OnInit, OnChanges {
 
   onProgressBarMove(event: MouseEvent): void {
     if (this.hold || this._click) {
-      const offset = this.volumeBar.nativeElement.offsetLeft;
+      const offset = this.volumeBar.nativeElement.getBoundingClientRect().x;
       const position = event.x - offset;
       const width = this.volumeBar.nativeElement.offsetWidth;
       this.percentage = position / width * 100;
+      if (this.percentage > 100) {
+        this.percentage = 100;
+      }
       this.setVolume(true);
       this.setThumbMargin();
     }

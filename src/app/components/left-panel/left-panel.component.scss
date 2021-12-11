@@ -1,5 +1,10 @@
 @import 'node_modules/@angular/material/theming';
 @import "src/colors";
+@import 'src/media';
+
+:host {
+  position: relative;
+}
 
 .container {
   user-select: none;
@@ -10,6 +15,17 @@
   background: $leftPanelBackground;
   @include mat-elevation(4);
   flex-flow: column;
+  z-index: 1;
+  transition: left 0.2s;
+
+  @include mobile() {
+    left: -300px;
+
+    &.opened {
+      left: 0;
+    }
+
+  }
 
   .profile {
     padding: 0 10px;
@@ -119,6 +135,50 @@
     background: none;
     border-radius: 15px;
     transition: background 0.2s;
+  }
+
+}
+
+.drawer {
+  user-select: none;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  left: -15px;
+  top: 50px;
+  border-radius: 50px;
+  transition: left 0.2s;
+  @include mat-elevation-transition();
+  @include mat-elevation(4);
+  background: $darkerBackground;
+
+  &.opened {
+
+    .mat-icon {
+      transform: rotate(180deg);
+    }
+
+  }
+
+  mat-icon {
+    color: white;
+    width: 100%;
+    height: 100%;
+    line-height: 35px;
+    margin-left: 5px;
+    text-align: center;
+    transition: transform 0.15s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    @include mat-elevation(8);
+  }
+
+  &.opened {
+    left: 280px;
   }
 
 }

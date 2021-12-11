@@ -14,6 +14,7 @@ import { PlaylistService } from '../../../../services/playlist-service/playlist.
 import { Playlists } from '../../../../models/playlists.interface';
 import { Playlist } from '../../../../models/playlist.interface';
 import { SnackBarService } from '../../../../services/snack-bar-service/snack-bar.service';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-track-tile',
@@ -30,11 +31,12 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
   playlists: Playlists;
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               private _spotifyService: SpotifyService,
               private _linkTileService: LinkTileService,
               private _playlistService: PlaylistService,
               private _snackBarService: SnackBarService) {
-    super(contextMenuService);
+    super(contextMenuService, resizeService);
   }
 
   ngOnInit(): void {

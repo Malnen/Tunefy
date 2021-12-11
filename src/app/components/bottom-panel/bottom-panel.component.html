@@ -1,5 +1,6 @@
-<div class="container">
-  <div class="left-side">
+<div class="content">
+  <div *ngIf="!mobile"
+       class="left-side">
     <div class="item-container">
       <div class="image"
            (contextmenu)="onContextMenu($event)">
@@ -64,19 +65,61 @@
                   (click)="toggleRepeatState()">repeat_one_on
         </mat-icon>
       </button>
-      <div class="queue">
-        <app-pop-up [icon]="'queue_music'"
-                    [popUpContentType]="popUpContentType.QUEUE"></app-pop-up>
+      <div *ngIf="mobile"
+           class="devices">
+        <app-pop-up [icon]="'devices'"
+                    [popUpContentType]="popUpContentType.DEVICES"></app-pop-up>
       </div>
     </div>
     <div class="app-volume-bar">
       <app-progress-bar [player]="player"></app-progress-bar>
     </div>
   </div>
-  <div class="right-side">
+  <div *ngIf="!mobile"
+       class="right-side">
     <div class="devices">
       <app-pop-up [icon]="'devices'"
                   [popUpContentType]="popUpContentType.DEVICES"></app-pop-up>
+    </div>
+    <div class="volume-container">
+      <button class="volume">
+        <mat-icon (click)="onVolumeClick()">{{volumeState}}</mat-icon>
+      </button>
+      <div class="volume-bar">
+        <app-volume-bar [player]="player"></app-volume-bar>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="mobile"
+     class="drawer"
+     [class.has-image]="image"
+     [class.opened]="drawerOpened">
+  <div class="arrow"
+       (click)="onBottomDrawerClick()">
+    <mat-icon>expand_less</mat-icon>
+  </div>
+  <div class="content">
+    <div *ngIf="image"
+         class="image-container">
+      <div class="image"
+           (contextmenu)="onContextMenu($event)">
+        <img src="{{image?.url}}">
+      </div>
+    </div>
+    <div class="text">
+      <div class="name"
+           (click)="onNameClick()">
+        {{currentItem?.name}}
+      </div>
+      <div *ngFor="let artist of artists;let i = index"
+           class="artists">
+        <div *ngIf="i<3"
+             class="artist"
+             (click)="onArtistClick(artist)">
+          {{artist.name}}
+        </div>
+      </div>
     </div>
     <div class="volume-container">
       <button class="volume">

@@ -8,6 +8,7 @@ import { DialogService } from '../../../services/dialog/dialog.service';
 import { ActiveLinkConfig } from '../../../models/active-link-config.interface';
 import { Player } from '../../../models/player.interface';
 import { ContentType } from '../../../enums/content-type.enum';
+import { ResizeService } from '../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-link-tile',
@@ -29,9 +30,10 @@ export class LinkTileComponent extends BaseComponent implements OnInit, AfterVie
   private _initialized = false;
 
   constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
               private _linkTileService: LinkTileService,
               private _spotifyService: SpotifyService,
-              private _dialogService: DialogService) {super(contextMenuService); }
+              private _dialogService: DialogService) {super(contextMenuService, resizeService); }
 
   ngOnInit(): void {
     this.image = this.activeLinkConfig?.playlist?.images[ 0 ];

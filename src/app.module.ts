@@ -76,6 +76,7 @@ import { EditPlaylistDialogComponent } from './app/components/dialogs/edit-playl
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ChangePlaylistImageDialogComponent } from './app/components/dialogs/change-playlist-image-dialog/change-playlist-image-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ResizeService } from './app/services/resize-service/resize.service';
 
 @NgModule({
   declarations : [
@@ -165,7 +166,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
       multi : true
     },
     SpotifyService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    ResizeService
   ],
   bootstrap : [ AppComponent ]
 })
