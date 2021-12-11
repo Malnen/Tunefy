@@ -1,5 +1,6 @@
 @import 'node_modules/@angular/material/theming';
 @import "src/colors";
+@import 'src/media';
 
 .content {
   user-select: none;
@@ -9,7 +10,8 @@
   z-index: 100;
 
   .search-wrapper {
-    width: 600px;
+    min-width: 600px;
+    max-width: 600px;
     margin: 30px;
     background: rgba($searchBarBackground, 0.80);
     overflow: hidden;
@@ -23,19 +25,31 @@
       @include mat-elevation(6);
     }
 
+    @include mobile() {
+      min-width: 75vw;
+      max-width: 75vw;
+    }
+
     .top {
       display: flex;
       height: 60px;
       justify-content: center;
 
       .search {
-        font-size: 2rem;
+        font-size: 1.25rem;
         line-height: 2.2rem;
         width: 85%;
         color: white;
         background: transparent;
         outline: none;
         border: none;
+
+        @include mobile() {
+          width: 80%;
+          min-width: 0;
+          max-width: 600px;
+        }
+
       }
 
       .search-button, .clear-button {
@@ -44,6 +58,10 @@
         outline: none;
         border: none;
         color: $searchButtons;
+
+        @include mobile() {
+          width: 10%;
+        }
 
         .mat-icon {
           display: flex;
