@@ -1,5 +1,6 @@
 @import 'node_modules/@angular/material/theming';
 @import "src/colors";
+@import "src/media";
 
 .devices {
   color: $lighterBackground;
@@ -36,6 +37,7 @@
     left: 0;
     top: 0;
     cursor: auto;
+    display: none;
   }
 
   --box-shadow: none;
@@ -46,26 +48,33 @@
     backdrop-filter: blur(10px);
     background: rgba($popUpBackground, 0.90);
     border-radius: 3px;
-    position: absolute;
-    margin-left: -180px;
     cursor: auto;
     box-shadow: var(--box-shadow);
     opacity: 0;
     @include mat-elevation-transition();
+
+    @include mobile() {
+      width: 75vw;
+    }
+
   }
 
 }
 
 .devices-pop-up::before {
-  border: 10px solid transparent;
-  border-top-color: $popUpBackground;
-  bottom: -20px;
-  content: "";
-  left: auto;
-  margin-left: -10px;
-  margin-right: -10px;
-  position: absolute;
-  right: 200px;
-  cursor: auto;
-  z-index: 1;
+
+  @include desktop() {
+    border: 10px solid transparent;
+    border-top-color: $popUpBackground;
+    bottom: -20px;
+    content: "";
+    left: auto;
+    margin-left: -10px;
+    margin-right: -10px;
+    position: absolute;
+    right: 200px;
+    cursor: auto;
+    z-index: 1;
+  }
+
 }

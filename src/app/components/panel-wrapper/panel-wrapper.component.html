@@ -1,7 +1,7 @@
 <div class="content">
   <div class="top">
     <div class="left-side"
-         [style.pointerEvents]="leftPanelOpened?'all':'none'">
+         [style.pointerEvents]="leftPanelOpened || !mobile?'all':'none'">
       <app-left-panel
               (openedEmitter)="onLeftPanelOpenEvent($event)"></app-left-panel>
     </div>
