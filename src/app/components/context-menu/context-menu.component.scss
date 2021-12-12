@@ -2,12 +2,12 @@
 @import 'node_modules/@angular/material/theming';
 
 .content {
-  z-index: 102;
   position: absolute;
   min-width: 100px;
   max-width: 300px;
   background: $contextMenu;
   border-radius: 6px;
+  z-index: 1000000001;
   @include mat-elevation(4);
   @include mat-elevation-transition();
 
@@ -30,5 +30,5 @@
   top: 0;
   left: 0;
   position: absolute;
-  z-index: 101;
+  z-index: 1000000000;
 }
