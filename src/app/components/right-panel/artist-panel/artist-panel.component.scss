@@ -1,4 +1,5 @@
 @import "src/colors";
+@import "src/media";
 @import 'node_modules/@angular/material/theming';
 
 .content {
@@ -18,6 +19,13 @@
       background: $playlistImageBackground;
       @include mat-elevation(6);
       margin: 10px;
+
+      @include mobile() {
+        max-width: 50vw;
+        max-height: 50vw;
+        min-width: 50vw;
+        min-height: 50vw;
+      }
 
       img {
         max-height: 100%;

@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import { PlaylistService } from '../../../../services/playlist-service/playlist.service';
 import { Item } from '../../../../models/item.interface';
 import { Playlists } from '../../../../models/playlists.interface';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
+import { ScreenSize } from '../../../../models/screen-size.interface';
 
 @Component({
   selector : 'app-track-table',
@@ -31,14 +33,27 @@ export class TrackTableComponent implements OnInit, OnChanges {
   sortType = SortType;
   sort = SortType.NONE;
   asc = true;
+  showAddedDate = true;
+  showArtist = true;
 
-  constructor(protected playlistService: PlaylistService) { }
+  private _size: ScreenSize;
+
+  constructor(protected playlistService: PlaylistService,
+              private _resizeService: ResizeService) { }
 
   ngOnInit(): void {
     this.playlistService.hasNextLoaded().subscribe(this.sortTracks.bind(this));
     this.playlistService.hasPlaylistChanged().subscribe(() => {
       this.sort = SortType.NONE;
       this.asc = true;
+    });
+    this._size = this._resizeService.size;
+    this.showAddedDate = this._size.width > 700;
+    this.showArtist = this._size.width > 550;
+    this._resizeService.hasSizeUpdated().subscribe((size: ScreenSize) => {
+      this._size = size;
+      this.showAddedDate = this._size.width > 700;
+      this.showArtist = this._size.width > 550;
     });
   }
 

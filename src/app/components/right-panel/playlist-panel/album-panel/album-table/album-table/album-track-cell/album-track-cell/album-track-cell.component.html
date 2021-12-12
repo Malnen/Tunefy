@@ -34,8 +34,10 @@
       </div>
       {{track.name}}
     </div>
-    <div class="artist">{{artists}}</div>
-    <div class="added">{{addedAt}}</div>
+    <div *ngIf="showArtist"
+         class="artist">{{artists}}</div>
+    <div *ngIf="showAddedDate"
+         class="added">{{addedAt}}</div>
     <div class="duration">
       {{duration}}
     </div>

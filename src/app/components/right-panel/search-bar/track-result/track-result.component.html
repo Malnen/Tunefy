@@ -2,6 +2,7 @@
      appHover
      (contextmenu)="onContextMenu($event)"
      (hover)="onHover($event)"
+     (click)="navigateToAlbum()"
      [class.hover]="hover"
      [class.is-current]="isCurrentTrack">
   <div class="image"

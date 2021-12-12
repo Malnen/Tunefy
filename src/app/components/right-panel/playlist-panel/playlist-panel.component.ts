@@ -12,13 +12,16 @@ import { Item } from '../../../models/item.interface';
 import { Playlists } from '../../../models/playlists.interface';
 import { DialogService } from '../../../services/dialog/dialog.service';
 import { HoverableComponent } from '../../hoverable/hoverable.component';
+import { BaseComponent } from '../../base-component/base.component';
+import { ContextMenuService } from '../../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-playlist-panel',
   templateUrl : './playlist-panel.component.html',
   styleUrls : [ './playlist-panel.component.scss' ]
 })
-export class PlaylistPanelComponent extends HoverableComponent implements OnInit, OnChanges {
+export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnChanges {
 
   @ViewChild('searchInput') searchInput: ElementRef;
 
@@ -45,13 +48,16 @@ export class PlaylistPanelComponent extends HoverableComponent implements OnInit
   private _loadAll: boolean;
   private _listUsedNext = [];
 
-  constructor(protected spotifyService: SpotifyService,
+  constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
+              protected spotifyService: SpotifyService,
               protected playlistService: PlaylistService,
               private _dialogService: DialogService) {
-    super();
+    super(contextMenuService, resizeService);
   }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.setContext();
     this.loadPanel();
     this.container.addEventListener('scroll', this.onScroll.bind(this));

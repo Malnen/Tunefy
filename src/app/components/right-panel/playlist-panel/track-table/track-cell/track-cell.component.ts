@@ -16,6 +16,7 @@ import { Option } from '../../../../../models/option.interface';
 import { Artists } from '../../../../../models/artists.interface';
 import { Playlists } from '../../../../../models/playlists.interface';
 import { ResizeService } from '../../../../../services/resize-service/resize.service';
+import { ScreenSize } from '../../../../../models/screen-size.interface';
 
 @Component({
   selector : 'app-track-cell',
@@ -28,6 +29,8 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   @Input() index: number;
   @Input() playlist: Playlist;
   @Input() playlists: Playlists;
+  @Input() showAddedDate: boolean;
+  @Input() showArtist: boolean;
 
   @Output() unfollowed = new EventEmitter<Item>();
   @Output() refresh = new EventEmitter<void>();

@@ -1,6 +1,8 @@
 <div class="content"
      appHover
      (hover)="onHover($event)"
+     (contextmenu)="onContextMenu($event)"
+     (click)="onClick()"
      [class.hover]="hover">
   <div class="image">
     <img *ngIf="album.images[0]"

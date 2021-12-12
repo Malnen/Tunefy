@@ -37,7 +37,10 @@
           </button>
         </div>
         <div class="play-random">
-          <button (click)="playRandom()">Odtwarzaj losowo</button>
+          <button (click)="playRandom()">
+            <span *ngIf="!mobile">Odtwarzaj losowo</span>
+            <mat-icon *ngIf="mobile">shuffle</mat-icon>
+          </button>
         </div>
         <div *ngIf="isUserPlaylist"
              class="details">
@@ -45,13 +48,23 @@
         </div>
       </div>
     </div>
-    <div class="search">
+    <div *ngIf="!mobile"
+         class="search">
       <div class="search-wrapper">
         <input #searchInput
                (input)="onInputChange()"
                placeholder="Szukaj...">
         <mat-icon (click)="clearSearchValue()">close</mat-icon>
       </div>
+    </div>
+  </div>
+  <div *ngIf="mobile"
+       class="search">
+    <div class="search-wrapper">
+      <input #searchInput
+             (input)="onInputChange()"
+             placeholder="Szukaj...">
+      <mat-icon (click)="clearSearchValue()">close</mat-icon>
     </div>
   </div>
   <app-track-table [tracks]="tracksToRender"

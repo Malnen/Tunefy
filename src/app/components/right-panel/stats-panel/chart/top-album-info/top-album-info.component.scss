@@ -21,8 +21,8 @@
 
   .image {
     margin: 10px 0 10px 0;
-    height: 50%;
-    width: auto;
+    height: 20vw;
+    width: 20vw;
 
     img {
       @include mat-elevation(3);

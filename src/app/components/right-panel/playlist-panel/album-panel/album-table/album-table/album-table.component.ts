@@ -4,6 +4,7 @@ import { PlaylistService } from '../../../../../../services/playlist-service/pla
 import { Album } from '../../../../../../models/album.interface';
 import { SortType } from '../../../../../../enums/sort-type.enum';
 import { Item } from '../../../../../../models/item.interface';
+import { ResizeService } from '../../../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-album-table',
@@ -14,8 +15,9 @@ export class AlbumTableComponent extends TrackTableComponent implements OnInit {
 
   @Input() album: Album;
 
-  constructor(playlistService: PlaylistService) {
-    super(playlistService);
+  constructor(playlistService: PlaylistService,
+              resizeService: ResizeService) {
+    super(playlistService, resizeService);
   }
 
   ngOnInit(): void {

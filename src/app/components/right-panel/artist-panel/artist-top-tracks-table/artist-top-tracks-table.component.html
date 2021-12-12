@@ -26,7 +26,8 @@
                   [class.down]="!asc">arrow_upward
         </mat-icon>
       </div>
-      <div class="artist"
+      <div *ngIf="showArtist"
+           class="artist"
            (click)="onHeaderClick(sortType.ALBUM)">
         Album
         <mat-icon *ngIf="sort === sortType.ALBUM"
@@ -34,7 +35,8 @@
                   [class.down]="!asc">arrow_upward
         </mat-icon>
       </div>
-      <div class="added"
+      <div *ngIf="showAddedDate"
+           class="added"
            (click)="onHeaderClick(sortType.ADDED_DATE)">
         Data wydania
         <mat-icon *ngIf="sort === sortType.ADDED_DATE"
@@ -57,6 +59,8 @@
                                  [item]="track"
                                  [index]="i"
                                  [playlists]="playlists"
+                                 [showAddedDate]="showAddedDate"
+                                 [showArtist]="showArtist"
                                  (playTrack)="play($event)"
                                  (resume)="resume()"></app-artist-top-track-cell>
     </div>

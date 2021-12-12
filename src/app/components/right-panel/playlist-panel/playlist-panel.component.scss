@@ -1,5 +1,55 @@
 @import "src/colors";
+@import "src/media";
 @import 'node_modules/@angular/material/theming';
+
+@mixin search() {
+
+  .search {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-grow: 1;
+    padding-right: 30px;
+
+    .search-wrapper {
+      padding: 10px;
+      border-radius: 4px;
+      @include mat-elevation(3);
+      background: $playlistBackground;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      input {
+        border: none;
+        outline: none;
+        background: transparent;
+        color: white;
+        height: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .mat-icon {
+        color: $playlistTitle;
+
+        &:hover {
+          font-weight: 600;
+          color: white;
+          transform: scale(1.1);
+
+          &:active {
+            transform: scale(0.95);
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
 
 .content {
   user-select: none;
@@ -159,6 +209,10 @@
           height: 50px;
           width: 200px;
 
+          @include mobile() {
+            width: 50px;
+          }
+
           button {
             border: none;
             outline: none;
@@ -179,6 +233,44 @@
               &:active {
                 height: 35px;
                 width: 190px;
+              }
+
+            }
+
+            @include mobile() {
+              border: none;
+              outline: none;
+              background: white;
+              border-radius: 40px;
+              height: 40px;
+              width: 40px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 20px 0 0;
+              transition: height 0.1s, width 0.1s;
+              @include mat-elevation(6);
+
+              mat-icon {
+                height: 40px;
+                width: 40px;
+                line-height: 40px;
+                transition: color 0.1s;
+              }
+
+              &:hover {
+                height: 45px;
+                width: 45px;
+
+                mat-icon {
+                  color: $orange;
+                }
+
+                &:active {
+                  height: 35px;
+                  width: 35px;
+                }
+
               }
 
             }
@@ -238,51 +330,14 @@
 
     }
 
-    .search {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      flex-grow: 1;
-      padding-right: 30px;
-
-      .search-wrapper {
-        padding: 10px;
-        border-radius: 4px;
-        @include mat-elevation(3);
-        background: $playlistBackground;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        input {
-          border: none;
-          outline: none;
-          background: transparent;
-          color: white;
-          height: 1.5rem;
-          font-size: 1.5rem;
-        }
-
-        .mat-icon {
-          color: $playlistTitle;
-
-          &:hover {
-            font-weight: 600;
-            color: white;
-            transform: scale(1.1);
-
-            &:active {
-              transform: scale(0.95);
-            }
-
-          }
-
-        }
-
-      }
-
+    @include desktop() {
+      @include search();
     }
 
+  }
+
+  @include mobile() {
+    @include search();
   }
 
 }

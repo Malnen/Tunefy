@@ -299,6 +299,10 @@
   &.opened {
     margin-top: -400px;
 
+    .content {
+      display: block;
+    }
+
     .arrow {
 
       .mat-icon {
@@ -347,6 +351,7 @@
   }
 
   .content {
+    display: none;
     position: absolute;
     height: 200px;
     width: 300px;
@@ -356,7 +361,6 @@
     @include mat-elevation(4);
     background: $darkerBackground;
     padding: 20px;
-    display: block;
 
     &:hover {
       @include mat-elevation(8);

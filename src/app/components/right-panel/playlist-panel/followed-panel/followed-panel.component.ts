@@ -9,6 +9,8 @@ import { Player } from '../../../../models/player.interface';
 import { PlaylistItem } from '../../../../models/playlist-item.interface';
 import { Item } from '../../../../models/item.interface';
 import { DialogService } from '../../../../services/dialog/dialog.service';
+import { ContextMenuService } from '../../../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-followed-panel',
@@ -22,8 +24,10 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
 
   constructor(spotifyService: SpotifyService,
               playlistService: PlaylistService,
-              dialogService: DialogService) {
-    super(spotifyService, playlistService, dialogService);
+              dialogService: DialogService,
+              contextMenuService: ContextMenuService,
+              resizeService: ResizeService) {
+    super(contextMenuService, resizeService, spotifyService, playlistService, dialogService);
   }
 
   ngOnInit(): void {

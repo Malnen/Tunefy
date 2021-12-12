@@ -3,6 +3,8 @@ import { ColorsEnum } from '../../../enums/colors.enum';
 import { SpotifyService } from '../../../services/spotify/spotify.service';
 import { SearchResponse } from '../../../models/search-response.interface';
 import { HoverableComponent } from '../../hoverable/hoverable.component';
+import { PlaylistService } from '../../../services/playlist-service/playlist.service';
+import { Playlists } from '../../../models/playlists.interface';
 
 @Component({
   selector : 'app-search-bar',
@@ -21,12 +23,17 @@ export class SearchBarComponent extends HoverableComponent implements OnInit {
   searchResult: SearchResponse;
   searchValue: string;
   maskLeft: number;
+  playlists: Playlists;
 
   private _timer: any;
 
-  constructor(private _spotifyService: SpotifyService) {super(); }
+  constructor(private _spotifyService: SpotifyService,
+              private _playlistService: PlaylistService) {super(); }
 
   ngOnInit(): void {
+    this._playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
+      this.playlists = playlists;
+    });
   }
 
   onFocus(): void {

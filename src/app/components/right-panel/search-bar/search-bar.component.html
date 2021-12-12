@@ -41,6 +41,8 @@
             </div>
             <div class="divider"></div>
             <app-track-result *ngFor="let track of searchResult.tracks?.items"
+                              [playlists]="playlists"
+                              (close)="onMaskClick()"
                               [track]="track"></app-track-result>
           </div>
           <div *ngIf="searchResult.artists?.items.length > 0"
@@ -50,6 +52,7 @@
             </div>
             <div class="divider"></div>
             <app-artist-result *ngFor="let artist of searchResult.artists?.items"
+                               (close)="onMaskClick()"
                                [artist]="artist"></app-artist-result>
           </div>
           <div *ngIf="searchResult.albums?.items.length > 0"
@@ -59,6 +62,7 @@
             </div>
             <div class="divider"></div>
             <app-album-result *ngFor="let album of searchResult.albums?.items"
+                              (close)="onMaskClick()"
                               [album]="album"></app-album-result>
           </div>
         </div>

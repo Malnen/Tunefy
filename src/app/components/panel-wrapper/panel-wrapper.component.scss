@@ -25,7 +25,14 @@
 
     .right-side {
       height: 100%;
-      flex: 1;
+
+      @include desktop() {
+        flex: 1;
+      }
+
+      @include mobile() {
+        width: 100%;
+      }
     }
 
   }

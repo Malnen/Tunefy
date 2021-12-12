@@ -79,7 +79,7 @@
     .title {
       display: flex;
       align-items: center;
-      width: 30%;
+      flex: 1;
       font-size: 1.05rem;
       overflow: hidden;
       text-overflow: ellipsis;

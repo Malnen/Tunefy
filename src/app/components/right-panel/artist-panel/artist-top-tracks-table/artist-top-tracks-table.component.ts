@@ -5,6 +5,7 @@ import { SortType } from '../../../../enums/sort-type.enum';
 import { Item } from '../../../../models/item.interface';
 import { ArtistTopTracks } from '../../../../models/artist-top-tracks.interface';
 import { SpotifyService } from '../../../../services/spotify/spotify.service';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-artist-top-tracks-table',
@@ -16,8 +17,9 @@ export class ArtistTopTracksTableComponent extends TrackTableComponent implement
   @Input() topTracks: ArtistTopTracks;
 
   constructor(playlistService: PlaylistService,
+              resizeService: ResizeService,
               private _spotifyService: SpotifyService) {
-    super(playlistService);
+    super(playlistService, resizeService);
   }
 
   ngOnInit(): void {

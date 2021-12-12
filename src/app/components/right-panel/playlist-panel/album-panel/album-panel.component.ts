@@ -9,6 +9,8 @@ import { AlbumResponse } from '../../../../models/album-response.interface';
 import { Item } from '../../../../models/item.interface';
 import { Player } from '../../../../models/player.interface';
 import { DialogService } from '../../../../services/dialog/dialog.service';
+import { ContextMenuService } from '../../../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../../../services/resize-service/resize.service';
 
 @Component({
   selector : 'app-album-panel',
@@ -23,8 +25,10 @@ export class AlbumPanelComponent extends PlaylistPanelComponent implements OnIni
 
   constructor(spotifyService: SpotifyService,
               playlistService: PlaylistService,
-              dialogService: DialogService) {
-    super(spotifyService, playlistService, dialogService);
+              dialogService: DialogService,
+              contextMenuService: ContextMenuService,
+              resizeService: ResizeService) {
+    super(contextMenuService, resizeService, spotifyService, playlistService, dialogService);
   }
 
   ngOnInit(): void {
