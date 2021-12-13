@@ -1,4 +1,5 @@
 @import "src/colors";
+@import "src/media";
 @import 'node_modules/@angular/material/theming';
 
 .content {
@@ -25,6 +26,14 @@
     height: 20vw;
     width: 20vw;
     position: relative;
+    padding: 15px;
+
+    @include mobile() {
+      height: auto;
+      width: 80%;
+      margin: auto;
+    }
+
 
     img {
       @include mat-elevation(3);

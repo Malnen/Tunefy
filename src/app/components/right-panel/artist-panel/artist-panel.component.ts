@@ -8,13 +8,17 @@ import { ArtistsAlbumsResponse } from '../../../models/artists-albums-response.i
 import { ColorsEnum } from '../../../enums/colors.enum';
 import { Playlists } from '../../../models/playlists.interface';
 import { PlaylistService } from '../../../services/playlist-service/playlist.service';
+import { ScreenSize } from '../../../models/screen-size.interface';
+import { ResizeService } from '../../../services/resize-service/resize.service';
+import { BaseComponent } from '../../base-component/base.component';
+import { ContextMenuService } from '../../../services/context-menu/context-menu.service';
 
 @Component({
   selector : 'app-artist-panel',
   templateUrl : './artist-panel.component.html',
   styleUrls : [ './artist-panel.component.scss' ]
 })
-export class ArtistPanelComponent implements OnInit, OnChanges {
+export class ArtistPanelComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() artist: Artist;
   @Input() container: HTMLElement;
@@ -28,11 +32,15 @@ export class ArtistPanelComponent implements OnInit, OnChanges {
   loadingAlbums: boolean;
   spinnerColor = ColorsEnum.ORANGE;
   playlists: Playlists;
+  size: ScreenSize;
 
-  constructor(private _spotifyService: SpotifyService,
-              private _playlistService: PlaylistService) { }
+  constructor(contextMenuService: ContextMenuService,
+              resizeService: ResizeService,
+              private _spotifyService: SpotifyService,
+              private _playlistService: PlaylistService) { super(contextMenuService, resizeService); }
 
   ngOnInit(): void {
+    super.ngOnInit();
     this.loading = true;
     this.loadImage();
     this.loadRelatedArtists();

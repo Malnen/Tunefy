@@ -78,6 +78,30 @@
 
     }
 
+    @include mobile() {
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-flow: wrap;
+      width: 100%;
+      text-align: center;
+
+      .name {
+        font-size: 2rem;
+        color: $artistName;
+        width: 100%;
+      }
+
+      .image {
+        width: 100%;
+      }
+
+      .text {
+        width: 100%;
+      }
+
+    }
+
   }
 
   .albums-container {

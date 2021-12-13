@@ -3,6 +3,7 @@ import { SpotifyService } from '../../services/spotify/spotify.service';
 import { Router } from '@angular/router';
 import { Animations } from '../../animations/animations';
 import { TokenResponse } from '../../models/token-response.interface';
+import { ColorsEnum } from '../../enums/colors.enum';
 
 @Component({
   selector : 'app-login',
@@ -13,12 +14,15 @@ import { TokenResponse } from '../../models/token-response.interface';
 export class LoginComponent implements OnInit {
 
   isHover = false;
+  loading = false;
+  spinnerColor = ColorsEnum.ORANGE;
 
   constructor(private _spotifyService: SpotifyService,
               private _router: Router) {
   }
 
   ngOnInit(): void {
+    this.loading = this._spotifyService.refreshToken != null && this._spotifyService.refreshToken !== '';
     this.checkRefreshToken();
   }
 
@@ -45,7 +49,7 @@ export class LoginComponent implements OnInit {
       if (this._spotifyService.refreshToken != null && this._spotifyService.refreshToken !== '') {
         this._router.navigate([ './main' ]);
       }
-    });
+    }, error => this.loading = false);
   }
 
 }

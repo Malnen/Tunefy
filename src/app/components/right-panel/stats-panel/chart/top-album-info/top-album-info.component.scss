@@ -1,4 +1,5 @@
 @import "src/colors";
+@import "src/media";
 @import 'node_modules/@angular/material/theming';
 
 .content {
@@ -12,6 +13,10 @@
     flex-flow: wrap;
     line-height: 2rem;
 
+    @include mobile() {
+      display: block;
+    }
+
     span {
       color: $orange;
       font-size: 1.75rem;
@@ -23,6 +28,13 @@
     margin: 10px 0 10px 0;
     height: 20vw;
     width: 20vw;
+    padding: 15px;
+
+    @include mobile() {
+      height: auto;
+      width: 80%;
+      margin: auto;
+    }
 
     img {
       @include mat-elevation(3);

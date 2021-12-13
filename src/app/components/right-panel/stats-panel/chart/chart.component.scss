@@ -1,4 +1,5 @@
 @import "src/colors";
+@import "src/media";
 @import 'node_modules/@angular/material/theming';
 @import 'src/assets/styles/date-picker-styles.scss';
 
@@ -15,15 +16,29 @@
     height: 100%;
     width: 100%;
 
+    @include mobile() {
+      display: block;
+    }
+
     .info {
       max-height: 100%;
       width: 25%;
+
+      @include mobile() {
+        width: 100%;
+        max-height: unset;
+      }
+
     }
 
     .right {
       width: 75%;
       height: 100%;
       padding: 15px;
+
+      @include mobile() {
+        width: 100%;
+      }
 
       .top {
         height: 10%;

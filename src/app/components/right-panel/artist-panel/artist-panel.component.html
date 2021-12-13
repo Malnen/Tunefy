@@ -1,6 +1,7 @@
 <div class="content">
   #container
-  <div class="top">
+  <div *ngIf="!mobile"
+       class="top">
     <div class="image">
       <img *ngIf="hasImage"
            src="{{image?.url}}"
@@ -11,6 +12,31 @@
       <div class="name">
         {{artist.name}}
       </div>
+      <div class="genres">
+        Gatunki Muzyczne:
+        <div *ngFor="let genre of artist.genres"
+             class="genre">
+          {{genre}}
+        </div>
+      </div>
+      <div class="followers">
+        Obserwujący: <span class="total">{{artist.followers.total}}</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="mobile"
+       class="top">
+    <div class="name">
+      {{artist.name}}
+    </div>
+    <div class="image">
+      <img *ngIf="hasImage"
+           src="{{image?.url}}"
+           (error)="onImageError()">
+      <mat-icon *ngIf="!hasImage">perm_identity</mat-icon>
+    </div>
+    <div class="text">
+
       <div class="genres">
         Gatunki Muzyczne:
         <div *ngFor="let genre of artist.genres"

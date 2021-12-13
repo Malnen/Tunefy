@@ -1,10 +1,18 @@
-<div class="container">
-  <div class="button-wrapper">
+<div class="content">
+  <div *ngIf="!loading"
+       class="button-wrapper">
     <button class="connect-spotify" [@buttonSize]="isHover ? 'true' : 'false'"
             mat-ripple
             (mouseover)="onMouseOver()"
             (mouseleave)="onMouseLeave()"
             (click)="spotifyAuth()">Połącz z Spotify
     </button>
+  </div>
+  <div *ngIf="loading"
+       class="loading">
+    <mat-spinner appSpinner
+                 [diameter]="150"
+                 [customColor]="spinnerColor">
+    </mat-spinner>
   </div>
 </div>
