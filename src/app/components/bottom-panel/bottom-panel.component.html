@@ -77,11 +77,11 @@
   </div>
   <div *ngIf="!mobile"
        class="right-side">
-    <div class="devices">
-      <app-pop-up [icon]="'devices'"
-                  [popUpContentType]="popUpContentType.DEVICES"></app-pop-up>
-    </div>
-    <div class="volume-container">
+    <div class="right-container">
+      <div class="devices">
+        <app-pop-up [icon]="'devices'"
+                    [popUpContentType]="popUpContentType.DEVICES"></app-pop-up>
+      </div>
       <button class="volume">
         <mat-icon (click)="onVolumeClick()">{{volumeState}}</mat-icon>
       </button>

@@ -378,6 +378,22 @@ export class SpotifyService {
     return this._http.get<RecentlyPlayed>(url, options);
   }
 
+  getAvailableGenres(): Observable<any> {
+    const url = 'https://api.spotify.com/v1/recommendations/available-genre-seeds';
+    const options = this.getOptions();
+
+    return this._http.get(url, options);
+  }
+
+  getRecommendedTrack(genres: string[], artistIds: string[] = []): Observable<any> {
+    const artists = artistIds.length > 0 ? `&seed_artists=${ artistIds.join(',') }` : '';
+    const url = `https://api.spotify.com/v1/recommendations?seed_genres=${ genres.join(',') }&limit=50${ artists }`;
+
+    const options = this.getOptions();
+
+    return this._http.get(url, options);
+  }
+
   getArtists(ids: string[]): Observable<any> {
     const url = `https://api.spotify.com/v1/artists?ids=${ ids.join('%2C') }`;
     const options = this.getOptions();

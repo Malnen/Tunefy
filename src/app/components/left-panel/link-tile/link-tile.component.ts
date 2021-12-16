@@ -96,7 +96,13 @@ export class LinkTileComponent extends BaseComponent implements OnInit, AfterVie
 
   private setIsCurrent(player: Player): void {
     const contentType = this.activeLinkConfig.contentType;
-    if (contentType === ContentType.home || contentType === ContentType.local || contentType === ContentType.stats) {
+    const excludedTypes = [
+      ContentType.home,
+      ContentType.local,
+      ContentType.stats,
+      ContentType.discover
+    ];
+    if (excludedTypes.includes(contentType)) {
       this.isCurrent = false;
     } else {
       const uri = this.activeLinkConfig?.playlist?.uri;

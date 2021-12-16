@@ -37,10 +37,10 @@ export class LeftPanelComponent extends BaseComponent implements OnInit, AfterVi
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.loadPlaylists();
-    this._dialog.hasPlaylistsUpdated().subscribe(() => {
-      this.loadPlaylists();
+    this._playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
+      this.playlists = playlists;
     });
+    this._playlistService.refreshPlaylists();
   }
 
   ngAfterViewInit(): void {
@@ -62,28 +62,6 @@ export class LeftPanelComponent extends BaseComponent implements OnInit, AfterVi
   onDrawerClick(): void {
     this.opened = !this.opened;
     this.openedEmitter.emit(this.opened);
-  }
-
-  private loadPlaylists(): void {
-    this._spotifyService.getPlaylists(50).subscribe((playlists: Playlists) => {
-      if (this.playlists) {
-        this.playlists = null;
-      }
-      this.playlists = playlists;
-      this._playlistService.updatePlaylists(this.playlists);
-      this.getNextPlaylists();
-    });
-  }
-
-  private getNextPlaylists(): void {
-    const next = this.playlists.next;
-    if (next) {
-      this._spotifyService.getPlaylists(50, next).subscribe((playlists: Playlists) => {
-        this.playlists.next = playlists.next;
-        this.playlists.items.push(...playlists.items);
-        this.getNextPlaylists();
-      });
-    }
   }
 
 }

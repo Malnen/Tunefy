@@ -10,8 +10,7 @@ import { ResizeService } from '../../services/resize-service/resize.service';
   templateUrl : './panel-wrapper.component.html',
   styleUrls : [ './panel-wrapper.component.scss' ],
   providers : [
-    LinkTileService,
-    PlaylistService
+    LinkTileService
   ]
 })
 export class PanelWrapperComponent extends BaseComponent implements OnInit {

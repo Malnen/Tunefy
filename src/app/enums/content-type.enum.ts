@@ -6,5 +6,6 @@ export enum ContentType {
   followed,
   local,
   stats,
-  genres
+  genres,
+  discover
 }

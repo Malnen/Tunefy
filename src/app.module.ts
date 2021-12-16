@@ -77,6 +77,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ChangePlaylistImageDialogComponent } from './app/components/dialogs/change-playlist-image-dialog/change-playlist-image-dialog.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ResizeService } from './app/services/resize-service/resize.service';
+import { DiscoverPanelComponent } from './app/components/right-panel/discover-panel/discover-panel.component';
+import { DiscoverService } from './app/services/discover/discover.service';
+import { PlaylistService } from './app/services/playlist-service/playlist.service';
 
 @NgModule({
   declarations : [
@@ -139,7 +142,8 @@ import { ResizeService } from './app/services/resize-service/resize.service';
     NotAllowedScreenComponent,
     SubMenuComponent,
     EditPlaylistDialogComponent,
-    ChangePlaylistImageDialogComponent
+    ChangePlaylistImageDialogComponent,
+    DiscoverPanelComponent
   ],
   imports : [
     BrowserModule,
@@ -167,7 +171,9 @@ import { ResizeService } from './app/services/resize-service/resize.service';
     },
     SpotifyService,
     MatDatepickerModule,
-    ResizeService
+    ResizeService,
+    DiscoverService,
+    PlaylistService
   ],
   bootstrap : [ AppComponent ]
 })
