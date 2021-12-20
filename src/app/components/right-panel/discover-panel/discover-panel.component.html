@@ -1,94 +1,124 @@
 <div class="content">
-  <div class="top">
-    <div class="hint"
-         (click)="onHintClick()">
-      <mat-icon *ngIf="!hintOpened">help_outline</mat-icon>
-      <mat-icon *ngIf="hintOpened">help</mat-icon>
-      <div *ngIf="hintOpened"
-           class="hint-content">
-        <div class="line">
-          <mat-icon>thumb_down</mat-icon>
-          - Odrzuca aktualnie grany utwór i przechodzi do kolejnego
-        </div>
-        <div class="line">
-          <mat-icon>thumb_up</mat-icon>
-          - Dodaje utwór do playlisty "Odkrywaj"
-        </div>
-        <div class="line">
-          <mat-icon>favorite</mat-icon>
-          - Dodaje utwór do polubionych utworów do playlisty "Odkrywaj"
+  <div class="wrapper">
+    <div class="top">
+      <div class="hint"
+           (click)="onHintClick()">
+        <mat-icon *ngIf="!hintOpened">help_outline</mat-icon>
+        <mat-icon *ngIf="hintOpened">help</mat-icon>
+        <div *ngIf="hintOpened"
+             class="hint-content">
+          <div class="line">
+            <mat-icon>thumb_down</mat-icon>
+            - Odrzuca aktualnie grany utwór i przechodzi do kolejnego
+          </div>
+          <div class="line">
+            <mat-icon>thumb_up</mat-icon>
+            - Dodaje utwór do playlisty "Odkrywaj"
+          </div>
+          <div class="line">
+            <mat-icon>favorite</mat-icon>
+            - Dodaje utwór do polubionych utworów do playlisty "Odkrywaj"
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="!loading"
-       class="bottom">
-    <div *ngIf="mobile"
-         class="mobile-buttons">
-      <div class="thumb-down"
-           (click)="onDislikeClick()">
-        <mat-icon>thumb_down</mat-icon>
+    <div *ngIf="!loading"
+         class="bottom">
+      <div *ngIf="mobile"
+           class="mobile-buttons">
+        <div class="thumb-down"
+             (click)="onDislikeClick()">
+          <mat-icon>thumb_down</mat-icon>
+        </div>
+        <div class="favorite"
+             (click)="onLikeClick(true)">
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div class="thumb-up"
+             (click)="onLikeClick(false)">
+          <mat-icon>thumb_up</mat-icon>
+        </div>
       </div>
-      <div class="favorite"
+      <div *ngIf="!mobile"
+           class="favorite"
            (click)="onLikeClick(true)">
         <mat-icon>favorite</mat-icon>
       </div>
-      <div class="thumb-up"
-           (click)="onLikeClick(false)">
-        <mat-icon>thumb_up</mat-icon>
-      </div>
-    </div>
-    <div *ngIf="!mobile"
-         class="favorite"
-         (click)="onLikeClick(true)">
-      <mat-icon>favorite</mat-icon>
-    </div>
-    <div class="bottom-content">
-      <div *ngIf="!mobile"
-           class="thumb-down"
-           (click)="onDislikeClick()">
-        <mat-icon>thumb_down</mat-icon>
-      </div>
-      <div class="track">
-        <div class="mask"></div>
-        <div class="previous-image">
-          <img *ngIf="hasPreviousImage"
-               src="{{previousImage?.url}}"
-               (error)="onCurrentImageError()">
+      <div class="bottom-content">
+        <div *ngIf="!mobile"
+             class="thumb-down"
+             (click)="onDislikeClick()">
+          <mat-icon>thumb_down</mat-icon>
         </div>
-        <div class="current-image">
-          <img src="{{currentImage?.url}}"
-               (error)="onCurrentImageError()">
-        </div>
-        <div class="next-image">
-          <img *ngIf="hasNextImage"
-               src="{{nextImage?.url}}"
-               (error)="onCurrentImageError()">
-        </div>
-        <div class="text">
-          <div class="name">
-            {{currentTrack?.name}}
+        <div class="track">
+          <div class="mask">
+            <div class="mask-content"
+                 [class.has-previous]="previousTrack!=null">
+              <div *ngIf="isPlaying"
+                   class="previous"
+                   (click)="previous()">
+                <mat-icon>skip_previous</mat-icon>
+              </div>
+              <div *ngIf="isPlaying"
+                   class="next"
+                   (click)="next()">
+                <mat-icon>skip_next</mat-icon>
+              </div>
+            </div>
           </div>
-          <div *ngFor="let artist of currentTrack.artists;let i = index"
-               class="artists">
-            <div *ngIf="i<3"
-                 class="artist">
-              {{artist.name}}
+          <div class="previous-image">
+            <img *ngIf="hasPreviousImage"
+                 src="{{previousImage?.url}}"
+                 (error)="onCurrentImageError()">
+          </div>
+          <div class="current-image">
+            <div *ngIf="isPlaying"
+                 class="pause"
+                 [class.is-playing]="isPlaying"
+                 (click)="pause()">
+              <mat-icon>pause</mat-icon>
+              <mat-icon *ngIf="!isPlaying">play_arrow</mat-icon>
+            </div>
+            <div *ngIf="!isPlaying"
+                 class="play"
+                 (click)="play()">
+              <mat-icon>play_arrow</mat-icon>
+            </div>
+            <img src="{{currentImage?.url}}"
+                 (error)="onCurrentImageError()">
+          </div>
+          <div class="next-image">
+            <img *ngIf="hasNextImage"
+                 src="{{nextImage?.url}}"
+                 (error)="onCurrentImageError()">
+          </div>
+          <div class="text">
+            <div class="name"
+                 (click)="onNameClick()">
+              {{currentTrack?.name}}
+            </div>
+            <div *ngFor="let artist of currentTrack.artists;let i = index"
+                 class="artists">
+              <div *ngIf="i<3"
+                   class="artist"
+                   (click)="onArtistClick(artist)">
+                {{artist.name}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="!mobile"
-           class="thumb-up"
-           (click)="onLikeClick(false)">
-        <mat-icon>thumb_up</mat-icon>
+        <div *ngIf="!mobile"
+             class="thumb-up"
+             (click)="onLikeClick(false)">
+          <mat-icon>thumb_up</mat-icon>
+        </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="loading"
-       class="loading">
-    <mat-spinner appSpinner
-                 [diameter]="125"
-                 [customColor]="spinnerColor"></mat-spinner>
+    <div *ngIf="loading"
+         class="loading">
+      <mat-spinner appSpinner
+                   [diameter]="125"
+                   [customColor]="spinnerColor"></mat-spinner>
+    </div>
   </div>
 </div>

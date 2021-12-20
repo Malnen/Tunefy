@@ -6,236 +6,362 @@
   height: 100%;
   width: 100%;
   user-select: none;
+  padding: 20px;
 
-  .top {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    color: $hint;
-    height: 5%;
+  .wrapper {
+    background: $playlistBackground;
+    border-radius: 6px;
+    @include mat-elevation(4);
+    height: 100%;
 
-    .hint {
-      padding: 20px;
-      position: relative;
-      z-index: 100000;
-
-      .hint-content {
-        position: absolute;
-        height: 240px;
-        width: 200px;
-        left: -180px;
-        line-height: 24px;
-        background: $charHintBackground;
-        border-radius: 8px;
-        @include mat-elevation(4);
-        padding: 10px;
-        font-size: 1rem;
-
-        .label {
-          margin-bottom: 10px;
-          font-size: 1.1rem;
-        }
-
-        .line {
-          line-height: 24px;
-        }
-
-      }
-
-    }
-
-  }
-
-  .loading {
-    display: flex;
-    height: 90%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    padding: 30px 0 30px 0;
-  }
-
-  .bottom {
-    height: 95%;
-    width: 100%;
-
-    @include mobile() {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-flow: wrap;
-
-      .favorite {
-        width: 34%;
-      }
-
-      .thumb-down {
-        margin-top: 10px;
-      }
-
-      .thumb-up {
-        margin-top: -10px;
-      }
-
-      .thumb-down, .thumb-up {
-        width: 33%;
-        color: $discoverColor;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        mat-icon {
-          height: 6rem;
-          width: 6rem;
-          font-size: 6rem;
-          line-height: 5rem;
-
-          &:hover {
-            font-weight: bold;
-            color: $discoverColorHover;
-          }
-
-        }
-
-      }
-
-    }
-
-    .favorite {
+    .top {
       width: 100%;
-      height: 15%;
-      color: $discoverColor;
-      text-align: center;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-end;
+      color: $hint;
+      height: 5%;
 
-      mat-icon {
-        height: 6rem;
-        width: 6rem;
-        font-size: 6rem;
-        line-height: 5rem;
+      .hint {
+        padding: 20px;
+        position: relative;
+        z-index: 100000;
 
-        &:hover {
-          font-weight: bold;
-          color: $discoverColorHover;
-        }
+        .hint-content {
+          position: absolute;
+          height: 240px;
+          width: 200px;
+          left: -180px;
+          line-height: 24px;
+          background: $charHintBackground;
+          border-radius: 8px;
+          @include mat-elevation(4);
+          padding: 10px;
+          font-size: 1rem;
 
-      }
+          .label {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+          }
 
-    }
-
-    .mobile-buttons {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 80%;
-    }
-
-    .bottom-content {
-      height: 85%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .thumb-down {
-        margin-top: 10px;
-        justify-content: flex-end;
-      }
-
-      .thumb-up {
-        justify-content: flex-start;
-        margin-top: -10px;
-      }
-
-      .thumb-down, .thumb-up {
-        width: 15%;
-        color: $discoverColor;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        mat-icon {
-          height: 6rem;
-          width: 6rem;
-          font-size: 6rem;
-          line-height: 5rem;
-
-          &:hover {
-            font-weight: bold;
-            color: $discoverColorHover;
+          .line {
+            line-height: 24px;
           }
 
         }
 
       }
 
-      .track {
-        width: 70%;
+    }
+
+    .loading {
+      display: flex;
+      height: 90%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 0 30px 0;
+    }
+
+    .bottom {
+      height: 95%;
+      width: 100%;
+
+      @include mobile() {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: $discoverColor;
         flex-flow: wrap;
-        overflow: hidden;
-        position: relative;
 
-        @include mobile() {
-          width: 100%;
+        .favorite {
+          width: 34%;
         }
 
-        .mask {
-          pointer-events: none;
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          z-index: 1;
-          background: linear-gradient(90deg,
-                  rgba(33, 33, 33, 1) 0%,
-                  rgba(0, 0, 0, 0) 10%,
-                  rgba(0, 0, 0, 0) 90%,
-                  rgba(33, 33, 33, 1) 100%);
+        .thumb-down {
+          margin-top: 10px;
         }
 
-        .previous-image {
-          margin-left: -850px;
-          position: absolute;
+        .thumb-up {
+          margin-top: -10px;
         }
 
-        .next-image {
-          margin-left: 850px;
-          position: absolute;
-        }
-
-        .current-image, .previous-image, .next-image {
-          width: 400px;
-          height: 400px;
+        .thumb-down, .thumb-up {
+          width: 33%;
+          color: $discoverColor;
           display: flex;
           justify-content: center;
           align-items: center;
-          overflow: hidden;
 
-          img {
-            max-height: 90%;
-            max-width: 90%;
-            min-height: 90%;
-            min-width: 90%;
+          mat-icon {
+            height: 6rem;
+            width: 6rem;
+            font-size: 6rem;
+            line-height: 5rem;
+
+            &:hover {
+              font-weight: bold;
+              color: $discoverColorHover;
+            }
+
           }
 
         }
 
-        .text {
-          text-align: center;
-          width: 100%;
+      }
 
-          .name {
-            font-size: 1.75rem;
-            line-height: 2rem;
+      .favorite {
+        width: 100%;
+        height: 15%;
+        color: $discoverColor;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        mat-icon {
+          height: 6rem;
+          width: 6rem;
+          font-size: 6rem;
+          line-height: 5rem;
+
+          &:hover {
+            font-weight: bold;
+            color: $discoverColorHover;
           }
 
-          .artists {
-            font-size: 1.25rem;
-            line-height: 2rem;
+        }
+
+      }
+
+      .mobile-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+      }
+
+      .bottom-content {
+        height: 85%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .thumb-down {
+          margin-top: 10px;
+          justify-content: flex-end;
+        }
+
+        .thumb-up {
+          justify-content: flex-start;
+          margin-top: -10px;
+        }
+
+        .thumb-down, .thumb-up {
+          width: 15%;
+          color: $discoverColor;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          mat-icon {
+            height: 6rem;
+            width: 6rem;
+            font-size: 6rem;
+            line-height: 5rem;
+
+            &:hover {
+              font-weight: bold;
+              color: $discoverColorHover;
+            }
+
+          }
+
+        }
+
+        .track {
+          width: 70%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: $discoverColor;
+          flex-flow: wrap;
+          overflow: hidden;
+          position: relative;
+
+          @include mobile() {
+            width: 100%;
+          }
+
+          .mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg,
+                    rgba(28, 28, 28, 1) 0%,
+                    rgba(0, 0, 0, 0) 10%,
+                    rgba(0, 0, 0, 0) 90%,
+                    rgba(28, 28, 28, 1) 100%);
+
+            &:hover {
+              background: linear-gradient(90deg,
+                      rgba(28, 28, 28, 1) 0%,
+                      rgba(0, 0, 0, 0) 30%,
+                      rgba(0, 0, 0, 0) 70%,
+                      rgba(28, 28, 28, 1) 100%);
+
+              .mask-content {
+
+                .next {
+                  display: flex;
+                  width: 100%;
+                  justify-content: flex-end;
+                }
+
+                &.has-previous {
+
+                  .next, .previous {
+                    display: flex;
+                  }
+
+                }
+              }
+
+            }
+
+            .mask-content {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+
+              .next, .previous {
+                display: none;
+                padding: 20px;
+                width: 6rem;
+                height: 6rem;
+                align-items: center;
+                justify-content: center;
+
+                mat-icon {
+                  height: 6rem;
+                  width: 6rem;
+                  line-height: 6rem;
+                  font-size: 6rem;
+                }
+
+              }
+            }
+
+          }
+
+          .previous-image {
+            margin-left: -850px;
+            position: absolute;
+          }
+
+          .next-image {
+            margin-left: 850px;
+            position: absolute;
+          }
+
+          .current-image {
+            position: relative;
+            z-index: 1000;
+
+            &:hover {
+
+              .play, .pause {
+
+                mat-icon {
+                  font-weight: bold;
+                }
+
+              }
+
+              .pause {
+
+                &.is-playing {
+                  display: flex;
+                }
+
+              }
+
+            }
+
+            .play, .pause {
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              background: rgba(0, 0, 0, 0.66);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              mat-icon {
+                height: 7rem;
+                width: 7rem;
+                line-height: 8rem;
+                font-size: 7rem;
+              }
+
+            }
+
+            .pause {
+              display: none;
+            }
+
+          }
+
+          .current-image, .previous-image, .next-image {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            img {
+              max-height: 90%;
+              max-width: 90%;
+              min-height: 90%;
+              min-width: 90%;
+            }
+
+          }
+
+          .text {
+            z-index: 1000;
+            text-align: center;
+            width: 100%;
+
+            .name {
+              font-size: 1.75rem;
+              line-height: 2rem;
+
+              &:hover {
+                font-weight: 500
+              }
+
+            }
+
+            .artists {
+              font-size: 1.25rem;
+              line-height: 2rem;
+
+              .artist {
+
+                &:hover {
+                  font-weight: 500
+                }
+
+              }
+
+            }
+
           }
 
         }

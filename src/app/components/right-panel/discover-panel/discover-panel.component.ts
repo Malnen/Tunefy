@@ -12,6 +12,11 @@ import { PlaylistService } from '../../../services/playlist-service/playlist.ser
 import { Playlists } from '../../../models/playlists.interface';
 import { Playlist } from '../../../models/playlist.interface';
 import { SnackBarService } from '../../../services/snack-bar-service/snack-bar.service';
+import { LinkTileService } from '../../../services/link-tile/link-tile.service';
+import { Artist } from '../../../models/artist.interface';
+import { Artists } from '../../../models/artists.interface';
+import { ContentType } from '../../../enums/content-type.enum';
+import { Player } from '../../../models/player.interface';
 
 @Component({
   selector : 'app-discover-panel',
@@ -36,15 +41,19 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
   hasCurrentImage = true;
   hasNextImage = true;
   hasPreviousImage = true;
+  isPlaying = false;
+  player: Player;
 
   private _playlists: Playlists;
+  private _lastTrack: Item;
 
   constructor(contextMenuService: ContextMenuService,
               resizeService: ResizeService,
               private _spotifyService: SpotifyService,
               private _discoverService: DiscoverService,
               private _playlistService: PlaylistService,
-              private _snackBarService: SnackBarService) {super(contextMenuService, resizeService); }
+              private _snackBarService: SnackBarService,
+              private _linkTileService: LinkTileService) {super(contextMenuService, resizeService); }
 
   ngOnInit(): void {
     super.ngOnInit();
@@ -78,6 +87,17 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
     this._playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
       this._playlists = playlists;
     });
+    this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
+      this.player = player;
+      if (!this._spotifyService.isFollowedPlayback) {
+        if (this._lastTrack?.id !== player?.item.id) {
+          this._lastTrack = player.item;
+          this._discoverService.silentSkip(this._lastTrack);
+        } else {
+          this.isPlaying = this.player.is_playing;
+        }
+      }
+    });
     this._discoverService.load();
   }
 
@@ -102,7 +122,6 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
     if (discoverPlaylistExists) {
       const playlist = this.getDiscoverPlaylist();
       this._spotifyService.addTracksToPlaylist(playlist.id, [ this.currentTrack.uri ]).subscribe(() => {
-        this._discoverService.nextTrack();
         if (superLike) {
           this._spotifyService.followTrack(this.currentTrack.id).subscribe();
         }
@@ -120,7 +139,6 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
         this._playlistService.refreshPlaylists();
 
         this._spotifyService.addTracksToPlaylist(response.id, [ this.currentTrack.uri ]).subscribe(() => {
-          this._discoverService.nextTrack();
           if (superLike) {
             this._spotifyService.followTrack(this.currentTrack.id).subscribe();
           }
@@ -136,7 +154,61 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
   }
 
   onDislikeClick(): void {
+    this.next();
+  }
+
+  onArtistClick(artist: Artist): void {
+    if (artist) {
+      this._spotifyService.getArtists([ artist.id ]).subscribe((artists: Artists) => {
+        const config = {
+          contentType : ContentType.artist,
+          artist : artists.artists[ 0 ]
+        };
+        this._linkTileService.updateLinkTile(config);
+      });
+    }
+  }
+
+  onNameClick(): void {
+    const album = this.currentTrack.album;
+    if (album) {
+      const config = {
+        contentType : ContentType.album,
+        album
+      };
+      this._linkTileService.updateLinkTile(config);
+    }
+  }
+
+  next(): void {
+    this._spotifyService.next().subscribe();
     this._discoverService.nextTrack();
+  }
+
+  previous(): void {
+    this._spotifyService.previous().subscribe();
+    this._discoverService.previousTrack();
+  }
+
+  play(): void {
+    if (!this._spotifyService.isFollowedPlayback) {
+      this._spotifyService.play().subscribe(() => {
+        this.isPlaying = true;
+        this._spotifyService.isFollowedPlayback = false;
+      });
+    } else {
+      const uris = this.getUris();
+      this._spotifyService.setShuffleState(false);
+      this._spotifyService.playFromUris(uris).subscribe(() => {
+        this.isPlaying = true;
+        this._spotifyService.isFollowedPlayback = false;
+      });
+    }
+  }
+
+  pause(): void {
+    this._spotifyService.pause().subscribe();
+    this.isPlaying = false;
   }
 
   private getDiscoverPlaylist(): Playlist {
@@ -154,6 +226,10 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
 
   private onFailure(): void {
     this._snackBarService.showSnackBar('Nie udało się dodać utworu do playlisty');
+  }
+
+  private getUris(): string[] {
+    return this.tracks.map((track: Item) => track.uri);
   }
 
 }

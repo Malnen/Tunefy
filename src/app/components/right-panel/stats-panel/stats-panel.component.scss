@@ -1,4 +1,5 @@
 @import "src/colors";
+@import "src/media";
 @import 'node_modules/@angular/material/theming';
 
 .content {
@@ -69,6 +70,10 @@
     height: 90%;
     width: 100%;
     color: white;
+
+    @include mobile(){
+      height: auto;
+    }
 
     .loading {
       display: flex;

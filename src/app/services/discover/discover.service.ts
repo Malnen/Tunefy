@@ -96,11 +96,6 @@ export class DiscoverService {
       this._currentIndex++;
     }
 
-    const diff = size - this._currentIndex;
-    if (diff < 20) {
-      this.loadNext();
-    }
-
     this.updateDisplayedTracks();
   }
 
@@ -110,6 +105,14 @@ export class DiscoverService {
     }
 
     this.updateDisplayedTracks();
+  }
+
+  silentSkip(track: Item): void {
+    const index = this._tracks.value.map((value: Item) => value.id).indexOf(track.id);
+    if (index > -1) {
+      this._currentIndex = index;
+      this.updateDisplayedTracks();
+    }
   }
 
   private loadNext(): void {

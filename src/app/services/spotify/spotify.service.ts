@@ -27,6 +27,7 @@ import { PlaylistCoverData } from '../../models/playlist-cover-data.interface';
 export class SpotifyService {
 
   userAllowed = true;
+  isFollowedPlayback = true;
 
   private readonly clientId: string = '6a6b154241b04bc1bd0f4656b98d8aa4'; // 'f65acf8953b54bd0b83627545be8ece4';
   private readonly clientSecret: string = 'e21ffa9272b14229896cf7003b46f8ae'; // '0cba5ea640b241b294596f215bbe9e15';

@@ -36,7 +36,13 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
     super.ngOnInit();
   }
 
+  play(): void {
+    this.spotifyService.isFollowedPlayback = true;
+    super.play();
+  }
+
   playRandom(): void {
+    this.spotifyService.isFollowedPlayback = true;
     this.spotifyService.setShuffleState(true).subscribe(() => {
       const offset = Math.floor(Math.random() * (this.playlistTracks.items.length + 1));
       this.spotifyService.playFromUris(this._uris, offset).subscribe();
@@ -92,7 +98,7 @@ export class FollowedPanelComponent extends PlaylistPanelComponent implements On
         total : 0,
         href : ''
       },
-      uri : null,
+      uri : `spotify:user:${this._profile.id}:collection`,
       id : '',
       href : '',
       images : [],

@@ -100,6 +100,7 @@ export class LinkTileComponent extends BaseComponent implements OnInit, AfterVie
       ContentType.home,
       ContentType.local,
       ContentType.stats,
+      ContentType.followed,
       ContentType.discover
     ];
     if (excludedTypes.includes(contentType)) {
