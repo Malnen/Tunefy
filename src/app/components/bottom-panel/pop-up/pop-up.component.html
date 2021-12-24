@@ -36,6 +36,8 @@
                             (loaded)="onLoaded()"></app-lyrics-wrapper>
         <app-queue-wrapper *ngSwitchCase="popUpContentTypeEnum.QUEUE"
                            (loaded)="onLoaded()"></app-queue-wrapper>
+        <app-audio-features *ngSwitchCase="popUpContentTypeEnum.AUDIO_FEATURES"
+                           (loaded)="onLoaded()"></app-audio-features>
       </div>
     </div>
   </button>

@@ -1,0 +1,18 @@
+<div class="feature">
+  <div class="label">
+    {{label}}
+  </div>
+  <div class="expand"
+       [class.expanded]="expanded"
+       (click)="onExpandClick()">
+    <mat-icon>expand_more</mat-icon>
+  </div>
+  <div class="value">
+    {{roundedValue + '/' + 100}}
+  </div>
+  <div class="bars">
+    <div class="background"></div>
+    <div class="foreground"
+         [style.width]="valueToDisplay + '%'"></div>
+  </div>
+</div>

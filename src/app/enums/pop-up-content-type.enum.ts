@@ -1,5 +1,6 @@
 export enum PopUpContentType {
   DEVICES,
   LYRICS,
-  QUEUE
+  QUEUE,
+  AUDIO_FEATURES
 }

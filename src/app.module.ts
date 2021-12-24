@@ -26,7 +26,7 @@ import { DevicesWrapperComponent } from './app/components/bottom-panel/pop-up/de
 import { HoverDirective } from './app/directives/hover.directive';
 import { VolumeBarComponent } from './app/components/bottom-panel/volume-bar/volume-bar.component';
 import { PopUpComponent } from './app/components/bottom-panel/pop-up/pop-up.component';
-import { LyricsWrapperComponent } from './app/components/bottom-panel/pop-up/lyrics-wrapper/lyrics-wrapper.component';
+import { ScrollMaskComponent } from './app/components/bottom-panel/pop-up/scroll-mask/scroll-mask.component';
 import { SafeHtmlPipe } from './app/pipes/safe-html.pipe';
 import { QueueWrapperComponent } from './app/components/bottom-panel/pop-up/queue-wrapper/queue-wrapper.component';
 import { SearchBarComponent } from './app/components/right-panel/search-bar/search-bar.component';
@@ -80,6 +80,9 @@ import { ResizeService } from './app/services/resize-service/resize.service';
 import { DiscoverPanelComponent } from './app/components/right-panel/discover-panel/discover-panel.component';
 import { DiscoverService } from './app/services/discover/discover.service';
 import { PlaylistService } from './app/services/playlist-service/playlist.service';
+import { LyricsWrapperComponent } from './app/components/bottom-panel/pop-up/lyrics-wrapper/lyrics-wrapper.component';
+import { AudioFeaturesComponent } from './app/components/bottom-panel/pop-up/audio-features/audio-features.component';
+import { AufioFeatureBarComponent } from './app/components/bottom-panel/pop-up/audio-features/aufio-feature-bar/aufio-feature-bar.component';
 
 @NgModule({
   declarations : [
@@ -99,7 +102,7 @@ import { PlaylistService } from './app/services/playlist-service/playlist.servic
     HoverDirective,
     VolumeBarComponent,
     PopUpComponent,
-    LyricsWrapperComponent,
+    ScrollMaskComponent,
     SafeHtmlPipe,
     QueueWrapperComponent,
     SearchBarComponent,
@@ -143,7 +146,10 @@ import { PlaylistService } from './app/services/playlist-service/playlist.servic
     SubMenuComponent,
     EditPlaylistDialogComponent,
     ChangePlaylistImageDialogComponent,
-    DiscoverPanelComponent
+    DiscoverPanelComponent,
+    LyricsWrapperComponent,
+    AudioFeaturesComponent,
+    AufioFeatureBarComponent
   ],
   imports : [
     BrowserModule,

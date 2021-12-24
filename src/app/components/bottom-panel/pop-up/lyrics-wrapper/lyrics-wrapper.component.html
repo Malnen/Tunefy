@@ -17,7 +17,7 @@
         Nie odnaleziono tekstu dla tego utworu
       </div>
       <div *ngIf="!hasError"
-           #lyricsContainer
+           #container
            class="lyrics-container"
            (scroll)="onScroll($event)"
            [class.hover]="hover"
