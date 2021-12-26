@@ -27,19 +27,33 @@
            [style.-webkit-mask-image]="maskImage">
         <div class="content">
           <app-aufio-feature-bar [value]="danceability"
-                                 [label]="'Taneczność'"></app-aufio-feature-bar>
+                                 [label]="'Taneczność'"
+                                 [description]="danceabilityDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
           <app-aufio-feature-bar [value]="acousticness"
-                                 [label]="'Akustyka'"></app-aufio-feature-bar>
+                                 [label]="'Akustyka'"
+                                 [description]="acousticnessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
           <app-aufio-feature-bar [value]="energy"
-                                 [label]="'Energia'"></app-aufio-feature-bar>
+                                 [label]="'Energia'"
+                                 [description]="energyDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
           <app-aufio-feature-bar [value]="instrumentalness"
-                                 [label]="'Instrumentalność'"></app-aufio-feature-bar>
+                                 [label]="'Instrumentalność'"
+                                 [description]="instrumentalnessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
           <app-aufio-feature-bar [value]="liveness"
-                                 [label]="'Żywość'"></app-aufio-feature-bar>
+                                 [label]="'Żywość'"
+                                 [description]="livenessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
           <app-aufio-feature-bar [value]="speechiness"
-                                 [label]="'Mowa'"></app-aufio-feature-bar>
+                                 [label]="'Mowa'"
+                                 [description]="speechinessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
           <app-aufio-feature-bar [value]="valence"
-                                 [label]="'Wartościowość'"></app-aufio-feature-bar>
+                                 [label]="'Wartościowość'"
+                                 [description]="valenceDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
         </div>
       </div>
     </div>

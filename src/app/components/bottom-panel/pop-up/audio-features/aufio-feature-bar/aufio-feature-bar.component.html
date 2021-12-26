@@ -7,6 +7,10 @@
        (click)="onExpandClick()">
     <mat-icon>expand_more</mat-icon>
   </div>
+  <div class="description"
+       [style.height]="expanded ? '100%':'0'">
+    {{description}}
+  </div>
   <div class="value">
     {{roundedValue + '/' + 100}}
   </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-aufio-feature-bar',
@@ -9,6 +9,9 @@ export class AufioFeatureBarComponent implements OnInit, OnChanges {
 
   @Input() value: number;
   @Input() label: string;
+  @Input() description: string;
+
+  @Output() expandClicked = new EventEmitter<void>();
 
   valueToDisplay = 0;
   roundedValue = 0;
@@ -27,6 +30,7 @@ export class AufioFeatureBarComponent implements OnInit, OnChanges {
 
   onExpandClick(): void {
     this.expanded = !this.expanded;
+    this.expandClicked.emit();
   }
 
   private prepareData(): void {

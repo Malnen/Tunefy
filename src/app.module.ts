@@ -83,6 +83,9 @@ import { PlaylistService } from './app/services/playlist-service/playlist.servic
 import { LyricsWrapperComponent } from './app/components/bottom-panel/pop-up/lyrics-wrapper/lyrics-wrapper.component';
 import { AudioFeaturesComponent } from './app/components/bottom-panel/pop-up/audio-features/audio-features.component';
 import { AufioFeatureBarComponent } from './app/components/bottom-panel/pop-up/audio-features/aufio-feature-bar/aufio-feature-bar.component';
+import { SwitcherComponent } from './app/components/switcher/switcher.component';
+import { HorizontalChartComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-chart.component';
+import { HorizontalBarComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-bar/horizontal-bar.component';
 
 @NgModule({
   declarations : [
@@ -149,7 +152,10 @@ import { AufioFeatureBarComponent } from './app/components/bottom-panel/pop-up/a
     DiscoverPanelComponent,
     LyricsWrapperComponent,
     AudioFeaturesComponent,
-    AufioFeatureBarComponent
+    AufioFeatureBarComponent,
+    SwitcherComponent,
+    HorizontalChartComponent,
+    HorizontalBarComponent
   ],
   imports : [
     BrowserModule,

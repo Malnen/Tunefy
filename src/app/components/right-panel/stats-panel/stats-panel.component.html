@@ -1,24 +1,8 @@
 <div class="content">
   <div class="top">
-    <div class="switches">
-      <div *ngFor="let switcher of switches;let i = index"
-           class="wrapper">
-        <div class="switch"
-             [class.is-current]="switcher.contentType == contentType"
-             (click)="switch(switcher)">
-          <div class="text">
-            <div class="name">
-              {{switcher.name}}
-            </div>
-          </div>
-          <div class="footer"
-               [style.background]="switcher.contentType == contentType ? '#FF8000' : '#444444'"
-               [style.width]="switcher.contentType == contentType ? '50%' : '0'"></div>
-        </div>
-        <div *ngIf="i<switches.length -1"
-             class="divider"></div>
-      </div>
-    </div>
+    <app-switcher [defaultValue]="contentType"
+                  [switches]="switches"
+                  (switched)="switch($event)"></app-switcher>
   </div>
   <div class="bottom">
     <div *ngIf="loading"
