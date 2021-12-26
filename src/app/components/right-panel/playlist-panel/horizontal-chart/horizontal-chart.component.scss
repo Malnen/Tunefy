@@ -1,4 +1,48 @@
+@import "src/colors";
+
 .bars {
   width: 100%;
   height: 100%;
+
+  .sort {
+    width: 98%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: $playlistTitle;
+    margin: 10px;
+
+    .button {
+      height: 100%;
+      transition: transform 0.2s;
+
+      mat-icon {
+        color: $playlistTitle;
+      }
+
+      .arrow {
+        transition: transform 0.1s;
+        color: $lightOrange;
+
+        &.down {
+
+          transform: rotate(180deg);
+        }
+
+      }
+
+      &:hover {
+        font-weight: bold;
+
+        mat-icon {
+          font-weight: bold;
+        }
+
+      }
+
+    }
+
+  }
+
 }

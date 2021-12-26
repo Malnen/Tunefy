@@ -423,7 +423,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   }
 
   private loadNextArtists(iterator: any): void {
-    const next = iterator.next.value;
+    const next = iterator.next().value;
     if (next != null) {
       this.spotifyService.getArtists(next).subscribe((artists: Artists) => {
         this._artists.push(...artists.artists);
@@ -454,12 +454,17 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     const artistsArray = Array.from(artistsMap);
     const max = Math.max(...artistsArray.map(value => value[1]));
     const step = 90 / max;
+    let index = 0;
     for (const artist of artistsArray) {
       this._artistsBars.push({
         label: artist[0]?.name,
         size: artist[1],
-        step
+        step,
+        showImage: true,
+        image: artist[0]?.images[0],
+        index
       });
+      index++;
     }
 
     this.activeBarsConfig = this._artistsBars;
@@ -489,12 +494,17 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     const albumsArray = Array.from(albums);
     const max = Math.max(...albumsArray.map(value => value[1].value));
     const step = 90 / max;
+    let index = 0;
     for (const album of albumsArray) {
       this._albumsBars.push({
         label: album[1].album.name,
         size: album[1].value,
-        step
+        step,
+        showImage: true,
+        image: album[1].album.images[0],
+        index
       });
+      index++;
     }
   }
 
@@ -523,12 +533,15 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     const genresArray = Array.from(genres);
     const max = Math.max(...genresArray.map(value => value[1]));
     const step = 90 / max;
+    let index = 0;
     for (const genre of genresArray) {
       this._genresBars.push({
         label: genre[0],
         size: genre[1],
-        step
+        step,
+        index
       });
+      index++;
     }
   }
 

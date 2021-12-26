@@ -25,6 +25,9 @@
   </div>
   <div class="middle">
     <div class="buttons">
+      <div *ngIf="mobile"
+           class="lyrics">
+      </div>
       <div class="lyrics">
         <app-pop-up [iconClass]="'icon-tunefy-lyrics'"
                     [fontSet]="'lyrics'"

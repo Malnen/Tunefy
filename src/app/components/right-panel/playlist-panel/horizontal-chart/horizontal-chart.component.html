@@ -1,4 +1,14 @@
 <div class="bars">
+  <div class="sort">
+    <div class="button"
+         (click)="sortClick()">
+      <mat-icon>sort</mat-icon>
+      <mat-icon *ngIf="sort !== sortType.NONE"
+        class="arrow"
+                [class.down]="!asc">arrow_upward
+      </mat-icon>
+    </div>
+  </div>
   <app-horizontal-bar *ngFor="let bar of bars"
                       [config]="bar"></app-horizontal-bar>
 </div>

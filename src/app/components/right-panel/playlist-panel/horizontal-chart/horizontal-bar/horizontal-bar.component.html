@@ -1,2 +1,24 @@
-<div class="bar"
-     [style.width]="config.size * config.step +'%'"></div>
+<div class="content">
+  <div *ngIf="config.showImage"
+       class="image">
+    <img src="{{config.image?.url}}">
+  </div>
+  <div class="bar"
+       [class.has-image]="config.showImage">
+    <div class="label">
+      {{config.label}}
+    </div>
+    <div class="background">
+
+    </div>
+    <div class="foreground">
+      <div class="bar"
+           [style.width]="valueToDisplay +'%'">
+      </div>
+      <div class="count">
+        {{config.size}}
+      </div>
+    </div>
+  </div>
+</div>
+
