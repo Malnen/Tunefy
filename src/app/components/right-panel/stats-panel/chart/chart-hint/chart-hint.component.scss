@@ -6,6 +6,7 @@
   height: 100%;
   background: $charHintBackground;
   border-radius: 8px;
+  color: $hint;
   @include mat-elevation(4);
 
   .top {

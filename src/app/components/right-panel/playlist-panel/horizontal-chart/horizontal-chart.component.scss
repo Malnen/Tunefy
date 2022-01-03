@@ -45,4 +45,12 @@
 
   }
 
+  .hint {
+    pointer-events: none;
+    position: absolute;
+    z-index: 100;
+    width: 300px;
+    min-height: 100px;
+  }
+
 }

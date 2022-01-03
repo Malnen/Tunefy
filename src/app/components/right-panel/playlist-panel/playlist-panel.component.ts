@@ -1,31 +1,31 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {SpotifyService} from '../../../services/spotify/spotify.service';
-import {Playlist} from '../../../models/playlist.interface';
-import {Image} from '../../../models/image.interface';
-import {PlaylistTracks} from '../../../models/playlist-tracks.interface';
-import {Player} from '../../../models/player.interface';
-import {Context} from '../../../models/context.interface';
-import {PlaylistItem} from '../../../models/playlist-item.interface';
-import {PlaylistService} from '../../../services/playlist-service/playlist.service';
-import {Observable} from 'rxjs';
-import {Item} from '../../../models/item.interface';
-import {Playlists} from '../../../models/playlists.interface';
-import {DialogService} from '../../../services/dialog/dialog.service';
-import {BaseComponent} from '../../base-component/base.component';
-import {ContextMenuService} from '../../../services/context-menu/context-menu.service';
-import {ResizeService} from '../../../services/resize-service/resize.service';
-import {Switch} from '../../../models/switch.interface';
-import {ContentType} from '../../../enums/content-type.enum';
-import {ColorsEnum} from '../../../enums/colors.enum';
-import {Artist} from '../../../models/artist.interface';
-import {Album} from '../../../models/album.interface';
-import {Artists} from '../../../models/artists.interface';
-import {PlaylistBarConfig} from '../../../models/playlist-bar-config.interface';
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { SpotifyService } from '../../../services/spotify/spotify.service';
+import { Playlist } from '../../../models/playlist.interface';
+import { Image } from '../../../models/image.interface';
+import { PlaylistTracks } from '../../../models/playlist-tracks.interface';
+import { Player } from '../../../models/player.interface';
+import { Context } from '../../../models/context.interface';
+import { PlaylistItem } from '../../../models/playlist-item.interface';
+import { PlaylistService } from '../../../services/playlist-service/playlist.service';
+import { Observable } from 'rxjs';
+import { Item } from '../../../models/item.interface';
+import { Playlists } from '../../../models/playlists.interface';
+import { DialogService } from '../../../services/dialog/dialog.service';
+import { BaseComponent } from '../../base-component/base.component';
+import { ContextMenuService } from '../../../services/context-menu/context-menu.service';
+import { ResizeService } from '../../../services/resize-service/resize.service';
+import { Switch } from '../../../models/switch.interface';
+import { ContentType } from '../../../enums/content-type.enum';
+import { ColorsEnum } from '../../../enums/colors.enum';
+import { Artist } from '../../../models/artist.interface';
+import { Album } from '../../../models/album.interface';
+import { Artists } from '../../../models/artists.interface';
+import { PlaylistBarConfig } from '../../../models/playlist-bar-config.interface';
 
 @Component({
-  selector: 'app-playlist-panel',
-  templateUrl: './playlist-panel.component.html',
-  styleUrls: ['./playlist-panel.component.scss']
+  selector : 'app-playlist-panel',
+  templateUrl : './playlist-panel.component.html',
+  styleUrls : [ './playlist-panel.component.scss' ]
 })
 export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnChanges {
 
@@ -59,7 +59,8 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   statsContentType: ContentType;
   topArtist: Artist;
   topAlbum: Album;
-  topGenres: String[];
+  topGenres: string[];
+  genreArtists: Artist[];
 
   protected disabledItemsCount = 0;
   private _scrollPosition: number;
@@ -186,7 +187,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   }
 
   protected setContext(): void {
-    this.context = {uri: this.playlist.uri};
+    this.context = { uri : this.playlist.uri };
   }
 
   protected getLoadTracksObservable(): Observable<PlaylistTracks> {
@@ -239,7 +240,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
       const temp = items.slice(i, i + chunk);
       this.spotifyService.checkIfTrackAreFollowed(temp).subscribe((response: boolean[]) => {
         for (let j = 0; j < response.length - 1; j++) {
-          this.playlistTracks.items[i + j + offset].track.followed = response[j];
+          this.playlistTracks.items[ i + j + offset ].track.followed = response[ j ];
         }
       });
     }
@@ -273,7 +274,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   protected loadImage(): void {
     if (this.playlist?.images.length > 0) {
       this.hasImage = true;
-      this.image = this.playlist.images[0];
+      this.image = this.playlist.images[ 0 ];
     } else {
       this.hasImage = false;
     }
@@ -294,31 +295,31 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     this.statsContentType = ContentType.artist;
     this.switches = [
       {
-        name: 'Playlista',
-        icon: '',
-        value: ContentType.playlist
+        name : 'Playlista',
+        icon : '',
+        value : ContentType.playlist
       },
       {
-        name: 'Statystyki',
-        icon: '',
-        value: ContentType.stats
+        name : 'Statystyki',
+        icon : '',
+        value : ContentType.stats
       }
     ];
     this.statsSwitches = [
       {
-        name: 'Artyści',
-        icon: '',
-        value: ContentType.artist
+        name : 'Artyści',
+        icon : '',
+        value : ContentType.artist
       },
       {
-        name: 'Albumy',
-        icon: '',
-        value: ContentType.album
+        name : 'Albumy',
+        icon : '',
+        value : ContentType.album
       },
       {
-        name: 'Gatunki',
-        icon: '',
-        value: ContentType.genres
+        name : 'Gatunki',
+        icon : '',
+        value : ContentType.genres
       }
     ];
   }
@@ -352,9 +353,9 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   private scrollToTop(): void {
     if (this.container) {
       this.container.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
+        top : 0,
+        left : 0,
+        behavior : 'smooth'
       });
     }
   }
@@ -420,7 +421,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
 
       const ids = Array.from(artistsMap.keys());
       const slices = this.getSlices(50, ids);
-      const iterator = slices[Symbol.iterator]();
+      const iterator = slices[ Symbol.iterator ]();
       const next = iterator.next().value;
       this.spotifyService.getArtists(next).subscribe((artists: Artists) => {
         this._artists.push(...artists.artists);
@@ -459,24 +460,24 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     }
 
     const artistsArray = Array.from(artistsMap);
-    const max = Math.max(...artistsArray.map(value => value[1]));
+    const max = Math.max(...artistsArray.map(value => value[ 1 ]));
     const step = 90 / max;
     let index = 0;
     for (const artist of artistsArray) {
       this._artistsBars.push({
-        label: artist[0]?.name,
-        size: artist[1],
+        label : artist[ 0 ]?.name,
+        size : artist[ 1 ],
         step,
-        showImage: true,
-        image: artist[0]?.images[0],
-        index
+        showImage : true,
+        image : artist[ 0 ]?.images[ 0 ],
+        index,
+        artist : artist[ 0 ]
       });
       index++;
     }
 
     this.activeBarsConfig = this._artistsBars;
-    /// top artist wyliczyc
-
+    this.topArtist = artistsArray.find(value => value[ 1 ] === max)[ 0 ];
   }
 
   private loadAlbums(): void {
@@ -487,9 +488,9 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
       const id = album.id;
       if (albums.has(id)) {
         const entry = albums.get(id);
-        albums.set(id, {album, value: entry.value + 1});
+        albums.set(id, { album, value : entry.value + 1 });
       } else {
-        albums.set(id, {album, value: 1});
+        albums.set(id, { album, value : 1 });
       }
     }
 
@@ -501,20 +502,23 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   private setAlbumBars(albums: Map<string, { album: Album, value: number }>): void {
     this._albumsBars = [];
     const albumsArray = Array.from(albums);
-    const max = Math.max(...albumsArray.map(value => value[1].value));
+    const max = Math.max(...albumsArray.map(value => value[ 1 ].value));
     const step = 90 / max;
     let index = 0;
     for (const album of albumsArray) {
       this._albumsBars.push({
-        label: album[1].album.name,
-        size: album[1].value,
+        label : album[ 1 ].album.name,
+        size : album[ 1 ].value,
         step,
-        showImage: true,
-        image: album[1].album.images[0],
-        index
+        showImage : true,
+        image : album[ 1 ].album.images[ 0 ],
+        index,
+        album : album[ 1 ].album
       });
       index++;
     }
+
+    this.topAlbum = albumsArray.find(value => value[ 1 ].value === max)[ 1 ].album;
   }
 
   private setGenres(): void {
@@ -540,17 +544,41 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   private setGenresBars(genres: Map<string, number>): void {
     this._genresBars = [];
     const genresArray = Array.from(genres);
-    const max = Math.max(...genresArray.map(value => value[1]));
+    const max = Math.max(...genresArray.map(value => value[ 1 ]));
     const step = 90 / max;
     let index = 0;
     for (const genre of genresArray) {
+      const genreArtists = [];
+      for (const artist of this._artists) {
+        if (genreArtists.length < 5) {
+          if (artist.genres.includes(genre[ 0 ])) {
+            genreArtists.push(artist);
+          }
+        } else {
+          break;
+        }
+      }
+
       this._genresBars.push({
-        label: genre[0],
-        size: genre[1],
+        label : genre[ 0 ],
+        size : genre[ 1 ],
         step,
-        index
+        index,
+        genreArtists
       });
       index++;
+    }
+
+    this.topGenres = [];
+    let topGenres = JSON.parse(JSON.stringify(Array.from(genres?.entries())));
+    topGenres = topGenres?.sort((x, y) => y[ 1 ] - x [ 1 ]);
+    if (topGenres) {
+      for (const genre of topGenres) {
+        this.topGenres.push(genre[ 0 ]);
+        if (this.topGenres.length > 4) {
+          break;
+        }
+      }
     }
   }
 
