@@ -11,7 +11,6 @@ import {Observable} from 'rxjs';
 import {Item} from '../../../models/item.interface';
 import {Playlists} from '../../../models/playlists.interface';
 import {DialogService} from '../../../services/dialog/dialog.service';
-import {HoverableComponent} from '../../hoverable/hoverable.component';
 import {BaseComponent} from '../../base-component/base.component';
 import {ContextMenuService} from '../../../services/context-menu/context-menu.service';
 import {ResizeService} from '../../../services/resize-service/resize.service';
@@ -57,6 +56,10 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   spinnerColor = ColorsEnum.ORANGE;
   noData = false;
   activeBarsConfig: PlaylistBarConfig[];
+  statsContentType: ContentType;
+  topArtist: Artist;
+  topAlbum: Album;
+  topGenres: String[];
 
   protected disabledItemsCount = 0;
   private _scrollPosition: number;
@@ -178,6 +181,8 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
         this.activeBarsConfig = this._genresBars;
         break;
     }
+
+    this.statsContentType = switcher.value;
   }
 
   protected setContext(): void {
@@ -286,6 +291,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   private initSwitches(): void {
     this.switchValue = ContentType.playlist;
     this.statsSwitchValue = ContentType.artist;
+    this.statsContentType = ContentType.artist;
     this.switches = [
       {
         name: 'Playlista',
@@ -331,6 +337,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     this.activeBarsConfig = this._artistsBars;
     this.switchValue = ContentType.playlist;
     this.statsSwitchValue = ContentType.artist;
+    this.statsContentType = ContentType.artist;
     this.disabledItemsCount = 0;
     this.loading = true;
     this.playlistTracks = null;
@@ -468,6 +475,8 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     }
 
     this.activeBarsConfig = this._artistsBars;
+    /// top artist wyliczyc
+
   }
 
   private loadAlbums(): void {

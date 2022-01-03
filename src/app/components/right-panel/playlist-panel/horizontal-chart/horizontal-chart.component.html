@@ -9,6 +9,7 @@
       </mat-icon>
     </div>
   </div>
+  <app-horizontal-chart-info [contentType]="contentType"></app-horizontal-chart-info>
   <app-horizontal-bar *ngFor="let bar of bars"
                       [config]="bar"></app-horizontal-bar>
 </div>

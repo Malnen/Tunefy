@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {PlaylistBarConfig} from '../../../../models/playlist-bar-config.interface';
 import {SortType} from '../../../../enums/sort-type.enum';
+import {ContentType} from '../../../../enums/content-type.enum';
 
 @Component({
   selector: 'app-horizontal-chart',
@@ -10,6 +11,7 @@ import {SortType} from '../../../../enums/sort-type.enum';
 export class HorizontalChartComponent implements OnInit, OnChanges {
 
   @Input() bars: PlaylistBarConfig[];
+  @Input() contentType: ContentType;
 
   sort = SortType.NONE;
   asc = false;

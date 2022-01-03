@@ -1,0 +1,17 @@
+<div class="content">
+  <div [ngSwitch]="contentType"
+       class="label">
+    <div *ngSwitchCase="contentTypeEnum.artist"
+         class="artist">
+      Najczęściej występujący artysta:
+    </div>
+    <div *ngSwitchCase="contentTypeEnum.album"
+         class="album">
+      Najczęściej występujący album:
+    </div>
+    <div *ngSwitchCase="contentTypeEnum.genres"
+         class="genres">
+      Najczęściej występujące gatunki:
+    </div>
+  </div>
+</div>

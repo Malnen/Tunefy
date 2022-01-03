@@ -86,6 +86,7 @@ import { AufioFeatureBarComponent } from './app/components/bottom-panel/pop-up/a
 import { SwitcherComponent } from './app/components/switcher/switcher.component';
 import { HorizontalChartComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-chart.component';
 import { HorizontalBarComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-bar/horizontal-bar.component';
+import { HorizontalChartInfoComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-chart-info/horizontal-chart-info.component';
 
 @NgModule({
   declarations : [
@@ -155,7 +156,8 @@ import { HorizontalBarComponent } from './app/components/right-panel/playlist-pa
     AufioFeatureBarComponent,
     SwitcherComponent,
     HorizontalChartComponent,
-    HorizontalBarComponent
+    HorizontalBarComponent,
+    HorizontalChartInfoComponent
   ],
   imports : [
     BrowserModule,

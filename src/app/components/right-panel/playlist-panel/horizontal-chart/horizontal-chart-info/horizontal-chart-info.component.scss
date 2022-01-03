@@ -1,0 +1,13 @@
+@import "src/colors";
+
+.content {
+  width: 100%;
+
+  .artist, .album, .genres {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin: 10px;
+    color: $playlistTitle;
+  }
+
+}

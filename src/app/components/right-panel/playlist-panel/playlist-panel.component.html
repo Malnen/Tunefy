@@ -95,7 +95,8 @@
                     [defaultValue]="statsSwitchValue"
                     (switched)="statsSwitch($event)"></app-switcher>
       <app-horizontal-chart *ngIf="!noData"
-                            [bars]="activeBarsConfig"></app-horizontal-chart>
+                            [bars]="activeBarsConfig"
+                            [contentType]="statsContentType"></app-horizontal-chart>
       <div *ngIf="noData"
            class="error">
         Brak danych
