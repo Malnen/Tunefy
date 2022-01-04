@@ -83,13 +83,13 @@ export class ChartComponent implements OnInit, OnChanges {
     this.hover = true;
     let x = event.x - 300;
     const width = this._elRef.nativeElement.getBoundingClientRect().width;
-    if (x < 0) {
+    const elRefX = this._elRef.nativeElement.getBoundingClientRect().x;
+    if (x < elRefX) {
       x = event.x;
     }
-    if (x + 300 > width) {
-      x = width / 2 - 150;
+    if (x + 300 - elRefX > width) {
+      x = width / 2 - 150 + elRefX;
     }
-
     this.hintPosition = {
       x,
       y : event.y - 100

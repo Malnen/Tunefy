@@ -27,6 +27,10 @@ export class DiscoverService {
 
   constructor(private _spotifyService: SpotifyService) { }
 
+  get currentIndex(): number {
+    return this._currentIndex;
+  }
+
   updateTracks(tracks: Item[]): void {
     this._tracks.next(tracks);
   }
@@ -92,8 +96,12 @@ export class DiscoverService {
   nextTrack(): void {
     const size = this._tracks.value.length;
 
-    if (this._currentIndex < size) {
+    if (this._currentIndex + 1 < size) {
       this._currentIndex++;
+    } else {
+      this._tracks.next([]);
+      this._currentIndex = 0;
+      this.load();
     }
 
     this.updateDisplayedTracks();
@@ -197,16 +205,16 @@ export class DiscoverService {
   }
 
   private setCurrentImage(): void {
-    this._currentImage.next(this._currentTrack.value.album.images[ 0 ]);
+    this._currentImage.next(this._currentTrack.value?.album.images[ 0 ]);
   }
 
   private setNextImage(): void {
-    this._nextImage.next(this._nextTrack.value.album.images[ 0 ]);
+    this._nextImage.next(this._nextTrack.value?.album?.images[ 0 ]);
   }
 
   private setPreviousImage(): void {
     if (this._currentIndex > 0) {
-      this._previousImage.next(this._previousTrack?.value.album.images[ 0 ]);
+      this._previousImage.next(this._previousTrack?.value?.album.images[ 0 ]);
     } else {
       this._previousImage.next(null);
     }

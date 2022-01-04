@@ -112,8 +112,6 @@ export class HorizontalChartComponent implements OnInit, OnChanges {
         navigationLabel = 'Kliknij aby przejść do albumu';
         navigable = true;
         break;
-      case ContentType.genres:
-        break;
     }
     return {
       contentType : this.contentType,
@@ -125,10 +123,6 @@ export class HorizontalChartComponent implements OnInit, OnChanges {
       navigable,
       genreArtists : bar.genreArtists
     };
-  }
-
-  private getGenreArtists(): void {
-
   }
 
   private sortBars(): void {

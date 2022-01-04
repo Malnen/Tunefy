@@ -37,7 +37,14 @@
     left: 0;
     top: 0;
     cursor: auto;
-    display: none;
+
+    @include mobile() {
+      width: 4000px;
+      height: 4000px;
+      left: -1500px;
+      top: -1500px;
+    }
+
   }
 
   --box-shadow: none;
@@ -45,6 +52,7 @@
   .devices-pop-up {
     font-weight: normal;
     width: 400px;
+    z-index: 100;
     backdrop-filter: blur(10px);
     background: rgba($popUpBackground, 0.90);
     border-radius: 3px;
