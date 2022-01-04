@@ -45,3 +45,7 @@
 .icon-tunefy-lyrics:before {
   content: "\e901";
 }
+
+.cdk-overlay-container {
+  z-index: 10000000000000 !important;
+}
