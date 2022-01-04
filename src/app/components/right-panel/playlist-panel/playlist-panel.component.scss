@@ -358,4 +358,45 @@
     @include search();
   }
 
+  .stats {
+    height: auto;
+    margin: auto;
+    width: 95%;
+    background: $playlistBackground;
+    border-radius: 10px;
+    @include mat-elevation(4);
+
+    .loading {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-self: center;
+      padding: 30px;
+
+      mat-spinner {
+        margin: auto;
+      }
+
+    }
+
+    .wrapper {
+      height: 100%;
+      width: 100%;
+      margin-bottom: 30px;
+      padding: 10px;
+
+      .error {
+        width: 100%;
+        font-size: 2rem;
+        height: 4rem;
+        line-height: 4rem;
+        color: $playlistHeader;
+        text-align: center;
+      }
+
+    }
+
+  }
+
 }

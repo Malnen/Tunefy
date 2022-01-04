@@ -11,10 +11,16 @@ import { Observable } from 'rxjs';
 import { Item } from '../../../models/item.interface';
 import { Playlists } from '../../../models/playlists.interface';
 import { DialogService } from '../../../services/dialog/dialog.service';
-import { HoverableComponent } from '../../hoverable/hoverable.component';
 import { BaseComponent } from '../../base-component/base.component';
 import { ContextMenuService } from '../../../services/context-menu/context-menu.service';
 import { ResizeService } from '../../../services/resize-service/resize.service';
+import { Switch } from '../../../models/switch.interface';
+import { ContentType } from '../../../enums/content-type.enum';
+import { ColorsEnum } from '../../../enums/colors.enum';
+import { Artist } from '../../../models/artist.interface';
+import { Album } from '../../../models/album.interface';
+import { Artists } from '../../../models/artists.interface';
+import { PlaylistBarConfig } from '../../../models/playlist-bar-config.interface';
 
 @Component({
   selector : 'app-playlist-panel',
@@ -41,12 +47,32 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   forceLoading: boolean;
   playlists: Playlists;
   isUserPlaylist = true;
+  switches: Switch[];
+  switchValue: any;
+  statsSwitches: Switch[];
+  statsSwitchValue: any;
+  isStatsPanel = false;
+  statsLoaded = false;
+  spinnerColor = ColorsEnum.ORANGE;
+  noData = false;
+  activeBarsConfig: PlaylistBarConfig[];
+  statsContentType: ContentType;
+  topArtist: Artist;
+  topAlbum: Album;
+  topGenres: string[];
+  genreArtists: Artist[];
 
   protected disabledItemsCount = 0;
   private _scrollPosition: number;
   private _timer: any;
   private _loadAll: boolean;
   private _listUsedNext = [];
+  private _artists: Artist[];
+  private _albums: Album[];
+  private _genres: string[];
+  private _artistsBars: PlaylistBarConfig[];
+  private _albumsBars: PlaylistBarConfig[];
+  private _genresBars: PlaylistBarConfig[];
 
   constructor(contextMenuService: ContextMenuService,
               resizeService: ResizeService,
@@ -58,6 +84,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.initSwitches();
     this.setContext();
     this.loadPanel();
     this.container.addEventListener('scroll', this.onScroll.bind(this));
@@ -123,7 +150,8 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     this.ngOnChanges();
   }
 
-  onUnfollowed(track: Item): void {}
+  onUnfollowed(track: Item): void {
+  }
 
   onDetailsClick(): void {
     this._dialogService.openEditPlaylistDialog(this.playlist);
@@ -131,6 +159,31 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
 
   onChangeImageClick(): void {
     this._dialogService.openChangePlaylistImageDialog(this.playlist);
+  }
+
+  switch(switcher: Switch): void {
+    this.isStatsPanel = switcher.value === ContentType.stats;
+    this.switchValue = switcher.value;
+    const allLoaded = this.statsLoaded && !this.loading && this.playlistTracks.next == null;
+    if (!allLoaded) {
+      this.loadAll();
+    }
+  }
+
+  statsSwitch(switcher: Switch): void {
+    switch (switcher.value) {
+      case ContentType.artist:
+        this.activeBarsConfig = this._artistsBars;
+        break;
+      case ContentType.album:
+        this.activeBarsConfig = this._albumsBars;
+        break;
+      case ContentType.genres:
+        this.activeBarsConfig = this._genresBars;
+        break;
+    }
+
+    this.statsContentType = switcher.value;
   }
 
   protected setContext(): void {
@@ -194,8 +247,8 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   }
 
   protected filter(): void {
-    this.searchValue = this.searchInput.nativeElement.value;
-    const hasSearchValue = this.searchValue.length > 0;
+    this.searchValue = this.searchInput?.nativeElement.value;
+    const hasSearchValue = this.searchValue?.length > 0;
     if (hasSearchValue) {
       this.tracksToRender = [];
     }
@@ -236,6 +289,41 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
 
   }
 
+  private initSwitches(): void {
+    this.switchValue = ContentType.playlist;
+    this.statsSwitchValue = ContentType.artist;
+    this.statsContentType = ContentType.artist;
+    this.switches = [
+      {
+        name : 'Playlista',
+        icon : '',
+        value : ContentType.playlist
+      },
+      {
+        name : 'Statystyki',
+        icon : '',
+        value : ContentType.stats
+      }
+    ];
+    this.statsSwitches = [
+      {
+        name : 'Artyści',
+        icon : '',
+        value : ContentType.artist
+      },
+      {
+        name : 'Albumy',
+        icon : '',
+        value : ContentType.album
+      },
+      {
+        name : 'Gatunki',
+        icon : '',
+        value : ContentType.genres
+      }
+    ];
+  }
+
   private onScroll(event: Event): void {
     const target = event.target as HTMLElement;
     this._scrollPosition = target ? target.scrollTop / (target.scrollHeight - target.clientHeight) : 0;
@@ -245,6 +333,12 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
   }
 
   private loadPanel(): void {
+    this.isStatsPanel = false;
+    this.statsLoaded = false;
+    this.activeBarsConfig = this._artistsBars;
+    this.switchValue = ContentType.playlist;
+    this.statsSwitchValue = ContentType.artist;
+    this.statsContentType = ContentType.artist;
     this.disabledItemsCount = 0;
     this.loading = true;
     this.playlistTracks = null;
@@ -292,7 +386,212 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     } else {
       this.playlistService.updateNextLoaded();
       this.forceLoading = false;
+      this.setStats();
     }
+  }
+
+  private setStats(): void {
+    if (this.statsLoaded) {
+      return;
+    }
+
+    this.loadArtists();
+  }
+
+  private loadArtists(): void {
+    this._artists = [];
+    if (this.playlistTracks.items.length < 1) {
+      this.noData = true;
+      this.statsLoaded = true;
+    } else {
+      this.noData = false;
+      const artistsMap = new Map<string, number>();
+      for (const track of this.playlistTracks.items) {
+        const artists = track.track.artists;
+        for (const artist of artists) {
+          const id = artist.id;
+          if (artistsMap.has(id)) {
+            const value = artistsMap.get(id);
+            artistsMap.set(id, value + 1);
+          } else {
+            artistsMap.set(id, 1);
+          }
+        }
+      }
+
+      const ids = Array.from(artistsMap.keys());
+      const slices = this.getSlices(50, ids);
+      const iterator = slices[ Symbol.iterator ]();
+      const next = iterator.next().value;
+      this.spotifyService.getArtists(next).subscribe((artists: Artists) => {
+        this._artists.push(...artists.artists);
+        this.loadNextArtists(iterator);
+      });
+    }
+  }
+
+  private loadNextArtists(iterator: any): void {
+    const next = iterator.next().value;
+    if (next != null) {
+      this.spotifyService.getArtists(next).subscribe((artists: Artists) => {
+        this._artists.push(...artists.artists);
+        this.loadNextArtists(iterator);
+      });
+    } else {
+      this.setArtistsBars();
+      this.loadAlbums();
+    }
+  }
+
+  private setArtistsBars(): void {
+    this._artistsBars = [];
+    const artistsMap = new Map<Artist, number>();
+    for (const track of this.playlistTracks.items) {
+      const artists = track.track.artists;
+      for (const artist of artists) {
+        const fullArtist = this._artists.find(value => value.id === artist.id);
+        if (artistsMap.has(fullArtist)) {
+          const value = artistsMap.get(fullArtist);
+          artistsMap.set(fullArtist, value + 1);
+        } else {
+          artistsMap.set(fullArtist, 1);
+        }
+      }
+    }
+
+    const artistsArray = Array.from(artistsMap);
+    const max = Math.max(...artistsArray.map(value => value[ 1 ]));
+    const step = 90 / max;
+    let index = 0;
+    for (const artist of artistsArray) {
+      this._artistsBars.push({
+        label : artist[ 0 ]?.name,
+        size : artist[ 1 ],
+        step,
+        showImage : true,
+        image : artist[ 0 ]?.images[ 0 ],
+        index,
+        artist : artist[ 0 ]
+      });
+      index++;
+    }
+
+    this.activeBarsConfig = this._artistsBars;
+    this.topArtist = artistsArray.find(value => value[ 1 ] === max)[ 0 ];
+  }
+
+  private loadAlbums(): void {
+    this._albums = [];
+    const albums = new Map<string, { album: Album, value: number }>();
+    for (const track of this.playlistTracks.items) {
+      const album = track.track.album;
+      const id = album.id;
+      if (albums.has(id)) {
+        const entry = albums.get(id);
+        albums.set(id, { album, value : entry.value + 1 });
+      } else {
+        albums.set(id, { album, value : 1 });
+      }
+    }
+
+    this._albums = Array.from(albums.values()).map(value => value.album);
+    this.setAlbumBars(albums);
+    this.setGenres();
+  }
+
+  private setAlbumBars(albums: Map<string, { album: Album, value: number }>): void {
+    this._albumsBars = [];
+    const albumsArray = Array.from(albums);
+    const max = Math.max(...albumsArray.map(value => value[ 1 ].value));
+    const step = 90 / max;
+    let index = 0;
+    for (const album of albumsArray) {
+      this._albumsBars.push({
+        label : album[ 1 ].album.name,
+        size : album[ 1 ].value,
+        step,
+        showImage : true,
+        image : album[ 1 ].album.images[ 0 ],
+        index,
+        album : album[ 1 ].album
+      });
+      index++;
+    }
+
+    this.topAlbum = albumsArray.find(value => value[ 1 ].value === max)[ 1 ].album;
+  }
+
+  private setGenres(): void {
+    this._genres = [];
+    const genres = new Map<string, number>();
+    for (const artist of this._artists) {
+      const artistGenres = artist.genres;
+      for (const genre of artistGenres) {
+        if (genres.has(genre)) {
+          const value = genres.get(genre);
+          genres.set(genre, value + 1);
+        } else {
+          genres.set(genre, 1);
+        }
+      }
+    }
+
+    this._genres = Array.from(genres.keys());
+    this.setGenresBars(genres);
+    this.statsLoaded = true;
+  }
+
+  private setGenresBars(genres: Map<string, number>): void {
+    this._genresBars = [];
+    const genresArray = Array.from(genres);
+    const max = Math.max(...genresArray.map(value => value[ 1 ]));
+    const step = 90 / max;
+    let index = 0;
+    for (const genre of genresArray) {
+      const genreArtists = [];
+      for (const artist of this._artists) {
+        if (genreArtists.length < 5) {
+          if (artist.genres.includes(genre[ 0 ])) {
+            genreArtists.push(artist);
+          }
+        } else {
+          break;
+        }
+      }
+
+      this._genresBars.push({
+        label : genre[ 0 ],
+        size : genre[ 1 ],
+        step,
+        index,
+        genreArtists
+      });
+      index++;
+    }
+
+    this.topGenres = [];
+    let topGenres = JSON.parse(JSON.stringify(Array.from(genres?.entries())));
+    topGenres = topGenres?.sort((x, y) => y[ 1 ] - x [ 1 ]);
+    if (topGenres) {
+      for (const genre of topGenres) {
+        this.topGenres.push(genre[ 0 ]);
+        if (this.topGenres.length > 4) {
+          break;
+        }
+      }
+    }
+  }
+
+  private getSlices(size: number, array: any[]): any[] {
+    const slices = [];
+    let index = 0;
+    while (index < array.length) {
+      const slice = array.slice(index, size + index);
+      slices.push(slice);
+      index = size + index;
+    }
+
+    return slices;
   }
 
 }

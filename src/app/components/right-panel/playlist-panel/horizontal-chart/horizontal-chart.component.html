@@ -1,0 +1,27 @@
+<div class="bars">
+  <div class="sort">
+    <div class="button"
+         (click)="sortClick()">
+      <mat-icon>sort</mat-icon>
+      <mat-icon *ngIf="sort !== sortType.NONE"
+                class="arrow"
+                [class.down]="!asc">arrow_upward
+      </mat-icon>
+    </div>
+  </div>
+  <app-horizontal-chart-info [contentType]="contentType"
+                             [topArtist]="topArtist"
+                             [topAlbum]="topAlbum"
+                             [topGenres]="topGenres"></app-horizontal-chart-info>
+  <app-horizontal-bar *ngFor="let bar of bars"
+                      (mousemove)="onBarHover(bar, $event)"
+                      (click)="onBarClick()"
+                      (mouseleave)="onBarLeave()"
+                      [config]="bar"></app-horizontal-bar>
+  <div *ngIf="hover"
+       class="hint"
+       [style.left]="hintPosition.x+'px'"
+       [style.top]="hintPosition.y+'px'">
+    <app-chart-hint [config]="hoveredBar"></app-chart-hint>
+  </div>
+</div>

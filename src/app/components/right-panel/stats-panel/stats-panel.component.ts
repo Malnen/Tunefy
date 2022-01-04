@@ -31,7 +31,7 @@ export class StatsPanelComponent implements OnInit {
   }
 
   switch(switcher: Switch): void {
-    this.contentType = switcher.contentType;
+    this.contentType = switcher.value;
   }
 
   private updateRecentlyPlayed(): void {
@@ -63,17 +63,17 @@ export class StatsPanelComponent implements OnInit {
       {
         name : 'Artyści',
         icon : '',
-        contentType : ContentType.artist
+        value : ContentType.artist
       },
       {
         name : 'Albumy',
         icon : '',
-        contentType : ContentType.album
+        value : ContentType.album
       },
       {
         name : 'Gatunki',
         icon : '',
-        contentType : ContentType.genres
+        value : ContentType.genres
       }
     ];
   }

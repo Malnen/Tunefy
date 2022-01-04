@@ -97,7 +97,7 @@
                  (click)="onNameClick()">
               {{currentTrack?.name}}
             </div>
-            <div *ngFor="let artist of currentTrack.artists;let i = index"
+            <div *ngFor="let artist of currentTrack?.artists;let i = index"
                  class="artists">
               <div *ngIf="i<3"
                    class="artist"

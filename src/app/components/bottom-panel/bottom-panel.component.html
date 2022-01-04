@@ -25,6 +25,9 @@
   </div>
   <div class="middle">
     <div class="buttons">
+      <div *ngIf="mobile"
+           class="lyrics">
+      </div>
       <div class="lyrics">
         <app-pop-up [iconClass]="'icon-tunefy-lyrics'"
                     [fontSet]="'lyrics'"
@@ -65,6 +68,10 @@
                   (click)="toggleRepeatState()">repeat_one_on
         </mat-icon>
       </button>
+      <div class="lyrics">
+        <app-pop-up [icon]="'bar_chart'"
+                    [popUpContentType]="popUpContentType.AUDIO_FEATURES"></app-pop-up>
+      </div>
       <div *ngIf="mobile"
            class="devices">
         <app-pop-up [icon]="'devices'"

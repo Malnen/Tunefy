@@ -1,0 +1,19 @@
+<div class="switches">
+  <div *ngFor="let switcher of switches;let i = index"
+       class="wrapper">
+    <div class="switch"
+         [class.is-current]="switcher.value == currentValue"
+         (click)="switch(switcher)">
+      <div class="text">
+        <div class="name">
+          {{switcher.name}}
+        </div>
+      </div>
+      <div class="footer"
+           [style.background]="switcher.value == currentValue ? '#FF8000' : '#444444'"
+           [style.width]="switcher.value == currentValue ? '50%' : '0'"></div>
+    </div>
+    <div *ngIf="i<switches.length -1"
+         class="divider"></div>
+  </div>
+</div>

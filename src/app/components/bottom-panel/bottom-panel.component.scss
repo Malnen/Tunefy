@@ -127,9 +127,10 @@
       justify-content: center;
       padding: 1rem 1rem 0 1rem;
 
-      .lyrics, .queue {
+      .lyrics, .audio-features, .queue {
         width: 50px;
         padding-top: 8px;
+        z-index: 100;
       }
 
       .repeat, .shuffle, {
@@ -238,6 +239,11 @@
     justify-content: flex-end;
 
     .right-container {
+      width: 80%;
+      display: flex;
+      margin: 0 20px;
+      padding-top: 30px;
+      justify-content: flex-end;
 
       .devices {
         transition: transform 0.1s;
@@ -245,12 +251,6 @@
         padding-top: 30px;
         padding-right: 10px;
       }
-
-      width: 80%;
-      display: flex;
-      margin: 0 20px;
-      padding-top: 30px;
-      justify-content: flex-end;
 
       .volume {
         color: $lighterBackground;

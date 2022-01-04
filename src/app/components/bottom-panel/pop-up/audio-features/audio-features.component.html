@@ -1,0 +1,61 @@
+<div class="container"
+     appHover
+     (hover)="onHover($event)"
+     [class.loading]="loading">
+  <mat-spinner *ngIf="loading"
+               appSpinner
+               [diameter]="60"
+               [customColor]="spinnerColor"></mat-spinner>
+  <div *ngIf="!loading">
+    <div class="audio-features"
+         [class.hover]="hover">
+      <div class="label"
+           [class.hover]="hover">
+        Cechy Utworu
+        <div class="name">
+          {{currentItem.name}}
+        </div>
+      </div>
+      <div *ngIf="hasError">
+        Brak danych
+      </div>
+      <div *ngIf="!hasError"
+           #container
+           class="features-container"
+           (scroll)="onScroll($event)"
+           [class.hover]="hover"
+           [style.-webkit-mask-image]="maskImage">
+        <div class="content">
+          <app-aufio-feature-bar [value]="danceability"
+                                 [label]="'Taneczność'"
+                                 [description]="danceabilityDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+          <app-aufio-feature-bar [value]="acousticness"
+                                 [label]="'Akustyka'"
+                                 [description]="acousticnessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+          <app-aufio-feature-bar [value]="energy"
+                                 [label]="'Energia'"
+                                 [description]="energyDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+          <app-aufio-feature-bar [value]="instrumentalness"
+                                 [label]="'Instrumentalność'"
+                                 [description]="instrumentalnessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+          <app-aufio-feature-bar [value]="liveness"
+                                 [label]="'Żywość'"
+                                 [description]="livenessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+          <app-aufio-feature-bar [value]="speechiness"
+                                 [label]="'Mowa'"
+                                 [description]="speechinessDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+          <app-aufio-feature-bar [value]="valence"
+                                 [label]="'Wartościowość'"
+                                 [description]="valenceDescription"
+                                 (expandClicked)="onExpandClick()"></app-aufio-feature-bar>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

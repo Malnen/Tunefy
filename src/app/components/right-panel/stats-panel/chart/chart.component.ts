@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { RecentlyPlayed } from '../../../../models/recently-played.interface';
 import { ContentType } from '../../../../enums/content-type.enum';
 import { BarConfig } from '../../../../models/bar-config.interface';
@@ -43,7 +43,8 @@ export class ChartComponent implements OnInit, OnChanges {
   private _endMillis: number;
 
   constructor(private _spotifyService: SpotifyService,
-              private _linkTileService: LinkTileService) { }
+              private _linkTileService: LinkTileService,
+              private _elRef: ElementRef) { }
 
   ngOnInit(): void {
   }
@@ -80,8 +81,17 @@ export class ChartComponent implements OnInit, OnChanges {
   onBarHover(bar: BarConfig, event: MouseEvent): void {
     this.hoveredBar = bar;
     this.hover = true;
+    let x = event.x - 300;
+    const width = this._elRef.nativeElement.getBoundingClientRect().width;
+    const elRefX = this._elRef.nativeElement.getBoundingClientRect().x;
+    if (x < elRefX) {
+      x = event.x;
+    }
+    if (x + 300 - elRefX > width) {
+      x = width / 2 - 150 + elRefX;
+    }
     this.hintPosition = {
-      x : event.x - 300,
+      x,
       y : event.y - 100
     };
   }

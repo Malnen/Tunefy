@@ -1,27 +1,28 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { TokenResponse } from '../../models/token-response.interface';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Router } from '@angular/router';
-import { Devices } from '../../models/devices.interface';
-import { TrackAnalysis } from '../../models/track-analysis.interface';
-import { Player } from '../../models/player.interface';
-import { RepeatState } from '../../enums/repeat-state.enum';
-import { SearchResponse } from '../../models/search-response.interface';
-import { Item } from '../../models/item.interface';
-import { Playlists } from '../../models/playlists.interface';
-import { RecentlyPlayed } from '../../models/recently-played.interface';
-import { Artists } from '../../models/artists.interface';
-import { PlaylistTracks } from '../../models/playlist-tracks.interface';
-import { Playlist } from '../../models/playlist.interface';
-import { PlaylistItem } from '../../models/playlist-item.interface';
-import { Profile } from '../../models/profile.interface';
-import { Album } from '../../models/album.interface';
-import { ArtistTopTracks } from '../../models/artist-top-tracks.interface';
-import { ArtistsAlbumsResponse } from '../../models/artists-albums-response.interface';
-import { ScriptLoaderService } from '../script-loader/script-loader.service';
-import { PlaylistData } from '../../models/playlist-data.interface';
-import { PlaylistCoverData } from '../../models/playlist-cover-data.interface';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {TokenResponse} from '../../models/token-response.interface';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {Router} from '@angular/router';
+import {Devices} from '../../models/devices.interface';
+import {TrackAnalysis} from '../../models/track-analysis.interface';
+import {Player} from '../../models/player.interface';
+import {RepeatState} from '../../enums/repeat-state.enum';
+import {SearchResponse} from '../../models/search-response.interface';
+import {Item} from '../../models/item.interface';
+import {Playlists} from '../../models/playlists.interface';
+import {RecentlyPlayed} from '../../models/recently-played.interface';
+import {Artists} from '../../models/artists.interface';
+import {PlaylistTracks} from '../../models/playlist-tracks.interface';
+import {Playlist} from '../../models/playlist.interface';
+import {PlaylistItem} from '../../models/playlist-item.interface';
+import {Profile} from '../../models/profile.interface';
+import {Album} from '../../models/album.interface';
+import {ArtistTopTracks} from '../../models/artist-top-tracks.interface';
+import {ArtistsAlbumsResponse} from '../../models/artists-albums-response.interface';
+import {ScriptLoaderService} from '../script-loader/script-loader.service';
+import {PlaylistData} from '../../models/playlist-data.interface';
+import {PlaylistCoverData} from '../../models/playlist-cover-data.interface';
+import {AudioFeatures} from '../../models/audio-features.interface';
 
 @Injectable()
 export class SpotifyService {
@@ -163,7 +164,7 @@ export class SpotifyService {
 
   spotifyRefreshToken(): Observable<TokenResponse> {
     const headers = new HttpHeaders({
-      'Content-Type' : 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     });
     const isRefreshTokenPresent = this.refreshToken !== '' && this.refreshToken != null;
     this.formatRedirectUri();
@@ -176,7 +177,7 @@ export class SpotifyService {
       .append(isRefreshTokenPresent ? 'refresh_token' : 'code',
         isRefreshTokenPresent ? this.refreshToken : this.accessToken);
 
-    const options = { headers };
+    const options = {headers};
     const url = 'https://accounts.spotify.com/api/token';
 
     return this._http.post<TokenResponse>(url, payload.toString(), options);
@@ -188,9 +189,9 @@ export class SpotifyService {
     let payload = {};
     if (track != null) {
       payload = {
-        context_uri : track?.album.uri,
-        offset : {
-          position : track.track_number - 1
+        context_uri: track?.album.uri,
+        offset: {
+          position: track.track_number - 1
         }
       };
     }
@@ -202,10 +203,10 @@ export class SpotifyService {
     const url = 'https://api.spotify.com/v1/me/player';
     const options = this.getOptions();
     const paylaod = {
-      device_ids : [
+      device_ids: [
         this.deviceId
       ],
-      play : true
+      play: true
     };
 
     return this._http.put(url, paylaod, options);
@@ -239,7 +240,7 @@ export class SpotifyService {
     this.accessToken = '';
     this.refreshToken = '';
     this._scriptsLoader.removeScripts();
-    this._router.navigate([ './' ]);
+    this._router.navigate(['./']);
     localStorage.setItem('showDialog', 'true');
     if (withReload) {
       window.location.reload();
@@ -254,7 +255,7 @@ export class SpotifyService {
     const url = 'https://api.spotify.com/v1/me/player';
     const options = this.getOptions();
     const paylaod = {
-      device_ids : [
+      device_ids: [
         id ?? this.deviceId
       ]
     };
@@ -263,7 +264,7 @@ export class SpotifyService {
   }
 
   setVolume(volume: number): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/volume?volume_percent=${ volume }`;
+    const url = `https://api.spotify.com/v1/me/player/volume?volume_percent=${volume}`;
     const options = this.getOptions();
     const paylaod = {};
 
@@ -292,7 +293,7 @@ export class SpotifyService {
   }
 
   seek(ms: number): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/seek?position_ms=${ ms }`;
+    const url = `https://api.spotify.com/v1/me/player/seek?position_ms=${ms}`;
     const options = this.getOptions();
     const payload = {};
 
@@ -300,7 +301,7 @@ export class SpotifyService {
   }
 
   setRepeatState(state: RepeatState): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/repeat?state=${ state }`;
+    const url = `https://api.spotify.com/v1/me/player/repeat?state=${state}`;
     const options = this.getOptions();
     const payload = {};
 
@@ -308,7 +309,7 @@ export class SpotifyService {
   }
 
   setShuffleState(state: boolean): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/shuffle?state=${ state }`;
+    const url = `https://api.spotify.com/v1/me/player/shuffle?state=${state}`;
     const options = this.getOptions();
     const payload = {};
 
@@ -332,7 +333,7 @@ export class SpotifyService {
   }
 
   search(query: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/search?q=${ encodeURI(query) }&type=track%2Calbum%2Cartist&limit=5&offset=0`;
+    const url = `https://api.spotify.com/v1/search?q=${encodeURI(query)}&type=track%2Calbum%2Cartist&limit=5&offset=0`;
     const options = this.getOptions();
 
     return this._http.get<SearchResponse>(url, options);
@@ -348,11 +349,11 @@ export class SpotifyService {
     this._wait = true;
     clearTimeout(this._waitTimer);
     this.userAllowed = false;
-    this._router.navigate([ './userNotAllowed' ]);
+    this._router.navigate(['./userNotAllowed']);
   }
 
   addTrackToQueue(track: Item): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/player/queue?uri=${ track.uri }`;
+    const url = `https://api.spotify.com/v1/me/player/queue?uri=${track.uri}`;
     const options = this.getOptions();
 
     return this._http.post(url, null, options);
@@ -366,7 +367,7 @@ export class SpotifyService {
   }
 
   getPlaylists(limit = 50, newUrl?: string): Observable<any> {
-    const url = newUrl ?? `https://api.spotify.com/v1/me/playlists?limit=${ limit }`;
+    const url = newUrl ?? `https://api.spotify.com/v1/me/playlists?limit=${limit}`;
     const options = this.getOptions();
 
     return this._http.get<Playlists>(url, options);
@@ -387,8 +388,8 @@ export class SpotifyService {
   }
 
   getRecommendedTrack(genres: string[], artistIds: string[] = []): Observable<any> {
-    const artists = artistIds.length > 0 ? `&seed_artists=${ artistIds.join(',') }` : '';
-    const url = `https://api.spotify.com/v1/recommendations?seed_genres=${ genres.join(',') }&limit=50${ artists }`;
+    const artists = artistIds.length > 0 ? `&seed_artists=${artistIds.join(',')}` : '';
+    const url = `https://api.spotify.com/v1/recommendations?seed_genres=${genres.join(',')}&limit=50${artists}`;
 
     const options = this.getOptions();
 
@@ -396,28 +397,35 @@ export class SpotifyService {
   }
 
   getArtists(ids: string[]): Observable<any> {
-    const url = `https://api.spotify.com/v1/artists?ids=${ ids.join('%2C') }`;
+    const url = `https://api.spotify.com/v1/artists?ids=${ids.join('%2C')}`;
     const options = this.getOptions();
 
     return this._http.get<Artists>(url, options);
   }
 
+  getAudioFeatures(id: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/audio-features/${id}`;
+    const options = this.getOptions();
+
+    return this._http.get<AudioFeatures>(url, options);
+  }
+
   getTracks(playlistId: string, next?: string): Observable<any> {
-    const url = next != null ? `${ next }&market=from_token` : `https://api.spotify.com/v1/playlists/${ playlistId }/tracks?market=from_token&limit=50&offset=0`;
+    const url = next != null ? `${next}&market=from_token` : `https://api.spotify.com/v1/playlists/${playlistId}/tracks?market=from_token&limit=50&offset=0`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
   }
 
   getFollowedTracks(next?: string): Observable<any> {
-    const url = next != null ? `${ next }&market=from_token` : `https://api.spotify.com/v1/me/tracks?market=from_token&limit=50&offset=0`;
+    const url = next != null ? `${next}&market=from_token` : `https://api.spotify.com/v1/me/tracks?market=from_token&limit=50&offset=0`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
   }
 
   getAlbumTracks(id: string, next?: string): Observable<any> {
-    const url = next != null ? `${ next }&market=from_token` : `https://api.spotify.com/v1/albums/${ id }?market=from_token&limit=50&offset=0`;
+    const url = next != null ? `${next}&market=from_token` : `https://api.spotify.com/v1/albums/${id}?market=from_token&limit=50&offset=0`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
@@ -425,7 +433,7 @@ export class SpotifyService {
 
   checkIfTrackAreFollowed(items: PlaylistItem[]): Observable<any> {
     const ids = items.map((item: PlaylistItem) => item.track.id);
-    const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ ids.join(',') }`;
+    const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ids.join(',')}`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
@@ -433,7 +441,7 @@ export class SpotifyService {
 
   checkIfTrackItemAreFollowed(items: Item[]): Observable<any> {
     const ids = items.map((item: Item) => item.id);
-    const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ ids.join(',') }`;
+    const url = `https://api.spotify.com/v1/me/tracks/contains?ids=${ids.join(',')}`;
     const options = this.getOptions();
 
     return this._http.get<PlaylistTracks>(url, options);
@@ -443,9 +451,9 @@ export class SpotifyService {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
     const payload = {
-      context_uri : playlist.uri,
-      offset : {
-        position : offset ?? 0
+      context_uri: playlist.uri,
+      offset: {
+        position: offset ?? 0
       }
     };
 
@@ -453,14 +461,14 @@ export class SpotifyService {
   }
 
   followTrack(id: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/tracks?ids=${ id }`;
+    const url = `https://api.spotify.com/v1/me/tracks?ids=${id}`;
     const options = this.getOptions();
 
     return this._http.put(url, null, options);
   }
 
   unFollowTrack(id: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/me/tracks?ids=${ id }`;
+    const url = `https://api.spotify.com/v1/me/tracks?ids=${id}`;
     const options = this.getOptions();
 
     return this._http.delete(url, options);
@@ -470,9 +478,9 @@ export class SpotifyService {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
     const payload = {
-      context_uri : album.uri,
-      offset : {
-        position : offset ?? 0
+      context_uri: album.uri,
+      offset: {
+        position: offset ?? 0
       }
     };
 
@@ -481,7 +489,7 @@ export class SpotifyService {
 
   addTracksToPlaylist(id: string, uris: string[]): Observable<any> {
     const urisString = uris.join('%2C').replace(/:/g, '%3A');
-    const url = `https://api.spotify.com/v1/playlists/${ id }/tracks?uris=${ urisString }`;
+    const url = `https://api.spotify.com/v1/playlists/${id}/tracks?uris=${urisString}`;
     const options = this.getOptions();
 
     return this._http.post(url, null, options);
@@ -494,10 +502,10 @@ export class SpotifyService {
         uri
       });
     }
-    const url = `https://api.spotify.com/v1/playlists/${ id }/tracks`;
+    const url = `https://api.spotify.com/v1/playlists/${id}/tracks`;
     const options = this.getOptionsWithBody(
       {
-        tracks : urisArray
+        tracks: urisArray
       }
     );
 
@@ -509,8 +517,8 @@ export class SpotifyService {
     const options = this.getOptions();
     const payload = {
       uris,
-      offset : {
-        position : offset ?? 0
+      offset: {
+        position: offset ?? 0
       }
     };
 
@@ -534,7 +542,7 @@ export class SpotifyService {
     }
     const payload = {
       uris,
-      offset : {
+      offset: {
         position
       }
     };
@@ -546,65 +554,65 @@ export class SpotifyService {
     const url = 'https://api.spotify.com/v1/me/player/play';
     const options = this.getOptions();
     const payload = {
-      context_uri : playlist.uri
+      context_uri: playlist.uri
     };
 
     return this._http.put(url, payload, options);
   }
 
   creatPlaylist(data: PlaylistData): Observable<any> {
-    const url = `	https://api.spotify.com/v1/users/${ this._profile.id }/playlists`;
+    const url = `	https://api.spotify.com/v1/users/${this._profile.id}/playlists`;
     const options = this.getOptions();
     const payload = {
-      name : data.name,
-      description : data.description,
-      public : true
+      name: data.name,
+      description: data.description,
+      public: true
     };
 
     return this._http.post(url, payload, options);
   }
 
   editPlaylist(data: PlaylistData, playlist: Playlist): Observable<any> {
-    const url = `https://api.spotify.com/v1/playlists/${ playlist.id }`;
+    const url = `https://api.spotify.com/v1/playlists/${playlist.id}`;
     const options = this.getOptions();
     const payload = {
-      name : data.name,
-      description : data.description
+      name: data.name,
+      description: data.description
     };
 
     return this._http.put(url, payload, options);
   }
 
   changePlaylistImage(data: PlaylistCoverData, base64: ArrayBuffer | string): Observable<any> {
-    const url = `https://api.spotify.com/v1/playlists/${ data.playlist.id }/images`;
+    const url = `https://api.spotify.com/v1/playlists/${data.playlist.id}/images`;
     const options = this.getOptions();
 
     return this._http.put(url, base64.toString().substring(base64.toString().indexOf(',') + 1), options);
   }
 
   deletePlaylist(id: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/playlists/${ id }/followers`;
+    const url = `https://api.spotify.com/v1/playlists/${id}/followers`;
     const options = this.getOptions();
 
     return this._http.delete(url, options);
   }
 
   getRelatedArtists(id: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/artists/${ id }/related-artists`;
+    const url = `https://api.spotify.com/v1/artists/${id}/related-artists`;
     const options = this.getOptions();
 
     return this._http.get<Artists>(url, options);
   }
 
   getArtistTopTracks(id: string): Observable<any> {
-    const url = `https://api.spotify.com/v1/artists/${ id }/top-tracks?market=from_token`;
+    const url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=from_token`;
     const options = this.getOptions();
 
     return this._http.get<ArtistTopTracks>(url, options);
   }
 
   getArtistAlbums(id: string, next?: string): Observable<any> {
-    const url = next ?? `https://api.spotify.com/v1/artists/${ id }/albums?market=from_token&include_groups=album`;
+    const url = next ?? `https://api.spotify.com/v1/artists/${id}/albums?market=from_token&include_groups=album`;
     const options = this.getOptions();
 
     return this._http.get<ArtistsAlbumsResponse>(url, options);
@@ -642,18 +650,18 @@ export class SpotifyService {
 
   private getOptions(): any {
     const headers = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      Authorization : `Bearer ${ this.accessToken }`
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.accessToken}`
     });
-    return { headers };
+    return {headers};
   }
 
   private getOptionsWithBody(body: any): any {
     const headers = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      Authorization : `Bearer ${ this.accessToken }`
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.accessToken}`
     });
-    return { headers, body };
+    return {headers, body};
   }
 
 }

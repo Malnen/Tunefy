@@ -1,0 +1,58 @@
+@import "src/colors";
+
+.content {
+  width: 100%;
+
+
+  .artist, .album {
+
+    span {
+      color: $orange;
+      font-size: 2.25rem;
+      line-height: 2.75rem;
+    }
+
+    .image {
+      min-width: 300px;
+      min-height: 300px;
+      max-width: 300px;
+      max-height: 300px;
+      margin: 10px;
+
+      img {
+        min-width: 100%;
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+    }
+
+  }
+
+  .artist, .album, .genres {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin: 10px;
+    color: $playlistTitle;
+  }
+
+  .divider {
+    height: 2px;
+    width: 98%;
+    background: $divider;
+    margin: 1% 10px 1% 10px;
+  }
+
+  .genres {
+    text-transform: capitalize;
+
+    span {
+      color: $orange;
+      font-size: 2.25rem;
+      line-height: 2.75rem;
+    }
+
+  }
+
+}

@@ -1,0 +1,99 @@
+@import "src/colors";
+
+.feature {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-flow: wrap;
+
+  .label, .expand, .value {
+    color: $audioFeatureLabel;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    height: 1.5rem;
+    width: 100%;
+    text-align: start;
+  }
+
+  .description {
+    width: 100%;
+    height: 0;
+    font-size: 0.8rem;
+    text-align: start;
+    overflow: hidden;
+  }
+
+  .expand {
+    width: 100%;
+    text-align: end;
+    margin-top: -1.5rem;
+
+    &.expanded {
+
+      mat-icon {
+        transform: rotate(180deg);
+      }
+
+    }
+
+    &:hover {
+      font-weight: bold;
+
+      mat-icon {
+        font-weight: bold;
+      }
+
+    }
+
+    mat-icon {
+      transition: transform 0.15s;
+      height: 1.5rem;
+      width: 1rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      text-align: end;
+    }
+
+  }
+
+  .value {
+    text-align: end;
+  }
+
+  &:hover {
+
+    .bars {
+
+      .foreground {
+        background: $lightOrange;
+      }
+
+    }
+
+  }
+
+  .bars {
+    height: 10px;
+    position: relative;
+    width: 100%;
+
+    .background, .foreground {
+      width: 100%;
+      height: 75%;
+      position: absolute;
+      pointer-events: none;
+      border-radius: 10px;
+    }
+
+    .background {
+      background: $audioFeatureBarBackground;
+    }
+
+    .foreground {
+      transition: background 0.2s, width 0.2s;
+      background: $audioFeatureBarForeground;
+    }
+
+  }
+
+}

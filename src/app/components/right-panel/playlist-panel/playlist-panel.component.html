@@ -1,5 +1,8 @@
 <div class="content"
      #container>
+  <app-switcher [defaultValue]="switchValue"
+                [switches]="switches"
+                (switched)="switch($event)"></app-switcher>
   <div class="top">
     <div class="image"
          appHover
@@ -48,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!mobile"
+    <div *ngIf="!mobile && !isStatsPanel"
          class="search">
       <div class="search-wrapper">
         <input #searchInput
@@ -58,7 +61,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="mobile"
+  <div *ngIf="mobile && !isStatsPanel"
        class="search">
     <div class="search-wrapper">
       <input #searchInput
@@ -67,7 +70,8 @@
       <mat-icon (click)="clearSearchValue()">close</mat-icon>
     </div>
   </div>
-  <app-track-table [tracks]="tracksToRender"
+  <app-track-table [style.display]="isStatsPanel ? 'none':'block'"
+                   [tracks]="tracksToRender"
                    [loading]="loading"
                    [forceLoading]="forceLoading"
                    [container]="container"
@@ -76,4 +80,31 @@
                    (sorted)="onSorted()"
                    (refresh)="onRefresh()"
                    (unfollowed)="onUnfollowed($event)"></app-track-table>
+  <div class="stats"
+       [style.display]="isStatsPanel ? 'block':'none'">
+    <div *ngIf="!statsLoaded"
+         class="loading">
+      <mat-spinner appSpinner
+                   [diameter]="60"
+                   [customColor]="spinnerColor"></mat-spinner>
+    </div>
+    <div *ngIf="statsLoaded"
+         class="wrapper">
+      <app-switcher *ngIf="!noData"
+                    [switches]="statsSwitches"
+                    [defaultValue]="statsSwitchValue"
+                    (switched)="statsSwitch($event)"></app-switcher>
+      <app-horizontal-chart *ngIf="!noData"
+                            [bars]="activeBarsConfig"
+                            [contentType]="statsContentType"
+                            [topAlbum]="topAlbum"
+                            [topArtist]="topArtist"
+                            [genreArtists]="genreArtists"
+                            [topGenres]="topGenres"></app-horizontal-chart>
+      <div *ngIf="noData"
+           class="error">
+        Brak danych
+      </div>
+    </div>
+  </div>
 </div>

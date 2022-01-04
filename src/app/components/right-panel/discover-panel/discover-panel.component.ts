@@ -89,14 +89,16 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
     });
     this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
       this.player = player;
+      const isFollowedTrack = !this.tracks.map(value => value.id).includes(player?.item?.id);
       if (!this._spotifyService.isFollowedPlayback) {
-        if (this._lastTrack?.id !== player?.item.id) {
+        if (this._lastTrack?.id !== player?.item.id && !isFollowedTrack) {
           this._lastTrack = player.item;
           this._discoverService.silentSkip(this._lastTrack);
         } else {
-          this.isPlaying = this.player.is_playing;
+          this.isPlaying = this.player.is_playing && !isFollowedTrack;
         }
       }
+      this._spotifyService.isFollowedPlayback = isFollowedTrack;
     });
     this._discoverService.load();
   }
@@ -199,7 +201,7 @@ export class DiscoverPanelComponent extends BaseComponent implements OnInit {
     } else {
       const uris = this.getUris();
       this._spotifyService.setShuffleState(false);
-      this._spotifyService.playFromUris(uris).subscribe(() => {
+      this._spotifyService.playFromUris(uris, this._discoverService.currentIndex).subscribe(() => {
         this.isPlaying = true;
         this._spotifyService.isFollowedPlayback = false;
       });
