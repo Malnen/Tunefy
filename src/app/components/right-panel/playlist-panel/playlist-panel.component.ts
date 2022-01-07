@@ -90,7 +90,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
     this.container.addEventListener('scroll', this.onScroll.bind(this));
     this.playlistService.hasPlaylistsUpdated().subscribe((playlists: Playlists) => {
       this.playlists = playlists;
-      const playlist = this.playlists.items.find(value => value.id === this.playlist.id);
+      const playlist = this.playlists.items.find(value => value.id === this.playlist?.id);
       if (playlist) {
         this.playlist = playlist;
         this.loadImage();

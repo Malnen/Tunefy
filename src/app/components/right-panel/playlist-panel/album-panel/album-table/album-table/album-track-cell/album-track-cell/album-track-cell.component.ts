@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { SnackBarService } from '../../../../../../../../services/snack-bar-service/snack-bar.service';
 import { LinkTileService } from '../../../../../../../../services/link-tile/link-tile.service';
 import { ResizeService } from '../../../../../../../../services/resize-service/resize.service';
+import { DialogService } from '../../../../../../../../services/dialog/dialog.service';
+import { Option } from '../../../../../../../../models/option.interface';
 
 @Component({
   selector : 'app-album-track-cell',
@@ -23,8 +25,9 @@ export class AlbumTrackCellComponent extends TrackCellComponent implements OnIni
               spotifyService: SpotifyService,
               snackBarService: SnackBarService,
               resizeService: ResizeService,
-              linkTileService: LinkTileService) {
-    super(contextMenuService, resizeService, spotifyService, snackBarService, linkTileService);
+              linkTileService: LinkTileService,
+              dialogService: DialogService) {
+    super(contextMenuService, resizeService, dialogService, spotifyService, snackBarService, linkTileService);
   }
 
   ngOnInit(): void {

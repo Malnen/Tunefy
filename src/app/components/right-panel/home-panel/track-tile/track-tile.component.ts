@@ -15,6 +15,7 @@ import { Playlists } from '../../../../models/playlists.interface';
 import { Playlist } from '../../../../models/playlist.interface';
 import { SnackBarService } from '../../../../services/snack-bar-service/snack-bar.service';
 import { ResizeService } from '../../../../services/resize-service/resize.service';
+import { DialogService } from '../../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-track-tile',
@@ -32,6 +33,7 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
 
   constructor(contextMenuService: ContextMenuService,
               resizeService: ResizeService,
+              private _dialogService: DialogService,
               private _spotifyService: SpotifyService,
               private _linkTileService: LinkTileService,
               private _playlistService: PlaylistService,
@@ -96,7 +98,16 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
         label : 'Dodaj do playlisty',
         action : () => {},
         expandable : true,
-        subOptions : this.getPlaylistsOptions()
+        subOptions : this.getPlaylistsOptions(),
+        showDivider : true
+      },
+      {
+        label : 'Tekst utworu',
+        action : this.showLyrics.bind(this)
+      },
+      {
+        label : 'Cechy utworu',
+        action : this.showAudioFeatures.bind(this)
       }
     ];
   }
@@ -159,6 +170,14 @@ export class TrackTileComponent extends BaseComponent implements OnInit {
       };
       this._linkTileService.updateLinkTile(config);
     });
+  }
+
+  private showLyrics(): void {
+    this._dialogService.openLyricsDialog(this.recentlyPlayed.track);
+  }
+
+  private showAudioFeatures(): void {
+    this._dialogService.openAudioFeaturesDialog(this.recentlyPlayed.track);
   }
 
 }

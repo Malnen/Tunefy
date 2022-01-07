@@ -87,6 +87,8 @@ import { SwitcherComponent } from './app/components/switcher/switcher.component'
 import { HorizontalChartComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-chart.component';
 import { HorizontalBarComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-bar/horizontal-bar.component';
 import { HorizontalChartInfoComponent } from './app/components/right-panel/playlist-panel/horizontal-chart/horizontal-chart-info/horizontal-chart-info.component';
+import { LyricsDialogComponent } from './app/components/dialogs/lyrics-dialog/lyrics-dialog.component';
+import { AudioFeaturesDialogComponent } from './app/components/dialogs/audio-features-dialog/audio-features-dialog.component';
 
 @NgModule({
   declarations : [
@@ -157,7 +159,9 @@ import { HorizontalChartInfoComponent } from './app/components/right-panel/playl
     SwitcherComponent,
     HorizontalChartComponent,
     HorizontalBarComponent,
-    HorizontalChartInfoComponent
+    HorizontalChartInfoComponent,
+    LyricsDialogComponent,
+    AudioFeaturesDialogComponent
   ],
   imports : [
     BrowserModule,

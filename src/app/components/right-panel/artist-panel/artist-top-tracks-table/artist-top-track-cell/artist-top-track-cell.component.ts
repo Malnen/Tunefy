@@ -8,6 +8,7 @@ import { SnackBarService } from '../../../../../services/snack-bar-service/snack
 import { LinkTileService } from '../../../../../services/link-tile/link-tile.service';
 import { Option } from '../../../../../models/option.interface';
 import { ResizeService } from '../../../../../services/resize-service/resize.service';
+import { DialogService } from '../../../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-artist-top-track-cell',
@@ -25,13 +26,15 @@ export class ArtistTopTrackCellComponent extends TrackCellComponent implements O
               resizeService: ResizeService,
               spotifyService: SpotifyService,
               snackBarService: SnackBarService,
-              linkTileService: LinkTileService) {
-    super(contextMenuService, resizeService, spotifyService, snackBarService, linkTileService);
+              linkTileService: LinkTileService,
+              dialogService: DialogService) {
+    super(contextMenuService, resizeService, dialogService, spotifyService, snackBarService, linkTileService);
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.removeOption();
+    this.removeDeleteOption();
+    this.removeGoToArtistOption();
   }
 
   play(): void {
@@ -54,10 +57,17 @@ export class ArtistTopTrackCellComponent extends TrackCellComponent implements O
     this.addedAt = moment(this.item.album.release_date).format('YYYY-MM-DD');
   }
 
-  private removeOption(): void {
+  private removeGoToArtistOption(): void {
     const option = this.options.find((o: Option) => o.label === 'Przejdź do artysty');
     const index = this.options.indexOf(option);
     this.options[ index + 1 ].showDivider = true;
+    this.options.splice(index, 1);
+  }
+
+  private removeDeleteOption(): void {
+    const option = this.options.find((o: Option) => o.label === 'Usuń z playlisty');
+    const index = this.options.indexOf(option);
+    this.options[ index + 1 ].showDivider = false;
     this.options.splice(index, 1);
   }
 

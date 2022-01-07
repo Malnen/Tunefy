@@ -11,7 +11,10 @@
          [class.hover]="hover">
       <div class="label"
            [class.hover]="hover">
-        Cechy Utworu
+        <div *ngIf="showLabel"
+                class="text">
+          Cechy Utworu
+        </div>
         <div class="name">
           {{currentItem.name}}
         </div>
