@@ -1,0 +1,37 @@
+@import "src/colors";
+@import 'node_modules/@angular/material/theming';
+
+.audio-features-dialog {
+  user-select: none;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .close {
+
+      mat-icon {
+
+        &:hover {
+          font-weight: bold;
+        }
+
+      }
+
+    }
+
+  }
+
+  mat-dialog-container {
+    background: $dialogBackground;
+    color: $dialogColor;
+
+    .content {
+      font-size: 1rem;
+      line-height: 2rem;
+      margin-top: -50px;
+    }
+
+  }
+
+}
