@@ -17,6 +17,7 @@ import { Artists } from '../../../../../models/artists.interface';
 import { Playlists } from '../../../../../models/playlists.interface';
 import { ResizeService } from '../../../../../services/resize-service/resize.service';
 import { ScreenSize } from '../../../../../models/screen-size.interface';
+import { DialogService } from '../../../../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-track-cell',
@@ -48,6 +49,7 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
 
   constructor(contextMenuService: ContextMenuService,
               resizeService: ResizeService,
+              protected _dialogService: DialogService,
               protected spotifyService: SpotifyService,
               private _snackBarService: SnackBarService,
               private _linkTileService: LinkTileService) {
@@ -133,7 +135,16 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
       },
       {
         label : this._isFollowedPlaylist ? 'Przestań obserwować' : 'Usuń z playlisty',
-        action : () => this._isFollowedPlaylist ? this.unFollow() : this.deleteTrackFromPlaylist(this.playlist)
+        action : () => this._isFollowedPlaylist ? this.unFollow() : this.deleteTrackFromPlaylist(this.playlist),
+        showDivider : true,
+      },
+      {
+        label : 'Tekst utworu',
+        action : this.showLyrics.bind(this)
+      },
+      {
+        label : 'Cechy utworu',
+        action : this.showAudioFeatures.bind(this)
       }
     ];
   }
@@ -234,6 +245,14 @@ export class TrackCellComponent extends BaseComponent implements OnInit {
   private setArtists(): void {
     const artists = this.track.artists.map((artist: Artist) => artist.name);
     this.artists = artists.join(', ');
+  }
+
+  private showLyrics(): void {
+    this._dialogService.openLyricsDialog(this.track);
+  }
+
+  private showAudioFeatures(): void {
+    this._dialogService.openAudioFeaturesDialog(this.track);
   }
 
 }

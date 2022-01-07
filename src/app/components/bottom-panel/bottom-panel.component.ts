@@ -19,6 +19,7 @@ import { PlaylistService } from '../../services/playlist-service/playlist.servic
 import { Playlists } from '../../models/playlists.interface';
 import { ResizeService } from '../../services/resize-service/resize.service';
 import { ScreenSize } from '../../models/screen-size.interface';
+import { DialogService } from '../../services/dialog/dialog.service';
 
 @Component({
   selector : 'app-bottom-panel',
@@ -48,6 +49,7 @@ export class BottomPanelComponent extends BaseComponent implements OnInit {
 
   constructor(contextMenuService: ContextMenuService,
               resizeService: ResizeService,
+              private _dialogService: DialogService,
               private _spotifyService: SpotifyService,
               private _linkTileService: LinkTileService,
               private _snackBarService: SnackBarService,
@@ -186,7 +188,16 @@ export class BottomPanelComponent extends BaseComponent implements OnInit {
         label : 'Dodaj do playlisty',
         action : () => {},
         expandable : true,
-        subOptions : this.getPlaylistsOptions()
+        subOptions : this.getPlaylistsOptions(),
+        showDivider : true
+      },
+      {
+        label : 'Tekst utworu',
+        action : this.showLyrics.bind(this)
+      },
+      {
+        label : 'Cechy utworu',
+        action : this.showAudioFeatures.bind(this)
       }
     ];
   }
@@ -300,6 +311,14 @@ export class BottomPanelComponent extends BaseComponent implements OnInit {
 
       this.artists = item?.artists;
     }
+  }
+
+  private showLyrics(): void {
+    this._dialogService.openLyricsDialog(this.currentItem);
+  }
+
+  private showAudioFeatures(): void {
+    this._dialogService.openAudioFeaturesDialog(this.currentItem);
   }
 
 }

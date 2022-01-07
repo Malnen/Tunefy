@@ -14,6 +14,9 @@ import { EditPlaylistDialogComponent } from '../../components/dialogs/edit-playl
 import { ChangePlaylistImageDialogComponent } from '../../components/dialogs/change-playlist-image-dialog/change-playlist-image-dialog.component';
 import { PlaylistCoverData } from '../../models/playlist-cover-data.interface';
 import { PlaylistService } from '../playlist-service/playlist.service';
+import { LyricsDialogComponent } from '../../components/dialogs/lyrics-dialog/lyrics-dialog.component';
+import { Item } from '../../models/item.interface';
+import { AudioFeaturesDialogComponent } from '../../components/dialogs/audio-features-dialog/audio-features-dialog.component';
 
 @Injectable({
   providedIn : 'root'
@@ -60,6 +63,22 @@ export class DialogService {
         this.changePlaylistImage(data);
       }
     });
+  }
+
+  openLyricsDialog(track: Item): void {
+    const dialogRef = this._dialog.open(LyricsDialogComponent, {
+      panelClass : 'lyrics-dialog',
+      scrollStrategy : new NoopScrollStrategy()
+    });
+    dialogRef.componentInstance.track = track;
+  }
+
+  openAudioFeaturesDialog(track: Item): void {
+    const dialogRef = this._dialog.open(AudioFeaturesDialogComponent, {
+      panelClass : 'audio-features-dialog',
+      scrollStrategy : new NoopScrollStrategy()
+    });
+    dialogRef.componentInstance.track = track;
   }
 
   openDeletePlaylistDialog(playlist: Playlist): void {

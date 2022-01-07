@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import {ScrollMaskComponent} from '../scroll-mask/scroll-mask.component';
-import {Player} from '../../../../models/player.interface';
-import {LyricsProviderService} from '../../../../services/lyrics-provider/lyrics-provider.service';
-import {SpotifyService} from '../../../../services/spotify/spotify.service';
-import {LyricsResponse} from '../../../../models/lyricsResponse.interface';
-import {ColorsEnum} from '../../../../enums/colors.enum';
-import {Item} from '../../../../models/item.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import { ScrollMaskComponent } from '../scroll-mask/scroll-mask.component';
+import { Player } from '../../../../models/player.interface';
+import { LyricsProviderService } from '../../../../services/lyrics-provider/lyrics-provider.service';
+import { SpotifyService } from '../../../../services/spotify/spotify.service';
+import { LyricsResponse } from '../../../../models/lyricsResponse.interface';
+import { ColorsEnum } from '../../../../enums/colors.enum';
+import { Item } from '../../../../models/item.interface';
 
 @Component({
-  selector: 'app-lyrics-wrapper',
-  templateUrl: './lyrics-wrapper.component.html',
-  styleUrls: ['./lyrics-wrapper.component.scss']
+  selector : 'app-lyrics-wrapper',
+  templateUrl : './lyrics-wrapper.component.html',
+  styleUrls : [ './lyrics-wrapper.component.scss' ]
 })
 export class LyricsWrapperComponent extends ScrollMaskComponent implements OnInit {
+
+  @Input() track: Item;
 
   player: Player;
   currentItem: Item;
@@ -24,17 +26,26 @@ export class LyricsWrapperComponent extends ScrollMaskComponent implements OnIni
   }
 
   ngOnInit(): void {
-    this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
-      this.player = player;
-      const item = player?.item;
-      if (JSON.stringify(item) !== JSON.stringify(this.currentItem)) {
-        this.loading = true;
-        this.currentItem = player.item;
-        this.getLyrics();
-        this.setMask();
-        this.emitLoadedEvent();
-      }
-    });
+    if (this.track != null) {
+      this.currentItem = this.track;
+      this.setLyrics();
+    } else {
+      this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
+        this.player = player;
+        const item = player?.item;
+        if (JSON.stringify(item) !== JSON.stringify(this.currentItem)) {
+          this.currentItem = player.item;
+          this.setLyrics();
+        }
+      });
+    }
+  }
+
+  private setLyrics(): void {
+    this.loading = true;
+    this.getLyrics();
+    this.setMask();
+    this.emitLoadedEvent();
   }
 
   private getLyrics(): void {

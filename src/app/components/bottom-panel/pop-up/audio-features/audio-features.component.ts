@@ -1,16 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {ScrollMaskComponent} from '../scroll-mask/scroll-mask.component';
-import {SpotifyService} from '../../../../services/spotify/spotify.service';
-import {Player} from '../../../../models/player.interface';
-import {Item} from '../../../../models/item.interface';
-import {AudioFeatures} from '../../../../models/audio-features.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import { ScrollMaskComponent } from '../scroll-mask/scroll-mask.component';
+import { SpotifyService } from '../../../../services/spotify/spotify.service';
+import { Player } from '../../../../models/player.interface';
+import { Item } from '../../../../models/item.interface';
+import { AudioFeatures } from '../../../../models/audio-features.interface';
 
 @Component({
-  selector: 'app-audio-features',
-  templateUrl: './audio-features.component.html',
-  styleUrls: ['./audio-features.component.scss']
+  selector : 'app-audio-features',
+  templateUrl : './audio-features.component.html',
+  styleUrls : [ './audio-features.component.scss' ]
 })
 export class AudioFeaturesComponent extends ScrollMaskComponent implements OnInit {
+
+  @Input() track: Item;
+  @Input() showLabel = true;
 
   player: Player;
   currentItem: Item;
@@ -37,17 +40,26 @@ export class AudioFeaturesComponent extends ScrollMaskComponent implements OnIni
 
   ngOnInit(): void {
     this.setDescriptions();
-    this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
-      this.player = player;
-      const item = player?.item;
-      if (JSON.stringify(item) !== JSON.stringify(this.currentItem)) {
-        this.loading = true;
-        this.currentItem = player.item;
-        this.setMask();
-        this.getFeatures();
-        this.emitLoadedEvent();
-      }
-    });
+    if (this.track != null) {
+      this.currentItem = this.track;
+      this.setFeatures();
+    } else {
+      this._spotifyService.hasPlayerUpdated().subscribe((player: Player) => {
+        this.player = player;
+        const item = player?.item;
+        if (JSON.stringify(item) !== JSON.stringify(this.currentItem)) {
+          this.currentItem = player.item;
+          this.setFeatures();
+        }
+      });
+    }
+  }
+
+  private setFeatures(): void {
+    this.loading = true;
+    this.setMask();
+    this.getFeatures();
+    this.emitLoadedEvent();
   }
 
   onExpandClick(): void {
