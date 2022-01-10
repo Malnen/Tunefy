@@ -19,15 +19,15 @@
 
     span {
       color: $orange;
-      font-size: 1.75rem;
+      font-size: 1.5rem;
     }
 
   }
 
   .image {
     margin: 10px 0 10px 0;
-    height: 20vw;
-    width: 20vw;
+    height: 17vw;
+    width: 17vw;
     padding: 15px;
 
     @include mobile() {
