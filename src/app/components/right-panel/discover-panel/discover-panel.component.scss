@@ -259,12 +259,12 @@
           }
 
           .previous-image {
-            margin-left: -850px;
+            margin-left: -650px;
             position: absolute;
           }
 
           .next-image {
-            margin-left: 850px;
+            margin-left: 650px;
             position: absolute;
           }
 
@@ -317,8 +317,8 @@
           }
 
           .current-image, .previous-image, .next-image {
-            width: 400px;
-            height: 400px;
+            width: 300px;
+            height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;

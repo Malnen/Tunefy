@@ -3,20 +3,19 @@
 .content {
   width: 100%;
 
-
   .artist, .album {
 
     span {
       color: $orange;
-      font-size: 2.25rem;
-      line-height: 2.75rem;
+      font-size: 1.75rem;
+      line-height: 2.25rem;
     }
 
     .image {
-      min-width: 300px;
-      min-height: 300px;
-      max-width: 300px;
-      max-height: 300px;
+      min-width: 200px;
+      min-height: 200px;
+      max-width: 200px;
+      max-height: 200px;
       margin: 10px;
 
       img {
@@ -31,7 +30,7 @@
   }
 
   .artist, .album, .genres {
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 2.5rem;
     margin: 10px;
     color: $playlistTitle;
@@ -49,8 +48,8 @@
 
     span {
       color: $orange;
-      font-size: 2.25rem;
-      line-height: 2.75rem;
+      font-size: 1.75rem;
+      line-height: 2.25rem;
     }
 
   }
