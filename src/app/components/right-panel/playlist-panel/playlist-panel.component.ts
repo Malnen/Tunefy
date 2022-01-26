@@ -400,7 +400,7 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
 
   private loadArtists(): void {
     this._artists = [];
-    if (this.playlistTracks.items.length < 1) {
+    if (this.playlistTracks == null || this.playlistTracks?.items.length < 1) {
       this.noData = true;
       this.statsLoaded = true;
     } else {
