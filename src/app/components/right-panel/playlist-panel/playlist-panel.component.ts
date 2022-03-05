@@ -436,6 +436,9 @@ export class PlaylistPanelComponent extends BaseComponent implements OnInit, OnC
       this.spotifyService.getArtists(next).subscribe((artists: Artists) => {
         this._artists.push(...artists.artists);
         this.loadNextArtists(iterator);
+      }, error => {
+        this.setArtistsBars();
+        this.loadAlbums();
       });
     } else {
       this.setArtistsBars();
