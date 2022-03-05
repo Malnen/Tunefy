@@ -9,7 +9,8 @@
       </mat-icon>
     </div>
   </div>
-  <app-horizontal-chart-info [contentType]="contentType"
+  <app-horizontal-chart-info *ngIf="topArtist && topAlbum && topGenres"
+                             [contentType]="contentType"
                              [topArtist]="topArtist"
                              [topAlbum]="topAlbum"
                              [topGenres]="topGenres"></app-horizontal-chart-info>

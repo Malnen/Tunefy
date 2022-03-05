@@ -30,7 +30,7 @@
       <div class="image">
         <img *ngIf="hasImage"
              [class.hover]="hover"
-             src="{{image.url}}"
+             src="{{image?.url}}"
              (error)="onImageError()">
       </div>
       {{track.name}}
